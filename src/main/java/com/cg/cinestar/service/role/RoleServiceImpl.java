@@ -26,6 +26,11 @@ public class RoleServiceImpl implements IRoleService{
     }
 
     @Override
+    public Role getById(Long id) {
+        return null;
+    }
+
+    @Override
     public Role save(Role role) {
         return roleRepository.save(role);
     }
