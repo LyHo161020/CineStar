@@ -1,0 +1,109 @@
+
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<th:block th:fragment="md_upate_movie">
+    <div class="modal fade show" id="md_update_movie" data-backdrop="static" tabindex="-1" aria-modal="true" style="padding-right: 19px;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Update movie</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body p-3">
+                    <form id="frmUpateMovie" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="control-label">Title</label>
+                                    <input class="form-control form-white" placeholder="Enter name" type="text" id="titleUp" name="titleUp">
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="control-label">Premiere date</label>
+                                    <input class="form-control form-white" placeholder="Enter name" type="date" id="premiereDateUp" name="premiereDateUp">
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="control-label">Show duration</label>
+                                    <input class="form-control form-white" placeholder="Enter name" type="number" id="showDurationUp" name="showDurationUp">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="control-label">Language</label>
+                                    <input class="form-control form-white" placeholder="Enter name" type="text" id="languageUp" name="languageUp">
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="control-label">Director</label>
+                                    <input class="form-control form-white" placeholder="Enter name" type="text" id="directorUp" name="directorUp">
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="control-label">Actor</label>
+                                    <input class="form-control form-white" placeholder="Enter name" type="text" id="actorUp" name="actorUp">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <label class="control-label">Description</label>
+                                    <textarea class="form-control" id="descriptionUp" name="descriptionUp" rows="4"></textarea>
+                                </div>
+                                <div class="row">
+                                    <label class="control-label">Type of movie</label>
+                                    <div class="row" id="categoryContainerUp">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 containerUpload">
+                                <label class="control-label">Upload Image</label>
+                                <input class="form-control" id="imageUp" accept="image/jpeg, image/png" type="file">
+                                <!--                                <div class="wrapper">-->
+                                <!--                                    <div class="image">-->
+                                <!--                                        <img src="" alt="">-->
+                                <!--                                    </div>-->
+                                <!--                                    <div class="content">-->
+                                <!--                                        <div class="icon">-->
+                                <!--                                            <i class="fas fa-cloud-upload-alt"></i>-->
+                                <!--                                        </div>-->
+                                <!--                                        <div class="text">-->
+                                <!--                                            No file chosen, yet!-->
+                                <!--                                        </div>-->
+                                <!--                                    </div>-->
+                                <!--                                    <div id="cancel-btn">-->
+                                <!--                                        <i class="fas fa-times"></i>-->
+                                <!--                                    </div>-->
+                                <!--                                    <div class="file-name">-->
+                                <!--                                        File name here-->
+                                <!--                                    </div>-->
+                                <!--                                </div>-->
+                                <!--                                <div class="row mt-3 mb-2">-->
+                                <!--                                    <button onclick="defaultBtnActive()" class="btn btn-primary btn-block">Choose a file</button>-->
+                                <!--                                    <input id="default-btn" type="file" hidden>-->
+
+                                <!--                                </div>-->
+
+                            </div>
+                        </div>
+
+                    </form>
+                    <div class="text-right pt-2">
+                        <button type="button" class="btn btn-light " data-dismiss="modal">Close</button>
+                        <button type="button" id="btn_save_upate_movie" class="btn btn-primary ml-1 save-category" data-dismiss="modal">Save</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
