@@ -11,6 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class UserController {
     @GetMapping
     public ModelAndView showListUser() {
-        return new ModelAndView("list_user");
+        return new ModelAndView("/user/list_user");
     }
 }
