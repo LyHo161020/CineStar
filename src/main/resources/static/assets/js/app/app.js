@@ -4,6 +4,15 @@ class App {
     static BASE_URL_MOVIE = this.DOMAIN + "/api/movies";
     static BASE_URL_CATEGORY = this.DOMAIN + "/api/categories";
 
+    static BASE_URL_FOOD = this.DOMAIN + "/api/foods";
+    static BASE_URL_SIZE = this.DOMAIN + "/api/sizes";
+    static BASE_URL_LOGOUT = "/logout";
+
+    static SUCCESS_ADDED = "Add food successfully!!";
+    static SUCCESS_EDITED = "Edit food successfully!";
+    static SUCCESS_REMOVED = "Remove successfully!";
+    static FAIL_LOAD = "Load data failed!";
+
     static ERROR_400 = "Giao dịch không thành công, vui lòng kiểm tra lại dữ liệu.";
     static ERROR_401 = "Bạn chưa đăng nhập! Vui lòng đăng nhập!";
     static ERROR_403 = "Thực hiện thất bại! Tài khoản của bạn không có quyền thực hiện chức năng này.";
@@ -216,6 +225,24 @@ class Category {
     constructor(id, name) {
         this.id = id;
         this.name = name;
+    }
+}
+
+class Food {
+    constructor(id, name, price, size, deleted) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.sizes = size;
+        this.deleted = deleted;
+
+    }
+}
+
+class Size {
+    constructor(id, size) {
+        this.id = id;
+        this.size = size;
     }
 }
 
