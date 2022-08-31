@@ -7,7 +7,7 @@ import com.cg.cinestar.model.FileMedia;
 import com.cg.cinestar.model.dto.CategoryDTO;
 import com.cg.cinestar.model.dto.IMovieDTO;
 import com.cg.cinestar.model.dto.MovieDTO;
-
+import com.cg.cinestar.model.dto.MovieTestDTO;
 import com.cg.cinestar.repository.FileMediaRepository;
 import com.cg.cinestar.repository.MovieRepository;
 import com.cg.cinestar.service.category.ICategoryService;
@@ -32,6 +32,9 @@ public class MovieAPI {
 
     @Autowired
     IMovieService movieService;
+
+    @Autowired
+    MovieRepository movieRepository;
 
     @Autowired
     ICategoryService categoryService;
@@ -77,8 +80,10 @@ public class MovieAPI {
             Movie movieCreated = movieService.create(movieDTO);
             Optional<FileMedia> movieMedia = fileMediaRepository.findByMovie(movieCreated);
 
-            movieDTO = movieCreated.toMovieDTO().setCategories(categories);
-            movieDTO.setFileUrl(movieMedia.get().getFileUrl());
+            movieDTO = movieCreated.toMovieDTO()
+                    .setCategories(categories)
+                    .setFileUrl(movieMedia.get().getFileUrl());
+
             return new ResponseEntity<>(movieDTO, HttpStatus.CREATED);
 
         } catch (DataIntegrityViolationException e) {
@@ -90,9 +95,16 @@ public class MovieAPI {
 
     @PutMapping("/update")
     public ResponseEntity<?> update(MovieDTO movieDTO){
+        Optional<Movie> movie = movieRepository.findById(movieDTO.getId());
+
+        if(!movie.isPresent()){
+            throw new ResourceNotFoundException("not found.");
+        }
+
         String categories = movieDTO.getCategories();
         try {
-            Movie movieUpdated = movieService.create(movieDTO);
+
+            Movie movieUpdated = movieService.update(movieDTO);
             Optional<FileMedia> movieMedia = fileMediaRepository.findByMovie(movieUpdated);
 
             movieDTO = movieUpdated.toMovieDTO().setCategories(categories);
@@ -104,6 +116,30 @@ public class MovieAPI {
             throw new DataInputException("Invalid creation information, please check the information again!");
         }
 
+    }
+    @PostMapping("/create-test")
+    public ResponseEntity<?> create(MovieTestDTO movieDTO){
+        System.out.println(movieDTO.getTitle());
+        return new ResponseEntity<>(movieDTO.getFile(), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> doDelete(@PathVariable String id) {
+        Optional<Movie> movie = movieRepository.findById(id);
+
+        if (movie.isPresent()) {
+            try {
+                movie.get().setDeleted(true);
+                movieService.save(movie.get());
+
+                return new ResponseEntity<>(HttpStatus.ACCEPTED);
+
+            } catch (DataIntegrityViolationException e) {
+                throw new DataInputException("Delete fail.");
+            }
+        } else {
+            throw new DataInputException("Invalid movie information");
+        }
     }
 
 }

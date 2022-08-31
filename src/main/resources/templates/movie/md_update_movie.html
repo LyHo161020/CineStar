@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <th:block th:fragment="md_upate_movie">
-    <div class="modal fade show" id="md_update_movie" data-backdrop="static" tabindex="-1" aria-modal="true" style="padding-right: 19px;">
+    <div class="modal fade" id="md_update_movie" data-backdrop="static" tabindex="-1" aria-modal="true" style="padding-right: 19px;">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -10,11 +10,13 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body p-3">
-                    <form id="frmUpateMovie" enctype="multipart/form-data">
+                    <div class="modal-alert-danger"></div>
+                    <form id="frmUpdateMovie" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="control-label">Title</label>
+                                    <input class="form-control form-white" hidden placeholder="Enter name" type="text" id="idUp" name="idUp">
                                     <input class="form-control form-white" placeholder="Enter name" type="text" id="titleUp" name="titleUp">
                                 </div>
                             </div>
@@ -36,7 +38,13 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="control-label">Language</label>
-                                    <input class="form-control form-white" placeholder="Enter name" type="text" id="languageUp" name="languageUp">
+                                    <select id="languageUp" name="languageUp" class="form-control">
+                                        <option value="English-Vietnamse">English-Vietnamse</option>
+                                        <option value="Vietnamese">Vietnamese</option>
+                                        <option value="Korean">Korean</option>
+                                        <option value="Japanese">Japanese</option>
+                                    </select>
+<!--                                    <input class="form-control form-white" placeholder="Enter name" type="text" id="languageUp" name="languageUp">-->
                                 </div>
                             </div>
                             <div class="col-lg-4">
@@ -66,40 +74,21 @@
                                 </div>
                             </div>
                             <div class="col-lg-6 containerUpload">
-                                <label class="control-label">Upload Image</label>
-                                <input class="form-control" id="imageUp" accept="image/jpeg, image/png" type="file">
-                                <!--                                <div class="wrapper">-->
-                                <!--                                    <div class="image">-->
-                                <!--                                        <img src="" alt="">-->
-                                <!--                                    </div>-->
-                                <!--                                    <div class="content">-->
-                                <!--                                        <div class="icon">-->
-                                <!--                                            <i class="fas fa-cloud-upload-alt"></i>-->
-                                <!--                                        </div>-->
-                                <!--                                        <div class="text">-->
-                                <!--                                            No file chosen, yet!-->
-                                <!--                                        </div>-->
-                                <!--                                    </div>-->
-                                <!--                                    <div id="cancel-btn">-->
-                                <!--                                        <i class="fas fa-times"></i>-->
-                                <!--                                    </div>-->
-                                <!--                                    <div class="file-name">-->
-                                <!--                                        File name here-->
-                                <!--                                    </div>-->
-                                <!--                                </div>-->
-                                <!--                                <div class="row mt-3 mb-2">-->
-                                <!--                                    <button onclick="defaultBtnActive()" class="btn btn-primary btn-block">Choose a file</button>-->
-                                <!--                                    <input id="default-btn" type="file" hidden>-->
-
-                                <!--                                </div>-->
-
+                                <div class="image-box-up text-center">
+                                    <i class="fas fa-cloud-upload-alt" id="uploadIcon"></i>
+                                    <img src="" alt="" id="viewImageUp">
+                                    <p class="mt-2 tellUpload">Click to upload image!</p>
+                                </div>
+                                <div class="controls" style="display: none;">
+                                    <input type="file" id="imageUp" name="imageUp" accept="image/jpeg, image/png" />
+                                </div>
                             </div>
                         </div>
 
                     </form>
                     <div class="text-right pt-2">
                         <button type="button" class="btn btn-light " data-dismiss="modal">Close</button>
-                        <button type="button" id="btn_save_upate_movie" class="btn btn-primary ml-1 save-category" data-dismiss="modal">Save</button>
+                        <button type="button" id="btn_save_update_movie" class="btn btn-primary ml-1 save-category">Save</button>
                     </div>
 
                 </div>

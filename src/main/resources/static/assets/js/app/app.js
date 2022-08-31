@@ -16,15 +16,16 @@ class App {
     static UPDATE_SUCCESS = "Update user success!";
 
     static SweetAlert = class {
-        static showSuspendConfirmDialog() {
+
+        static showConfirmDelete(mess, ok, notOk) {
             return Swal.fire({
                 icon: 'warning',
-                text: 'Bạn có chắc muốn xoá sản phẩm này không?',
+                text: mess,
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Đồng ý!',
-                cancelButtonText: 'Huỷ',
+                confirmButtonText: ok,
+                cancelButtonText: notOk,
             })
         }
 
@@ -91,7 +92,7 @@ class App {
         }
     }
 
-    static drawRowMovie(id, title, image, premiereDate, showDuration, director, actor, language, description) {
+    static drawRowMovie(id, title, image, premiereDate, showDuration, director, actor, language) {
         let str = `
             <tr id="tr_${id}" >
                 <td>
@@ -110,8 +111,8 @@ class App {
                     ${showDuration}
                 </td>
                 <td id="tdCategory_${id}">
-                    <span class="badge badge-secondary">Low</span>
-                    <span class="badge badge-success">Open</span>
+<!--                    <span class="badge badge-secondary">Low</span>-->
+<!--                    <span class="badge badge-success">Open</span>-->
                 </td>
                 <td>
                     ${director}
@@ -123,18 +124,14 @@ class App {
                     ${language}
                 </td>
                 <td>
-                    ${description}
-                </td>
-                <td>
-                    <button type="button" id="btn_edit_movie_${id}" data-toggle="modal" data-target="#md_update_movie" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light btn_edit_movie">
-                        Edit
+                    <button type="button" id="btn_edit_movie_${id}" data-toggle="modal" data-target="#md_update_movie" class="btn btn-primary btn-sm waves-effect waves-light btn_edit_movie mb-1">
+                        <i class="fas fa-edit"></i></i>
+                    </button>
+                    <button type="button" id="btn_delete_movie_${id}" data-toggle="modal" class="btn btn-warning btn-sm waves-effect waves-light btn_delete_movie">
+                        <i class="fas fa-ban"></i></i>
                     </button>
                 </td>
-                <td>
-                    <button type="button" id="btn_delete_movie_${id}" data-toggle="modal" class="btn btn-warning btn-sm btn-rounded waves-effect waves-light">
-                        Delete
-                    </button>
-                </td>
+              
         `;
 
         return str;
@@ -156,8 +153,8 @@ class App {
         let str = `
             <div class="col-lg-4">
                 <div class="custom-control custom-checkbox custom-checkbox-info mb-3">
-                    <input type="checkbox" class="custom-control-input category" id="category_${id}" name="${category}">
-                    <label class="custom-control-label" for="category_${id}">${category}</label>
+                    <input type="checkbox" class="custom-control-input categoryUp ${category}" id="categoryUp_${id}" name="${category}">
+                    <label class="custom-control-label" for="categoryUp_${id}">${category}</label>
                 </div>    
             </div>
                 

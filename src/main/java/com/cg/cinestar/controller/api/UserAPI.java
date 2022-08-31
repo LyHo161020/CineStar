@@ -50,7 +50,7 @@ public class UserAPI {
         new User().validate(user, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            return AppUtils.errors(bindingResult);
+            return AppUtils.mapErrorToResponse(bindingResult);
         }
 
         try {
@@ -103,7 +103,7 @@ public class UserAPI {
 
 
         if (bindingResult.hasErrors()) {
-            return AppUtils.errors(bindingResult);
+            return AppUtils.mapErrorToResponse(bindingResult);
         }
 
         try {
