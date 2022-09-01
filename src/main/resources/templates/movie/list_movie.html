@@ -313,7 +313,10 @@
 
     $('#btn_open_create_movie').on('click', () => {
         $('#frmCreateMovie')[0].reset();
-        $('#viewImageCre').src = "";
+
+        $('#viewImageCre').attr("src", "");
+        $('#viewImageCre').css("display", "none");
+        $('#uploadIconCre').css("display", "block");
 
         $('#md_add_movie').addClass("show");
         $("#md_add_movie .modal-alert-danger").removeClass("show").addClass("hide");
@@ -376,11 +379,14 @@
                     $('#titleUp').val(data.title);
                     $('#premiereDateUp').val(data.premiereDate);
                     $('#showDurationUp').val(data.showDuration);
-                    $('#languageUp option:selected').val(data.language);
+                    $('#languageUp').val(data.language);
                     $('#directorUp').val(data.director);
                     $('#actorUp').val(data.actor);
                     $('#descriptionUp').val(data.description);
-                    $('#viewImageUp').src = data.fileUrl;
+                    $('#viewImageUp').attr("src", data.fileUrl);
+                    $('#viewImageUp').css("display", "inline");
+                    $('#uploadIconUp').css("display", "none");
+
 
                     let strCategory =  data.categories;
                     let categoriesList = strCategory.substring(1,strCategory.length-1).split(",");

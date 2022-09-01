@@ -96,7 +96,7 @@ label.error {
     display: none;
 }
 
-#uploadIcon {
+#uploadIconCre, #uploadIconUp {
     position: relative;
     top: 45%;
     font-size: 100px;

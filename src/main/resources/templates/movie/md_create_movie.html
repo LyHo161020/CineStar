@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <th:block th:fragment="md_create_movie">
-    <div class="modal fade" id="md_add_movie" data-bs-backdrop="static" tabindex="-1" style="padding-right: 19px;">
+    <div class="modal fade" id="md_add_movie" tabindex="-1" style="padding-right: 19px;">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -71,10 +71,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 control-group file-upload containerUpload" id="file-upload1">
-<!--                                <input class="form-control" id="imageCre" name="imageCre" accept="image/jpeg, image/png" type="file">-->
+                            <div class="col-lg-6 control-group file-upload containerUpload">
                                 <div class="image-box text-center">
-                                    <i class="fas fa-cloud-upload-alt" id="uploadIcon"></i>
+                                    <i class="fas fa-cloud-upload-alt" id="uploadIconCre"></i>
                                     <img src="" alt="" id="viewImageCre">
                                     <p class="mt-2 tellUpload">Click to upload image!</p>
                                 </div>
@@ -87,7 +86,7 @@
                     </form>
                     <div class="text-right pt-2">
                         <button type="button" class="btn btn-light " data-dismiss="modal">Close</button>
-                        <button type="button" id="btn_create_movie" class="btn btn-primary ml-1 save-category">Save</button>
+                        <button type="button" id="btn_create_movie" class="btn btn-primary ml-1">Save</button>
                     </div>
 
                 </div>
