@@ -4,6 +4,16 @@ class App {
     static BASE_URL_MOVIE = this.DOMAIN + "/api/movies";
     static BASE_URL_CATEGORY = this.DOMAIN + "/api/categories";
 
+    static BASE_URL_FOOD = this.DOMAIN + "/api/foods";
+    static BASE_URL_SIZE = this.DOMAIN + "/api/sizes";
+    static BASE_URL_LOGOUT = "/logout";
+
+    static SUCCESS_ADDED = "Add food successfully!!";
+    static SUCCESS_EDITED = "Edit food successfully!";
+    static SUCCESS_REMOVED = "Remove successfully!";
+    static FAIL_LOAD = "Load data failed!";
+
+
     static ERROR_400 = "Giao dịch không thành công, vui lòng kiểm tra lại dữ liệu.";
     static ERROR_401 = "Bạn chưa đăng nhập! Vui lòng đăng nhập!";
     static ERROR_403 = "Thực hiện thất bại! Tài khoản của bạn không có quyền thực hiện chức năng này.";
@@ -25,6 +35,18 @@ class App {
             return Swal.fire({
                 icon: 'warning',
                 text: 'Bạn có chắc muốn xoá sản phẩm này không?',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Đồng ý!',
+                cancelButtonText: 'Huỷ',
+            })
+        }
+
+        static showRemoveConfirmDialog() {
+            return Swal.fire({
+                icon: 'warning',
+                text: 'Bạn có chắc muốn xoá đi lịch chiếu này không?',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
@@ -224,6 +246,7 @@ class Branch {
     }
 }
 
+
 class Room {
     constructor(id, name, capacity, numberOfRows) {
         this.id = id;
@@ -233,12 +256,6 @@ class Room {
     }
 }
 
-class Category {
-    constructor(id, name) {
-        this.id = id;
-        this.name = name;
-    }
-}
 
 class Status {
     constructor(id, status) {
@@ -252,6 +269,31 @@ class Role {
         this.id = id;
         this.code = code;
         this.name = name;
+    }
+}
+
+class Category {
+    constructor(id, name) {
+        this.id = id;
+        this.name = name;
+    }
+}
+
+class Food {
+    constructor(id, name, price, size, deleted) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.sizes = size;
+        this.deleted = deleted;
+
+    }
+}
+
+class Size {
+    constructor(id, size) {
+        this.id = id;
+        this.size = size;
     }
 }
 

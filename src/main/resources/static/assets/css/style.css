@@ -43,12 +43,17 @@ label.error {
 
 #search-input {
     position: relative;
+    bottom: 20px;
 }
 
 #search-icon {
     position: absolute;
-    top: 12px;
+    top: 11px;
     font-size: 20px;
     right: 25px;
     z-index: 1;
+}
+
+#search-icon:hover {
+    cursor: pointer;
 }

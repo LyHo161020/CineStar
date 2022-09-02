@@ -302,7 +302,7 @@
 
             page.commands.findById(id).then(function () {
                 console.log(showSchedule);
-                App.SweetAlert.showSuspendConfirmDialog()
+                App.SweetAlert.showRemoveConfirmDialog()
                     .then((result) => {
 
                         if (result.isConfirmed)
