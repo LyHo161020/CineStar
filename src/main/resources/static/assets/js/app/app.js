@@ -13,22 +13,40 @@ class App {
     static SUCCESS_REMOVED = "Remove successfully!";
     static FAIL_LOAD = "Load data failed!";
 
+
     static ERROR_400 = "Giao dịch không thành công, vui lòng kiểm tra lại dữ liệu.";
     static ERROR_401 = "Bạn chưa đăng nhập! Vui lòng đăng nhập!";
     static ERROR_403 = "Thực hiện thất bại! Tài khoản của bạn không có quyền thực hiện chức năng này.";
     static ERROR_404 = "An error occurred. Please try again later!";
     static ERROR_500 = "Lưu dữ liệu không thành công, vui lòng liên hệ quản trị hệ thống.";
 
-    static UNLOCK_SUCCESS = "Unlock user success!";
-    static BLOCK_SUCCESS = "Block user success!";
-    static CREATE_SUCCESS = "Create user success!";
-    static UPDATE_SUCCESS = "Update user success!";
+    static UNLOCK_USER_SUCCESS = "Unlock user success!";
+    static BLOCK_USER_SUCCESS = "Block user success!";
+    static CREATE_USER_SUCCESS = "Create user success!";
+    static UPDATE_USER_SUCCESS = "Update user success!";
+
+
+    static CREATE_SHOW_SCHEDULE_SUCCESS = "Create show schedule success!";
+    static UPDATE_SHOW_SCHEDULE_SUCCESS = "Update show schedule success!";
+    static DELETE_SHOW_SCHEDULE_SUCCESS = "Delete show schedule success!";
 
     static SweetAlert = class {
         static showSuspendConfirmDialog() {
             return Swal.fire({
                 icon: 'warning',
                 text: 'Bạn có chắc muốn xoá sản phẩm này không?',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Đồng ý!',
+                cancelButtonText: 'Huỷ',
+            })
+        }
+
+        static showRemoveConfirmDialog() {
+            return Swal.fire({
+                icon: 'warning',
+                text: 'Bạn có chắc muốn xoá đi lịch chiếu này không?',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
@@ -183,27 +201,11 @@ class User {
         this.password = password;
         this.fullName = fullName;
         this.phone = phone;
-
         this.email = email;
         this.address = address;
         this.dateOfBirth = dateOfBirth;
         this.status = status;
         this.role = role;
-    }
-}
-
-class Status {
-    constructor(id, status) {
-        this.id = id;
-        this.statusName = status;
-    }
-}
-
-class Role {
-    constructor(id, code, name) {
-        this.id = id;
-        this.code = code;
-        this.name = name;
     }
 }
 
@@ -221,6 +223,55 @@ class Movie {
         this.description = description;
     }
 }
+
+class ShowSchedule {
+    constructor(id, movieId, movieName, roomId,roomName, branchId, branchName, showDate, showTimeSlot) {
+        this.id = id;
+        this.movieId = movieName;
+        this.movieName = movieName;
+        this.roomId = roomId;
+        this.roomName = roomName;
+        this.branchId = branchId;
+        this.branchName = branchName;
+        this.showDate = showDate;
+        this.showTimeSlot = showTimeSlot;
+    }
+}
+
+class Branch {
+    constructor(id, name, address) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+    }
+}
+
+
+class Room {
+    constructor(id, name, capacity, numberOfRows) {
+        this.id = id;
+        this.name = name;
+        this.capacity = capacity;
+        this.numberOfRows = numberOfRows;
+    }
+}
+
+
+class Status {
+    constructor(id, status) {
+        this.id = id;
+        this.statusName = status;
+    }
+}
+
+class Role {
+    constructor(id, code, name) {
+        this.id = id;
+        this.code = code;
+        this.name = name;
+    }
+}
+
 class Category {
     constructor(id, name) {
         this.id = id;

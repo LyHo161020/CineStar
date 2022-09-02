@@ -17,4 +17,6 @@ public interface IMovieService extends IGeneralService<Movie> {
     Movie create(MovieDTO movieDTO);
 
     MovieDTO findMovieDTOById(String id);
+
+    boolean checkValidMovieId(String id);
 }

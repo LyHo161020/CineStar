@@ -122,6 +122,7 @@
     </div>
 
     <th:block th:replace="/food/temp_list_table :: temp_list_table_food"/>
+    <th:block th:replace="/layout/script :: script-app"/>
     <th:block th:replace="/layout/script :: script-page"/>
     <script src="/assets/js/app/jquery.validate-1.19.3.min.js"></script>
 </div>
@@ -206,7 +207,7 @@
             let id = $(this).data("id");
 
             page.commands.findById(id).then(function () {
-                App.SweetAlertConfirm.showSuspendConfirmDialog()
+                App.SweetAlert.showSuspendConfirmDialog()
                     .then((result) => {
 
                         if (result.isConfirmed)
@@ -329,6 +330,8 @@
             "data": JSON.stringify(food)
         })
             .done((item) => {
+                food = item;
+
                 page.commands.loadRow();
                 page.commands.handleBtn();
                 page.dialogs.element.modalAddFood.modal("hide");
