@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <th:block th:replace="/layout/head :: head"/>
-<!--    <script src="/assets/js/app/jquery-3.6.0.min.js"></script>-->
+    <script src="/assets/js/app/jquery-3.6.0.min.js"></script>
 
 </head>
 <body>
@@ -175,9 +175,10 @@
 
 
 
+    <script src="/assets/js/app/custom-validation.js"></script>
     <th:block th:replace="/layout/script :: script-app"/>
     <th:block th:replace="/layout/script :: script-page"></th:block>
-<!--    <script src="/assets/js/app/jquery.validate.js"></script>-->
+    <script src="/assets/js/app/jquery.validate.js"></script>
 </body>
 
 <script>
@@ -227,7 +228,7 @@
     page.dialogs.element.addressCre = $("#address");
     page.dialogs.element.dateOfBirthCre = $("#dateOfBirth");
     page.dialogs.element.roleIdCre = $("#role");
-    page.dialogs.element.roleNameCre = $('#role option:selected');
+    // page.dialogs.element.roleNameCre = $('#role option:selected');
 
     page.dialogs.element.fullNameUp = $("#fullNameUp");
     page.dialogs.element.phoneUp = $("#phoneUp");
@@ -406,13 +407,11 @@
 
     page.dialogs.element.btnCreate.on("click", function () {
         page.dialogs.element.mdAlertDangerCre.removeClass('show').addClass('hide').empty();
-        // $("#modalCreateAccount .modal-alert-danger").empty();
         page.dialogs.element.frmCreate.submit();
     })
 
     page.dialogs.element.btnUpdate.on('click', function () {
         page.dialogs.element.mdAlertDangerUp.removeClass('show').addClass('hide').empty();
-        // $("#modalUpdateAccount .modal-alert-danger").empty();
         page.dialogs.element.frmUpdate.submit();
     })
 
@@ -435,9 +434,9 @@
                 page.commands.handleBtn();
 
                 if(item.status.id === 1) {
-                    App.SweetAlert.showSuccessAlert(App.UNLOCK_SUCCESS);
+                    App.SweetAlert.showSuccessAlert(App.UNLOCK_USER_SUCCESS);
                 }else {
-                    App.SweetAlert.showSuccessAlert(App.BLOCK_SUCCESS);
+                    App.SweetAlert.showSuccessAlert(App.BLOCK_USER_SUCCESS);
                 }
 
 
@@ -462,8 +461,9 @@
     page.commands.doCreate = () => {
 
         role.id = page.dialogs.element.roleIdCre.val();
-        role.code =  page.dialogs.element.roleNameCre.text();
-        role.name =  page.dialogs.element.roleNameCre.text();
+        role.code =  $('#role option:selected').text();
+        role.name =  $('#role option:selected').text();
+        console.log(role);
 
 
         delete user.id;
@@ -475,6 +475,7 @@
         user.address = page.dialogs.element.addressCre.val();
         user.dateOfBirth = page.dialogs.element.dateOfBirthCre.val();
         user.role = role;
+        console.log(user);
 
 
         $.ajax({
@@ -495,7 +496,7 @@
 
                 page.dialogs.element.mdCreate.modal("hide");
 
-                App.SweetAlert.showSuccessAlert(App.CREATE_SUCCESS);
+                App.SweetAlert.showSuccessAlert(App.CREATE_USER_SUCCESS);
             })
             .fail((jqXHR) => {
 
@@ -551,7 +552,7 @@
                 page.commands.handleBtn();
                 page.dialogs.element.mdUpdate.modal("hide");
 
-                App.SweetAlert.showSuccessAlert(App.UPDATE_SUCCESS);
+                App.SweetAlert.showSuccessAlert(App.UPDATE_USER_SUCCESS);
 
             })
             .fail((jqXHR) => {
@@ -583,7 +584,7 @@
 
     page.dialogs.element.mdCreate.on("hidden.bs.modal", function () {
         page.dialogs.element.mdAlertDangerCre.empty().removeClass('show').addClass('hide');
-        page.dialogs.element.frmUpdate[0].reset();
+        page.dialogs.element.frmCreate[0].reset();
     });
 
     page.dialogs.element.mdUpdate.on("hidden.bs.modal", function () {

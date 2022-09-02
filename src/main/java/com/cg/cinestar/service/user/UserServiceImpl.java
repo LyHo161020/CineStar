@@ -28,6 +28,11 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    public User getById(Long id) {
+        return null;
+    }
+
+    @Override
     public User save(User user) {
         return userRepository.save(user);
     }

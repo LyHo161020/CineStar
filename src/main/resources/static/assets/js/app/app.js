@@ -1,6 +1,8 @@
 class App {
     static DOMAIN = location.origin;
     static BASE_URL = this.DOMAIN + "/api";
+    static BASE_URL_MOVIE = this.DOMAIN + "/api/movies";
+    static BASE_URL_CATEGORY = this.DOMAIN + "/api/categories";
 
     static ERROR_400 = "Giao dịch không thành công, vui lòng kiểm tra lại dữ liệu.";
     static ERROR_401 = "Bạn chưa đăng nhập! Vui lòng đăng nhập!";
@@ -8,10 +10,15 @@ class App {
     static ERROR_404 = "An error occurred. Please try again later!";
     static ERROR_500 = "Lưu dữ liệu không thành công, vui lòng liên hệ quản trị hệ thống.";
 
-    static UNLOCK_SUCCESS = "Unlock user success!";
-    static BLOCK_SUCCESS = "Block user success!";
-    static CREATE_SUCCESS = "Create user success!";
-    static UPDATE_SUCCESS = "Update user success!";
+    static UNLOCK_USER_SUCCESS = "Unlock user success!";
+    static BLOCK_USER_SUCCESS = "Block user success!";
+    static CREATE_USER_SUCCESS = "Create user success!";
+    static UPDATE_USER_SUCCESS = "Update user success!";
+
+
+    static CREATE_SHOW_SCHEDULE_SUCCESS = "Create show schedule success!";
+    static UPDATE_SHOW_SCHEDULE_SUCCESS = "Update show schedule success!";
+    static DELETE_SHOW_SCHEDULE_SUCCESS = "Delete show schedule success!";
 
     static SweetAlert = class {
         static showSuspendConfirmDialog() {
@@ -88,6 +95,81 @@ class App {
             });
         }
     }
+
+    static drawRowMovie(id, title, image, premiereDate, showDuration, director, actor, language, description) {
+        let str = `
+            <tr id="tr_${id}" >
+                <td>
+                    <b>${id}</b>
+                </td>
+                <td>
+                    ${title}
+                </td>
+                <td>
+                    <img src="${image}" class="rounded mx-auto d-block img-thumbnail">
+                </td>
+                <td>
+                    ${premiereDate}
+                </td>
+                <td>
+                    ${showDuration}
+                </td>
+                <td id="tdCategory_${id}">
+                    <span class="badge badge-secondary">Low</span>
+                    <span class="badge badge-success">Open</span>
+                </td>
+                <td>
+                    ${director}
+                </td>
+                <td>
+                     ${actor}
+                </td>
+                <td>
+                    ${language}
+                </td>
+                <td>
+                    ${description}
+                </td>
+                <td>
+                    <button type="button" id="btn_edit_movie_${id}" data-toggle="modal" data-target="#md_update_movie" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light btn_edit_movie">
+                        Edit
+                    </button>
+                </td>
+                <td>
+                    <button type="button" id="btn_delete_movie_${id}" data-toggle="modal" class="btn btn-warning btn-sm btn-rounded waves-effect waves-light">
+                        Delete
+                    </button>
+                </td>
+        `;
+
+        return str;
+    }
+
+    static drawCheckboxCategory(id, category){
+        let str = `
+            <div class="col-lg-4">
+                <div class="custom-control custom-checkbox custom-checkbox-info mb-3">
+                    <input type="checkbox" class="custom-control-input category" id="category_${id}" name="${category}">
+                    <label class="custom-control-label" for="category_${id}">${category}</label>
+                </div>    
+            </div>
+                
+        `;
+        return str;
+    }
+    static drawCheckboxCategoryUp(id, category){
+        let str = `
+            <div class="col-lg-4">
+                <div class="custom-control custom-checkbox custom-checkbox-info mb-3">
+                    <input type="checkbox" class="custom-control-input category" id="category_${id}" name="${category}">
+                    <label class="custom-control-label" for="category_${id}">${category}</label>
+                </div>    
+            </div>
+                
+        `;
+        return str;
+    }
+
 }
 
 class User {
@@ -97,12 +179,64 @@ class User {
         this.password = password;
         this.fullName = fullName;
         this.phone = phone;
-
         this.email = email;
         this.address = address;
         this.dateOfBirth = dateOfBirth;
         this.status = status;
         this.role = role;
+    }
+}
+
+
+class Movie {
+    constructor(id, title, premiereDate, showDuration, categories, director, actor, language, description) {
+        this.id = id;
+        this.title = title;
+        this.premiereDate = premiereDate;
+        this.showDuration = showDuration;
+        this.categories = categories;
+        this.director = director;
+        this.actor = actor;
+        this.language = language;
+        this.description = description;
+    }
+}
+
+class ShowSchedule {
+    constructor(id, movieId, movieName, roomId,roomName, branchId, branchName, showDate, showTimeSlot) {
+        this.id = id;
+        this.movieId = movieName;
+        this.movieName = movieName;
+        this.roomId = roomId;
+        this.roomName = roomName;
+        this.branchId = branchId;
+        this.branchName = branchName;
+        this.showDate = showDate;
+        this.showTimeSlot = showTimeSlot;
+    }
+}
+
+class Branch {
+    constructor(id, name, address) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+    }
+}
+
+class Room {
+    constructor(id, name, capacity, numberOfRows) {
+        this.id = id;
+        this.name = name;
+        this.capacity = capacity;
+        this.numberOfRows = numberOfRows;
+    }
+}
+
+class Category {
+    constructor(id, name) {
+        this.id = id;
+        this.name = name;
     }
 }
 
@@ -122,21 +256,3 @@ class Role {
 }
 
 
-class Product {
-    constructor(id, name, image, amount, price, category, isDeleted) {
-        this.id = id;
-        this.name = name;
-        this.image = image;
-        this.amount = amount;
-        this.price = price;
-        this.category = category;
-        this.isDeleted = isDeleted;
-    }
-}
-
-class Category {
-    constructor(id, category) {
-        this.id = id;
-        this.categoryName = category;
-    }
-}
