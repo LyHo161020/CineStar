@@ -2,27 +2,23 @@ package com.cg.cinestar.controller.api;
 
 import com.cg.cinestar.exception.DataInputException;
 import com.cg.cinestar.exception.ResourceNotFoundException;
-import com.cg.cinestar.model.Category;
 import com.cg.cinestar.model.FileMedia;
-import com.cg.cinestar.model.dto.CategoryDTO;
-import com.cg.cinestar.model.dto.IMovieDTO;
 import com.cg.cinestar.model.dto.MovieDTO;
-import com.cg.cinestar.model.dto.MovieTestDTO;
 import com.cg.cinestar.repository.FileMediaRepository;
 import com.cg.cinestar.repository.MovieRepository;
 import com.cg.cinestar.service.category.ICategoryService;
 import com.cg.cinestar.service.movie.IMovieService;
 import com.cg.cinestar.model.Movie;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.cg.cinestar.utils.AppUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 
+import javax.validation.Valid;
 import java.util.*;
 
 
@@ -42,6 +38,9 @@ public class MovieAPI {
     @Autowired
     FileMediaRepository fileMediaRepository;
 
+    @Autowired
+    AppUtils appUtils;
+
 
     @GetMapping
     public ResponseEntity<?> findAllMovies(){
@@ -57,23 +56,27 @@ public class MovieAPI {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findMovieDTOById(@PathVariable String id){
+
         MovieDTO movieDTO = movieService.findMovieDTOById(id);
 
-        if (movieDTO != null) {
-            movieDTO.setCategories(categoryService.findAllCategoriesByFilmId(movieDTO.getId()).toString());
-
-            return new ResponseEntity<>(movieDTO, HttpStatus.OK);
-
-        } else {
+        if (movieDTO == null) {
             throw new ResourceNotFoundException("No movie found with the Id: " + id);
         }
+
+        movieDTO.setCategories(categoryService.findAllCategoriesByFilmId(movieDTO.getId()).toString());
+
+        return new ResponseEntity<>(movieDTO, HttpStatus.OK);
 
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> create(MovieDTO movieDTO){
-        String categories = movieDTO.getCategories();
+    public ResponseEntity<?> create(@Valid MovieDTO movieDTO, BindingResult bindingResult){
 
+        if (bindingResult.hasFieldErrors()){
+            return AppUtils.mapErrorToResponse(bindingResult);
+        }
+
+        String categories = movieDTO.getCategories();
         movieDTO.setId("0");
 
         try {
@@ -94,13 +97,17 @@ public class MovieAPI {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<?> update(MovieDTO movieDTO){
+    public ResponseEntity<?> update(@Valid MovieDTO movieDTO, BindingResult bindingResult){
+
+        if(bindingResult.hasFieldErrors()){
+            return AppUtils.mapErrorToResponse(bindingResult);
+        }
+
         Optional<Movie> movie = movieRepository.findById(movieDTO.getId());
 
         if(!movie.isPresent()){
             throw new ResourceNotFoundException("not found.");
         }
-
         String categories = movieDTO.getCategories();
         try {
 
@@ -109,6 +116,7 @@ public class MovieAPI {
 
             movieDTO = movieUpdated.toMovieDTO().setCategories(categories);
             movieDTO.setFileUrl(movieMedia.get().getFileUrl());
+
             return new ResponseEntity<>(movieDTO, HttpStatus.CREATED);
 
         } catch (DataIntegrityViolationException e) {
@@ -116,11 +124,6 @@ public class MovieAPI {
             throw new DataInputException("Invalid creation information, please check the information again!");
         }
 
-    }
-    @PostMapping("/create-test")
-    public ResponseEntity<?> create(MovieTestDTO movieDTO){
-        System.out.println(movieDTO.getTitle());
-        return new ResponseEntity<>(movieDTO.getFile(), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/delete/{id}")
@@ -140,6 +143,20 @@ public class MovieAPI {
         } else {
             throw new DataInputException("Invalid movie information");
         }
+    }
+
+    @GetMapping("/search/{keyword}")
+    public ResponseEntity<?> searchMovie(@PathVariable String keyword){
+
+        List<MovieDTO> movies = movieRepository.searchMovie(keyword);
+
+        if (movies.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        for (MovieDTO movieDTO: movies) {
+            movieDTO.setCategories(categoryService.findAllCategoriesByFilmId(movieDTO.getId()).toString());
+        }
+        return new ResponseEntity<>(movies, HttpStatus.OK);
     }
 
 }

@@ -10,7 +10,7 @@ $(()=>{
             },
             showDurationCre: {
                 required: true,
-                max: 600,
+                max: 1000,
                 min: 0
             },
             languageCre: {
@@ -24,10 +24,10 @@ $(()=>{
             },
             descriptionCre: {
                 required: true
-            },
-            imageCre: {
-                required: true
             }
+            // imageCre: {
+            //     required: true
+            // }
         },
         messages: {
             titleCre: {
@@ -53,10 +53,10 @@ $(()=>{
             },
             descriptionCre: {
                 required: "Vui lòng nhập mô tả phim"
-            },
-            imageCre: {
-                required: "Vui chọn ảnh phim"
             }
+            // imageCre: {
+            //     required: "Vui chọn ảnh phim"
+            // }
         },
         errorLabelContainer: "#md_add_movie .modal-alert-danger",
         errorPlacement: function (error, element) {

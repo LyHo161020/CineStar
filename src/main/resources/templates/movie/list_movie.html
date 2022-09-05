@@ -71,6 +71,21 @@
                     <div class="col-3">
                         <button class="btn btn-bordered-pink" data-toggle="modal" data-target="#md_add_movie" id="btn_open_create_movie">Add movie</button>
                     </div><!-- end col -->
+
+                    <div class="col-5">
+
+                    </div>
+
+                    <div class="app-search-box col-4">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="key_search" placeholder="Search...">
+                            <div class="input-group-append">
+                                <button class="btn btn-bordered-success" id="btn_search_movie">
+                                    <i class="fe-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row mt-3">
@@ -163,7 +178,8 @@
             getAllCategoriesByMovieId: App.BASE_URL_CATEGORY + "/movie/",
             getMovieById: App.BASE_URL_MOVIE + "/",
             updateMovie: App.BASE_URL_MOVIE + "/update",
-            deleteMovie: App.BASE_URL_MOVIE + "/delete/"
+            deleteMovie: App.BASE_URL_MOVIE + "/delete/",
+            searchMovie: App.BASE_URL_MOVIE + "/search/"
         },
         element: {},
         commands: {},
@@ -176,7 +192,6 @@
 
     let categories = [];
     let categoriesUp = [];
-    let allCategories = [];
     let movie = new Movie();
 
     function findById(id){
@@ -203,7 +218,6 @@
         })
             .done((data) => {
                 $('#tbMovies tbody').html('');
-                // console.log(data);
 
                 $.each(data, (i, item) => {
 
@@ -288,6 +302,7 @@
             data: formData
         })
             .done((data) => {
+
                 let categoriesList = JSON.parse(data.categories)
                 let str = App.drawRowMovie(data.id, data.title,data.fileUrl, data.premiereDate, data.showDuration, data.director, data.actor, data.language);
                 $('#tbMovies tbody').prepend(str);
@@ -297,14 +312,26 @@
                     let str = `<span class="badge badge-warning">${category.name}</span>`;
                     $('#tdCategory_' + data.id).append(str);
                 })
+
                 unbindAll();
                 handlerUpdateMovie();
                 handleShowDelete();
-                $('#md_add_movie').addClass("hide").removeClass("show");
-                console.log("done..")
+
+                $('#md_add_movie').removeClass("show").addClass("hide");
+                App.SweetAlert.showSuccessAlert("Create new movie successfully!")
             })
             .fail((jqXHR) => {
-                alert('fail');
+                console.log(jqXHR);
+                let str = ``;
+                if (jqXHR.responseJSON.message) {
+                    str += `<label id="message-error" class="error" for="message">${jqXHR.responseJSON.message}</label>`;
+                } else {
+                    $.each(jqXHR.responseJSON, function (key, value) {
+                        str += `<label id="${key}-error" class="error" for="${key}">${value}</label>`;
+                        $("#" + key).addClass("error");
+                    });
+                }
+                $('#md_add_movie .modal-alert-danger').empty().removeClass("hide").addClass("show").append(str)
             })
         $('.loader').addClass("hide");
 
@@ -314,11 +341,10 @@
     $('#btn_open_create_movie').on('click', () => {
         $('#frmCreateMovie')[0].reset();
 
-        $('#viewImageCre').attr("src", "");
-        $('#viewImageCre').css("display", "none");
+        $('#viewImageCre').attr("src", "").css("display", "none");
         $('#uploadIconCre').css("display", "block");
 
-        $('#md_add_movie').addClass("show");
+        $('#md_add_movie').removeClass("hide").addClass("show");
         $("#md_add_movie .modal-alert-danger").removeClass("show").addClass("hide");
         categories = [];
 
@@ -361,6 +387,8 @@
 
          $('.btn_edit_movie').on('click', function (){
 
+             $("#md_update_movie").removeClass("hide").addClass("show");
+
             $("#md_update_movie .modal-alert-danger").removeClass("show").addClass("hide");
 
             $('.categoryUp').prop('checked', false);
@@ -375,6 +403,7 @@
                 "url": page.urls.getMovieById + id
             })
                 .done((data) => {
+
                     $('#idUp').val(data.id);
                     $('#titleUp').val(data.title);
                     $('#premiereDateUp').val(data.premiereDate);
@@ -383,8 +412,7 @@
                     $('#directorUp').val(data.director);
                     $('#actorUp').val(data.actor);
                     $('#descriptionUp').val(data.description);
-                    $('#viewImageUp').attr("src", data.fileUrl);
-                    $('#viewImageUp').css("display", "inline");
+                    $('#viewImageUp').attr("src", data.fileUrl).css("display", "inline");
                     $('#uploadIconUp').css("display", "none");
 
 
@@ -432,7 +460,10 @@
         formData.append("language", $('#languageUp option:selected').text().toString());
         formData.append("description", $('#descriptionUp').val().toString());
 
-        formData.append("file", $("#imageUp")[0].files[0]);
+        if($("#imageUp").val() !== ""){
+            formData.append("file", $("#imageUp")[0].files[0]);
+        }
+
 
         formData.append("categories", JSON.stringify(categoriesUp));
         console.log("before update: ")
@@ -464,15 +495,24 @@
                 handleShowDelete();
 
                 $('#md_update_movie').addClass("hide").removeClass("show");
+                App.SweetAlert.showSuccessAlert("Update movie successfully!")
             })
             .fail((jqXHR) => {
-                alert('fail');
+                console.log(jqXHR);
+                let str = ``;
+                if (jqXHR.responseJSON.message) {
+                    str += `<label id="message-error" class="error" for="message">${jqXHR.responseJSON.message}</label>`;
+                } else {
+                    $.each(jqXHR.responseJSON, function (key, value) {
+                        str += `<label id="${key}-error" class="error" for="${key}">${value}</label>`;
+                        $("#" + key).addClass("error");
+                    });
+                }
+                $('#md_update_movie .modal-alert-danger').empty().removeClass("hide").addClass("show").append(str)
             })
         $('.loader').addClass("hide");
 
     }
-
-
 
 
     function handleShowDelete(){
@@ -513,8 +553,60 @@
             });
     }
 
+    $('#btn_search_movie').on('click', () =>{
+        let keyword = $('#key_search').val();
+        if(keyword === ""){
+            loadMovies();
+        }else {
+            searchMovie(keyword);
+        }
+
+    })
+
+
+    function searchMovie(keyword){
+
+        $.ajax({
+            headers: {
+                "Content-Type": "Application/json",
+                "Accept": "Application/json"
+            },
+            type: "GET",
+            url: page.urls.searchMovie + keyword
+        })
+            .done((data) => {
+                $('#tbMovies tbody').html('');
+
+                $.each(data, (i, item) => {
+
+                    let str = App.drawRowMovie(item.id, item.title,item.fileUrl, item.premiereDate, item.showDuration, item.director, item.actor, item.language);
+                    $('#tbMovies tbody').append(str);
+
+                    $('#tdCategory_' + item.id).html('')
+
+                    let strCategory = item.categories;
+                    let categoryList = strCategory.substring(1,strCategory.length-1).split(",");
+
+                    $.each(categoryList, (i, category) => {
+                        let str = `<span class="badge badge-warning">${category}</span>`;
+                        $('#tdCategory_' + item.id).append(str);
+                    })
+                })
+                unbindAll();
+                handlerUpdateMovie();
+                handleShowDelete();
+            })
+            .fail((jqXHR) => {
+                console.log(jqXHR);
+            })
+
+    }
+
+
+
     function unbindAll(){
         $('.btn_edit_movie').off();
+        $('.btn_delete_movie').off();
 
     }
 
@@ -526,6 +618,7 @@
 
     $(() => {
         loadMovies();
+        searchMovie();
         initializeControlEvent();
         getAllCategories().then(() =>{
             addCategories();

@@ -1,5 +1,5 @@
 function previewImageCre(){
-    $(".image-box").click(function(event) {
+    $(".image-box").click(function() {
         let previewImg = $(this).children("#viewImageCre");
 
         $(this)
@@ -27,7 +27,7 @@ function previewImageCre(){
 
 
 function previewImageUp(){
-    $(".image-box-up").click(function(event) {
+    $(".image-box-up").click(function() {
         let previewImg = $(this).children("#viewImageUp");
 
         $(this)

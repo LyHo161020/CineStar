@@ -73,7 +73,9 @@ public class MovieServiceImpl implements IMovieService{
     public Movie create(MovieDTO movieDTO) {
 
         String categories = movieDTO.getCategories();
+
         ObjectMapper mapper = new ObjectMapper();
+
         List<Category> categoryList;
         try {
             categoryList = Arrays.asList(mapper.readValue(categories, Category[].class));
@@ -106,8 +108,11 @@ public class MovieServiceImpl implements IMovieService{
 
     @Override
     public Movie update(MovieDTO movieDTO) {
+
         String categories = movieDTO.getCategories();
+
         ObjectMapper mapper = new ObjectMapper();
+
         List<Category> categoryList;
         try {
             categoryList = Arrays.asList(mapper.readValue(categories, Category[].class));
@@ -115,24 +120,28 @@ public class MovieServiceImpl implements IMovieService{
             throw new RuntimeException(e);
         }
 
-        String fileType = movieDTO.getFile().getContentType();
-
-        assert fileType != null;
-
-        fileType = fileType.substring(0, 5);
-
-        movieDTO.setFileType(fileType);
-
         Movie movie = movieRepository.save(movieDTO.toMovie().setCategories(categoryList));
 
         FileMedia fileMedia = fileMediaRepository.findByMovie(movie).get();
 
-        if (fileType.equals(FileType.IMAGE.getValue())) {
-            uploadAndSaveProductImage(movieDTO, movie, fileMedia);
-        }
 
-        if (fileType.equals(FileType.VIDEO.getValue())) {
-            uploadAndSaveProductVideo(movieDTO, movie, fileMedia);
+        if(movieDTO.getFile() != null){
+            String fileType = movieDTO.getFile().getContentType();
+
+            assert fileType != null;
+
+            fileType = fileType.substring(0, 5);
+
+            movieDTO.setFileType(fileType);
+
+            if (fileType.equals(FileType.IMAGE.getValue())) {
+                uploadAndSaveProductImage(movieDTO, movie, fileMedia);
+            }
+
+            if (fileType.equals(FileType.VIDEO.getValue())) {
+                uploadAndSaveProductVideo(movieDTO, movie, fileMedia);
+            }
+
         }
 
         return movie;
