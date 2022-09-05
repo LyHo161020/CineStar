@@ -27,6 +27,8 @@ public class Movie extends BaseEntity {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @JoinColumn(name = "movie_id", referencedColumnName = "id")
+
     private String id;
 
     private String title;

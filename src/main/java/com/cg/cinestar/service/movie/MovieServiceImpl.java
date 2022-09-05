@@ -17,12 +17,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 @Service
+@Transactional
 public class MovieServiceImpl implements IMovieService{
 
     @Autowired
@@ -150,6 +152,18 @@ public class MovieServiceImpl implements IMovieService{
     @Override
     public MovieDTO findMovieDTOById(String id) {
         return movieRepository.findMovieDTOById(id);
+    }
+
+    @Override
+    public boolean checkValidMovieId(String id) {
+        List<Movie> movies = findAll();
+
+        for (Movie movie : movies) {
+            if(movie.getId().equals(id)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void uploadAndSaveProductImage(MovieDTO movieDTO, Movie movie, FileMedia movieMedia) {
