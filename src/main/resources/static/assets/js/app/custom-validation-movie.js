@@ -24,10 +24,10 @@ $(()=>{
             },
             descriptionCre: {
                 required: true
+            },
+            imageCre: {
+                required: true
             }
-            // imageCre: {
-            //     required: true
-            // }
         },
         messages: {
             titleCre: {
@@ -53,10 +53,10 @@ $(()=>{
             },
             descriptionCre: {
                 required: "Vui lòng nhập mô tả phim"
+            },
+            imageCre: {
+                required: "Vui lòng chọn ảnh phim"
             }
-            // imageCre: {
-            //     required: "Vui chọn ảnh phim"
-            // }
         },
         errorLabelContainer: "#md_add_movie .modal-alert-danger",
         errorPlacement: function (error, element) {
@@ -102,9 +102,6 @@ $(()=>{
             },
             descriptionUp: {
                 required: true
-            },
-            imageUp: {
-                required: true
             }
         },
         messages: {
@@ -131,9 +128,6 @@ $(()=>{
             },
             descriptionUp: {
                 required: "Vui lòng nhập mô tả phim"
-            },
-            imageUp: {
-                required: "Vui chọn ảnh phim"
             }
         },
         errorLabelContainer: "#md_update_movie .modal-alert-danger",
