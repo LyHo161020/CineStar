@@ -3,6 +3,7 @@ package com.cg.cinestar.service.show_schedule;
 import com.cg.cinestar.model.ShowSchedule;
 import com.cg.cinestar.model.User;
 import com.cg.cinestar.model.dto.ShowScheduleDTO;
+import com.cg.cinestar.model.dto.ShowScheduleDetailsDTO;
 import com.cg.cinestar.service.IGeneralService;
 import org.springframework.data.repository.query.Param;
 import org.springframework.validation.BindingResult;
@@ -12,6 +13,8 @@ import java.util.Optional;
 
 public interface IShowScheduleService extends IGeneralService<ShowSchedule> {
     List<ShowScheduleDTO> findAllShowScheduleDTO();
+
+    List<ShowScheduleDetailsDTO> findAllShowScheduleDetailsDTOByBranchId(Long id);
 
     Optional<ShowScheduleDTO> findShowScheduleDTOById(Long id);
 

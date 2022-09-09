@@ -11,6 +11,7 @@ import lombok.experimental.Accessors;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -22,16 +23,26 @@ import java.util.Set;
 @Accessors(chain = true)
 public class MovieDTO implements Serializable {
     private String id;
+    @NotBlank(message = "Tiêu đề không được để trống.")
+    @Size(min = 1, max = 50, message = "Tiêu đề phim không quá 50 ký tự!")
     private String title;
 
+    @NotBlank(message = "Ngày khởi chiếu không được để trống.")
     private String premiereDate;
+    @Min(value = 0, message = "Thời lượng chiếu không được âm!")
+    @Max(value = 1000, message = "Thời lượng chiếu không quá 1000 phút!")
     private int showDuration;
 
     private String categories;
+    @NotBlank(message = "Đạo diễn không được để trống.")
     private String director;
+    @NotBlank(message = "Diễn viên không được để trống.")
     private String actor;
+    @NotBlank(message = "Vui lòng chọn ngôn ngữ.")
     private String language;
+    @NotBlank(message = "Mô tả phim không được để trống.")
     private String description;
+
     private String fileName;
     private String fileFolder;
     private String fileUrl;

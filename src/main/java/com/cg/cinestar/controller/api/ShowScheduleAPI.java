@@ -1,9 +1,13 @@
 package com.cg.cinestar.controller.api;
 
+import com.cg.cinestar.model.FileMedia;
 import com.cg.cinestar.model.ShowSchedule;
 import com.cg.cinestar.model.Status;
 import com.cg.cinestar.model.User;
 import com.cg.cinestar.model.dto.ShowScheduleDTO;
+import com.cg.cinestar.model.dto.ShowScheduleDetailsDTO;
+import com.cg.cinestar.repository.FileMediaRepository;
+import com.cg.cinestar.repository.ShowScheduleRepository;
 import com.cg.cinestar.service.branch.IBranchService;
 import com.cg.cinestar.service.movie.IMovieService;
 import com.cg.cinestar.service.room.IRoomService;
@@ -33,7 +37,13 @@ public class ShowScheduleAPI {
     private IRoomService roomService;
 
     @Autowired
+    FileMediaRepository fileMediaRepository;
+
+    @Autowired
     private IShowScheduleService showScheduleService;
+
+    @Autowired
+    private ShowScheduleRepository showScheduleRepository;
 
     @GetMapping
     public ResponseEntity<?> showListShowSchedule() {
@@ -45,6 +55,57 @@ public class ShowScheduleAPI {
 
         return new ResponseEntity<>(showScheduleDTOS, HttpStatus.OK);
     }
+
+    @GetMapping("/branch/{id}")
+    public ResponseEntity<?> findShowScheduleDetailsFTOListByBranch(@PathVariable Long id) {
+        List<ShowScheduleDetailsDTO> showScheduleDetailsDTOS = showScheduleService.findAllShowScheduleDetailsDTOByBranchId(id);
+
+        if(showScheduleDetailsDTOS.isEmpty()) {
+            return new ResponseEntity<>("danh sach trong", HttpStatus.NO_CONTENT);
+        }
+
+        for (ShowScheduleDetailsDTO scDTO: showScheduleDetailsDTOS) {
+            Optional<FileMedia> movieMedia = fileMediaRepository.findByMovie(scDTO.getMovie().toMovie());
+            scDTO.getMovie().setFileUrl(movieMedia.get().getFileUrl());
+        }
+
+        return new ResponseEntity<>(showScheduleDetailsDTOS, HttpStatus.OK);
+    }
+
+    @GetMapping("/branch/showdate/{branchId}/{movieId}")
+    public ResponseEntity<?> findByBranchAndMovieGroupByMovieAndShowDate(@PathVariable Long branchId, @PathVariable String movieId) {
+        List<ShowScheduleDetailsDTO> showScheduleDetailsDTOS = showScheduleRepository.findByBranchAndMovieGroupByMovieAndShowDate(branchId, movieId);
+
+        if(showScheduleDetailsDTOS.isEmpty()) {
+            return new ResponseEntity<>("danh sach trong", HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(showScheduleDetailsDTOS, HttpStatus.OK);
+    }
+
+    @GetMapping("/branch/showtimeslot/{branchId}/{movieId}/{showDate}")
+    public ResponseEntity<?> findSCGroupByMovieAndShowDateAndShowTimeSlot(@PathVariable Long branchId, @PathVariable String movieId, @PathVariable String showDate) {
+        List<ShowScheduleDetailsDTO> showScheduleDetailsDTOS = showScheduleRepository.findSCGroupByMovieAndShowDateAndShowTimeSlot(branchId, movieId, showDate);
+
+        if(showScheduleDetailsDTOS.isEmpty()) {
+            return new ResponseEntity<>("danh sach trong", HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(showScheduleDetailsDTOS, HttpStatus.OK);
+    }
+
+    @GetMapping("/{roomId}/{showDate}")
+    public ResponseEntity<?> findALlScheduleByRoomAndShowDate(@PathVariable Long roomId, @PathVariable String showDate) {
+        List<ShowScheduleDetailsDTO> showScheduleDetailsDTOS = showScheduleRepository.findALlScheduleByRoomAndShowDate(roomId, showDate);
+
+        if(showScheduleDetailsDTOS.isEmpty()) {
+            return new ResponseEntity<>("danh sach trong", HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(showScheduleDetailsDTOS, HttpStatus.OK);
+    }
+
+
 
     @GetMapping("/{id}")
 //    @PreAuthorize("hasAnyAuthority('USER')")

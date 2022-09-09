@@ -16,6 +16,8 @@ public interface IMovieService extends IGeneralService<Movie> {
     List<MovieDTO> findAllIMovieDTOByDeletedIsFalse();
     Movie create(MovieDTO movieDTO);
 
+    Movie update(MovieDTO movieDTO);
+
     MovieDTO findMovieDTOById(String id);
 
     boolean checkValidMovieId(String id);

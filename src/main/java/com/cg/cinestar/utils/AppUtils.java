@@ -21,4 +21,5 @@ public class AppUtils {
         }
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
+
 }
