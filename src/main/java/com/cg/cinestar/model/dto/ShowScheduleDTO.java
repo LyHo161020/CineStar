@@ -23,8 +23,6 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @Accessors(chain = true)
 
-
-
 public class ShowScheduleDTO {
 
     private Long id;

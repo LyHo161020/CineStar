@@ -151,10 +151,10 @@ class App {
                     ${language}
                 </td>
                 <td>
-                    <button type="button" id="btn_edit_movie_${id}" data-toggle="modal" data-target="#md_update_movie" class="btn btn-primary btn-sm waves-effect waves-light btn_edit_movie mb-1">
+                    <button type="button" id="btn_edit_movie_${id}" class="btn btn-primary btn-sm waves-effect waves-light btn_edit_movie mb-1">
                         <i class="fas fa-edit"></i></i>
                     </button>
-                    <button type="button" id="btn_delete_movie_${id}" data-toggle="modal" class="btn btn-warning btn-sm waves-effect waves-light btn_delete_movie">
+                    <button type="button" id="btn_delete_movie_${id}" class="btn btn-danger btn-sm waves-effect waves-light btn_delete_movie">
                         <i class="fas fa-ban"></i></i>
                     </button>
                 </td>
@@ -185,6 +185,71 @@ class App {
                 </div>    
             </div>
                 
+        `;
+        return str;
+    }
+
+    static drawBranchesOnShowSchedulePage(branchId, branchName){
+        let str = `
+            <li>
+                <a href="javascript:void(0);"
+                   data-target="${branchId}">
+                   <h3>${branchName}</h3>
+                </a>
+            </li>
+        `;
+        return str;
+    }
+
+    static drawScheduleDetails(movieId, movieName, moviePic, movieDes){
+        let str = `
+            <div class="schedule-item"  cine-id="${movieId}" cine-name="${movieName}">
+                <div class="film-item cl-org t-2d">
+                    <a href="http://cinestar.com.vn/phim/886acb7c-a361-478a-8922-7c33d7200137">
+                                    <div class="film-item-pic">
+                            <img src="${moviePic}" alt="${movieName}">
+                        </div>
+                                    <div class="film-item-txt">
+                            <h3>${movieName}</h3>
+                            <p>${movieDes}</p>
+                        </div>
+                    </a>
+                    <div class="film-item-type">
+                        <span class="icon-2d"></span>
+                    </div>
+                </div>
+            
+                <div class="schedule" id="schedule-${movieId}">
+                                            
+<!--                    <div class="row">-->
+                        
+<!--                        <div class="row-date" data-date="08/09/2022"><span>08/09<br>2022</span></div>-->
+            
+<!--                        <div class="row-hour">-->
+<!--                            <ul>-->
+<!--                            </ul>-->
+<!--                        </div>            -->
+<!--                    </div>-->
+                                    
+                </div>
+            </div>
+        `;
+
+        return str;
+    }
+
+    static drawShowDate(showDate){
+        let str = `
+            <div class="row ${showDate}">
+                <div class="row-date" data-date="${showDate}"><span>${showDate}</span></div>
+            </div>
+        `;
+        return str;
+    }
+
+    static drawShowTimeSlot(movieId,roomId, slot){
+        let str = `
+            <li data-id="${movieId}" data-room-name="${roomId}">${slot}</li>
         `;
         return str;
     }

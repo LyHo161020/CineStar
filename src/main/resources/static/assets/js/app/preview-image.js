@@ -30,6 +30,8 @@ function previewImageUp(){
     $(".image-box-up").click(function() {
         let previewImg = $(this).children("#viewImageUp");
 
+        // $("#imageUp").trigger("click");
+
         $(this)
             .siblings()
             .children("input")

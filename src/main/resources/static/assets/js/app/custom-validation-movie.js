@@ -72,6 +72,7 @@ $(()=>{
             this.defaultShowErrors();
         },
         submitHandler: function () {
+
             createMovie();
         }
     });

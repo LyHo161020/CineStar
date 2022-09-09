@@ -28,7 +28,6 @@
 </head>
 
 <body>
-<div class="loader hide"></div>
 
 <!-- Begin page -->
 <div id="wrapper">
@@ -273,8 +272,11 @@
     $('#btn_create_movie').on('click', () => {
         $("#frmCreateMovie").submit();
     });
+
     function createMovie(){
-        $('.loader').removeClass("hide");
+        $('#btn_create_movie').prop("disabled", true);
+        $('#btn_create_movie').html("<span class=\"spinner-border spinner-border-sm\"></span> Loading ...");
+
         let formData = new FormData();
         formData.append("title", $('#titleCre').val().toString());
         formData.append("premiereDate", $('#premiereDateCre').val().toString());
@@ -317,7 +319,7 @@
                 handlerUpdateMovie();
                 handleShowDelete();
 
-                $('#md_add_movie').removeClass("show").addClass("hide");
+                $('#md_add_movie').modal("hide");
                 App.SweetAlert.showSuccessAlert("Create new movie successfully!")
             })
             .fail((jqXHR) => {
@@ -333,18 +335,20 @@
                 }
                 $('#md_add_movie .modal-alert-danger').empty().removeClass("hide").addClass("show").append(str)
             })
-        $('.loader').addClass("hide");
+
 
     }
 
 
     $('#btn_open_create_movie').on('click', () => {
+        $('#btn_create_movie').html("Save");
+        $('#btn_create_movie').prop("disabled", false);
         $('#frmCreateMovie')[0].reset();
 
         $('#viewImageCre').attr("src", "").css("display", "none");
         $('#uploadIconCre').css("display", "block");
 
-        $('#md_add_movie').removeClass("hide").addClass("show");
+        $('#md_add_movie').modal("show");
         $("#md_add_movie .modal-alert-danger").removeClass("show").addClass("hide");
         categories = [];
 
@@ -373,7 +377,7 @@
         for(let checkbox of categoryCheckboxes){
 
             checkbox.addEventListener('click', function (e){
-                if(e.target.checked === true){
+                if(e.target.checked){
                     categoriesUp.push({id: e.target.id.replace("categoryUp_", ""), name: e.target.name.trim()})
                 }else{
                     categoriesUp = categoriesUp.filter(category => category.id !== e.target.id.replace("categoryUp_", ""))
@@ -386,8 +390,10 @@
     function handlerUpdateMovie(){
 
          $('.btn_edit_movie').on('click', function (){
+             $('#btn_save_update_movie').html("Update");
+             $('#btn_save_update_movie').prop("disabled", false);
 
-             $("#md_update_movie").removeClass("hide").addClass("show");
+             $("#md_update_movie").modal("show");
 
             $("#md_update_movie .modal-alert-danger").removeClass("show").addClass("hide");
 
@@ -437,8 +443,6 @@
                     console.log(jqXHR);
                 })
         })
-        addCategoriesForUpdate();
-        previewImageUp();
 
     }
 
@@ -449,7 +453,8 @@
 
 
     function updateMovie(){
-        $('.loader').removeClass("hide");
+        $('#btn_save_update_movie').prop("disabled", true);
+        $('#btn_save_update_movie').html("<span class=\"spinner-border spinner-border-sm\"></span> Updating ...");
         let formData = new FormData();
         formData.append("id", $('#idUp').val().toString());
         formData.append("title", $('#titleUp').val().toString());
@@ -494,7 +499,7 @@
                 handlerUpdateMovie();
                 handleShowDelete();
 
-                $('#md_update_movie').addClass("hide").removeClass("show");
+                $('#md_update_movie').modal("hide");
                 App.SweetAlert.showSuccessAlert("Update movie successfully!")
             })
             .fail((jqXHR) => {
@@ -510,7 +515,6 @@
                 }
                 $('#md_update_movie .modal-alert-danger').empty().removeClass("hide").addClass("show").append(str)
             })
-        $('.loader').addClass("hide");
 
     }
 
@@ -607,23 +611,25 @@
     function unbindAll(){
         $('.btn_edit_movie').off();
         $('.btn_delete_movie').off();
-
     }
 
 
     let initializeControlEvent = () => {
         previewImageCre();
+        previewImageUp();
 
     }
 
     $(() => {
         loadMovies();
-        searchMovie();
+
         initializeControlEvent();
         getAllCategories().then(() =>{
             addCategories();
-
+            addCategoriesForUpdate();
         });
+
+
 
     });
 
