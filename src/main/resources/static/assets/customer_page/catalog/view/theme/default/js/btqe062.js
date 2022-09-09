@@ -1531,8 +1531,9 @@ function LoadScheduleMovie(branchId) {
 				})
 					.done((data) => {
 						$.each(data, (i, item) => {
-							console.log(2)
-							let str = App.drawShowDate(item.showDate);
+							let year = item.showDate.substring(0,4);
+							let day = item.showDate.substring(5,7) + "/" + item.showDate.substring(8);
+							let str = App.drawShowDate(item.showDate, day, year);
 							$('#schedule-' + item.movie.id).prepend(str);
 							$.ajax({
 								"headers": {

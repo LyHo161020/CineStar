@@ -238,10 +238,11 @@ class App {
         return str;
     }
 
-    static drawShowDate(showDate){
+    static drawShowDate(showDate, date, year){
         let str = `
             <div class="row ${showDate}">
-                <div class="row-date" data-date="${showDate}"><span>${showDate}</span></div>
+                <div class="row-date" data-date="${showDate}"><span>${date}<br>${year}</span></div>
+<!--                <div class="row-date" data-date="${showDate}"><span>${showDate}</span></div>-->
             </div>
         `;
         return str;

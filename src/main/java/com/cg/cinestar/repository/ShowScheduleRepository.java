@@ -98,4 +98,22 @@ public interface ShowScheduleRepository extends JpaRepository<ShowSchedule, Long
 
     )
     List<ShowScheduleDetailsDTO> findSCGroupByMovieAndShowDateAndShowTimeSlot(Long branchId, String movieId, String showDate);
+
+    @Query("SELECT NEW com.cg.cinestar.model.dto.ShowScheduleDetailsDTO (" +
+            "s.id, " +
+            "s.movie, " +
+            "s.room.id, " +
+            "s.showDate, " +
+            "s.showTimeSlot " +
+            ") " +
+            "FROM ShowSchedule AS s " +
+            "WHERE s.deleted = false " +
+            "AND s.room.id = :roomId " +
+            "AND s.showDate = :showDate " +
+            "ORDER BY s.showTimeSlot"
+
+    )
+    List<ShowScheduleDetailsDTO> findALlScheduleByRoomAndShowDate(Long roomId, String showDate);
+
+
 }

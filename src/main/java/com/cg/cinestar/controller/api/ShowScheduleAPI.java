@@ -94,6 +94,17 @@ public class ShowScheduleAPI {
         return new ResponseEntity<>(showScheduleDetailsDTOS, HttpStatus.OK);
     }
 
+    @GetMapping("/{roomId}/{showDate}")
+    public ResponseEntity<?> findALlScheduleByRoomAndShowDate(@PathVariable Long roomId, @PathVariable String showDate) {
+        List<ShowScheduleDetailsDTO> showScheduleDetailsDTOS = showScheduleRepository.findALlScheduleByRoomAndShowDate(roomId, showDate);
+
+        if(showScheduleDetailsDTOS.isEmpty()) {
+            return new ResponseEntity<>("danh sach trong", HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(showScheduleDetailsDTOS, HttpStatus.OK);
+    }
+
 
 
     @GetMapping("/{id}")
