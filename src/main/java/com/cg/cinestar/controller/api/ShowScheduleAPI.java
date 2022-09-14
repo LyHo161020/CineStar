@@ -106,7 +106,6 @@ public class ShowScheduleAPI {
     }
 
 
-
     @GetMapping("/{id}")
 //    @PreAuthorize("hasAnyAuthority('USER')")
 
@@ -169,7 +168,6 @@ public class ShowScheduleAPI {
             showScheduleService.save(showSchedule);
 
 
-
             return new ResponseEntity<>(showSchedule.toShowScheduleDTO(), HttpStatus.OK);
 
         } catch (Exception e) {
@@ -185,7 +183,6 @@ public class ShowScheduleAPI {
         if (!showScheduleDTO.isPresent()) {
             return new ResponseEntity<>("Không tìm thấy customer có id là:" + id + "!", HttpStatus.NO_CONTENT);
         }
-
 
         try{
             showScheduleService.deleteShowScheduleById(id);

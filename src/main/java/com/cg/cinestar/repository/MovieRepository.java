@@ -24,6 +24,7 @@ public interface MovieRepository extends JpaRepository<Movie, String> {
             "fm.movie.actor, " +
             "fm.movie.language, " +
             "fm.movie.description, " +
+            "fm.movie.trailer, " +
             "fm.fileFolder, " +
             "fm.fileName, " +
             "fm.fileType, " +
@@ -44,6 +45,7 @@ public interface MovieRepository extends JpaRepository<Movie, String> {
             "fm.movie.actor, " +
             "fm.movie.language, " +
             "fm.movie.description, " +
+            "fm.movie.trailer, " +
             "fm.fileFolder, " +
             "fm.fileName, " +
             "fm.fileType, " +
@@ -70,6 +72,7 @@ public interface MovieRepository extends JpaRepository<Movie, String> {
                 "fm.movie.actor, " +
                 "fm.movie.language, " +
                 "fm.movie.description, " +
+                "fm.movie.trailer, " +
                 "fm.fileFolder, " +
                 "fm.fileName, " +
                 "fm.fileType, " +

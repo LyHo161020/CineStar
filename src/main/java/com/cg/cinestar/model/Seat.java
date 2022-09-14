@@ -1,6 +1,5 @@
 package com.cg.cinestar.model;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,23 +13,20 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "rooms")
+@Table(name = "seats")
 @Accessors(chain = true)
-public class Room {
+public class Seat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JoinColumn(name = "room_id", referencedColumnName = "id")
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "room_id")
+    private Room room;
 
     private String name;
 
-    private Long capacity;
-
-    @Column(name = "number_of_rows")
-    private Long numberOfRows;
-
-    @ManyToOne
-    @JoinColumn(name = "branch_id")
-    private Branch branch;
-
+    @OneToOne(targetEntity = SeatType.class)
+    @JoinColumn(name = "seat_type", referencedColumnName = "id")
+    private SeatType seatType;
 }

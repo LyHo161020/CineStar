@@ -3,6 +3,7 @@ package com.cg.cinestar.controller.api;
 
 import com.cg.cinestar.model.Branch;
 import com.cg.cinestar.model.Room;
+import com.cg.cinestar.model.dto.RoomDTO;
 import com.cg.cinestar.service.branch.IBranchService;
 import com.cg.cinestar.service.room.IRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class RoomAPI {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findAllRoomByBranchId(@PathVariable Long id) {
-        List<Room> rooms = roomService.findAllRoomByBranchId(id);
+        List<RoomDTO> rooms = roomService.findAllRoomByBranchId(id);
 
         if(rooms.isEmpty()) {
             return new ResponseEntity<>("Danh sach trong", HttpStatus.NO_CONTENT);
