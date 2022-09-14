@@ -1,5 +1,6 @@
 class App {
     static DOMAIN = location.origin;
+
     static BASE_URL = this.DOMAIN + "/api";
     static BASE_URL_MOVIE = this.DOMAIN + "/api/movies";
     static BASE_URL_CATEGORY = this.DOMAIN + "/api/categories";
@@ -294,6 +295,14 @@ class Size {
     constructor(id, size) {
         this.id = id;
         this.size = size;
+    }
+}
+
+class SeatType {
+    constructor(id , name , price) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
     }
 }
 
