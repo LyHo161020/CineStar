@@ -11,6 +11,6 @@ import java.util.List;
 
 @Repository
 public interface RoomRepository extends JpaRepository<Room, Long> {
-    @Query("SELECT b.rooms FROM Branch AS b WHERE b.id = :id")
+    @Query("SELECT r FROM Room AS r WHERE r.branch.id = :id")
     List<Room> findAllRoomByBranchId(@Param("id") Long id);
 }

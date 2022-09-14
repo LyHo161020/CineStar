@@ -43,6 +43,8 @@ public class MovieDTO implements Serializable {
     @NotBlank(message = "Mô tả phim không được để trống.")
     private String description;
 
+    private String trailer;
+
     private String fileName;
     private String fileFolder;
     private String fileUrl;
@@ -62,7 +64,8 @@ public class MovieDTO implements Serializable {
                 .setDirector(director)
                 .setActor(actor)
                 .setLanguage(language)
-                .setDescription(description);
+                .setDescription(description)
+                .setTrailer(trailer);
     }
 
     public FileMedia toFileMedia() {
@@ -86,7 +89,7 @@ public class MovieDTO implements Serializable {
         this.description = description;
     }
 
-    public MovieDTO(String id, String title, String premiereDate, int showDuration, String director, String actor, String language, String description, String fileFolder, String fileName, String fileType, String fileUrl) {
+    public MovieDTO(String id, String title, String premiereDate, int showDuration, String director, String actor, String language, String description, String trailer, String fileFolder, String fileName, String fileType, String fileUrl) {
         this.id = id;
         this.title = title;
         this.premiereDate = premiereDate;
@@ -95,10 +98,12 @@ public class MovieDTO implements Serializable {
         this.actor = actor;
         this.language = language;
         this.description = description;
+        this.trailer = trailer;
         this.fileName = fileName;
         this.fileFolder = fileFolder;
         this.fileUrl = fileUrl;
         this.fileType = fileType;
     }
+
 
 }

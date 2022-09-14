@@ -28,6 +28,6 @@ public class Branch {
 
     private String address;
 
-    @OneToMany(targetEntity = Room.class, fetch = FetchType.EAGER)
-    private Set<Room> rooms;
+//    @OneToMany(targetEntity = Room.class, fetch = FetchType.EAGER)
+//    private Set<Room> rooms;
 }

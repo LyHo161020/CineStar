@@ -56,6 +56,8 @@ public class Movie extends BaseEntity {
 
     private String description;
 
+    private String trailer;
+
 
     @OneToMany(mappedBy = "movie")
     private List<FileMedia> movieMedia;
@@ -69,7 +71,8 @@ public class Movie extends BaseEntity {
                 .setDirector(director)
                 .setActor(actor)
                 .setLanguage(language)
-                .setDescription(description);
+                .setDescription(description)
+                .setTrailer(trailer);
     }
 
 }

@@ -63,8 +63,8 @@ label.error {
 .image-box, .image-box-up {
     margin: 0 auto;
     margin-top: 28px;
-    height: 300px;
-    width: 217px;
+    height: 350px;
+    width: 250px;
     cursor: pointer;
     overflow: hidden;
 }

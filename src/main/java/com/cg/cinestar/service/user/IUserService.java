@@ -14,4 +14,7 @@ public interface IUserService extends IGeneralService<User> {
     User updateUser(Optional<User> user, User userUpdate);
 
     List<User> search(String searchInput);
+
+    User create(User user);
+
 }
