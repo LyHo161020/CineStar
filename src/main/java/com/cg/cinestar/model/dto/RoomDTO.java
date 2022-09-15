@@ -17,4 +17,6 @@ public class RoomDTO {
     private Long id;
 
     private String name;
+
+
 }

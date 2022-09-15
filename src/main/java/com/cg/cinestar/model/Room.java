@@ -29,8 +29,8 @@ public class Room {
     @Column(name = "number_of_rows")
     private Long numberOfRows;
 
-//    @ManyToOne
-//    @JoinColumn(name = "branch_id")
-//    private Branch branch;
+    @ManyToOne
+    @JoinColumn(name = "branch_id")
+    private Branch branch;
 
 }

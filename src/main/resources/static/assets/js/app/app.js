@@ -32,15 +32,16 @@ class App {
     static DELETE_SHOW_SCHEDULE_SUCCESS = "Delete show schedule success!";
 
     static SweetAlert = class {
-        static showSuspendConfirmDialog() {
+
+        static showConfirmDelete(mess, ok, notOk) {
             return Swal.fire({
                 icon: 'warning',
-                text: 'Bạn có chắc muốn xoá sản phẩm này không?',
+                text: mess,
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Đồng ý!',
-                cancelButtonText: 'Huỷ',
+                confirmButtonText: ok,
+                cancelButtonText: notOk,
             })
         }
 
@@ -119,7 +120,7 @@ class App {
         }
     }
 
-    static drawRowMovie(id, title, image, premiereDate, showDuration, director, actor, language, description) {
+    static drawRowMovie(id, title, image, premiereDate, showDuration, director, actor, language) {
         let str = `
             <tr id="tr_${id}" >
                 <td>
@@ -138,8 +139,8 @@ class App {
                     ${showDuration}
                 </td>
                 <td id="tdCategory_${id}">
-                    <span class="badge badge-secondary">Low</span>
-                    <span class="badge badge-success">Open</span>
+<!--                    <span class="badge badge-secondary">Low</span>-->
+<!--                    <span class="badge badge-success">Open</span>-->
                 </td>
                 <td>
                     ${director}
@@ -151,18 +152,14 @@ class App {
                     ${language}
                 </td>
                 <td>
-                    ${description}
-                </td>
-                <td>
-                    <button type="button" id="btn_edit_movie_${id}" data-toggle="modal" data-target="#md_update_movie" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light btn_edit_movie">
-                        Edit
+                    <button type="button" id="btn_edit_movie_${id}" class="btn btn-primary btn-sm waves-effect waves-light btn_edit_movie mb-1">
+                        <i class="fas fa-edit"></i></i>
+                    </button>
+                    <button type="button" id="btn_delete_movie_${id}" class="btn btn-danger btn-sm waves-effect waves-light btn_delete_movie">
+                        <i class="fas fa-ban"></i></i>
                     </button>
                 </td>
-                <td>
-                    <button type="button" id="btn_delete_movie_${id}" data-toggle="modal" class="btn btn-warning btn-sm btn-rounded waves-effect waves-light">
-                        Delete
-                    </button>
-                </td>
+              
         `;
 
         return str;
@@ -184,11 +181,77 @@ class App {
         let str = `
             <div class="col-lg-4">
                 <div class="custom-control custom-checkbox custom-checkbox-info mb-3">
-                    <input type="checkbox" class="custom-control-input category" id="category_${id}" name="${category}">
-                    <label class="custom-control-label" for="category_${id}">${category}</label>
+                    <input type="checkbox" class="custom-control-input categoryUp ${category}" id="categoryUp_${id}" name="${category}">
+                    <label class="custom-control-label" for="categoryUp_${id}">${category}</label>
                 </div>    
             </div>
                 
+        `;
+        return str;
+    }
+
+    static drawBranchesOnShowSchedulePage(branchId, branchName){
+        let str = `
+            <li>
+                <a href="javascript:void(0);"
+                   data-target="${branchId}">
+                   <h3>${branchName}</h3>
+                </a>
+            </li>
+        `;
+        return str;
+    }
+
+    static drawScheduleDetails(movieId, movieName, moviePic, movieDes){
+        let str = `
+            <div class="schedule-item"  cine-id="${movieId}" cine-name="${movieName}">
+                <div class="film-item cl-org t-2d">
+                    <a href="http://cinestar.com.vn/phim/886acb7c-a361-478a-8922-7c33d7200137">
+                                    <div class="film-item-pic">
+                            <img src="${moviePic}" alt="${movieName}">
+                        </div>
+                                    <div class="film-item-txt">
+                            <h3>${movieName}</h3>
+                            <p>${movieDes}</p>
+                        </div>
+                    </a>
+                    <div class="film-item-type">
+                        <span class="icon-2d"></span>
+                    </div>
+                </div>
+            
+                <div class="schedule" id="schedule-${movieId}">
+                                            
+<!--                    <div class="row">-->
+                        
+<!--                        <div class="row-date" data-date="08/09/2022"><span>08/09<br>2022</span></div>-->
+            
+<!--                        <div class="row-hour">-->
+<!--                            <ul>-->
+<!--                            </ul>-->
+<!--                        </div>            -->
+<!--                    </div>-->
+                                    
+                </div>
+            </div>
+        `;
+
+        return str;
+    }
+
+    static drawShowDate(showDate, date, year){
+        let str = `
+            <div class="row ${showDate}">
+                <div class="row-date" data-date="${showDate}"><span>${date}<br>${year}</span></div>
+<!--                <div class="row-date" data-date="${showDate}"><span>${showDate}</span></div>-->
+            </div>
+        `;
+        return str;
+    }
+
+    static drawShowTimeSlot(movieId,roomId, slot){
+        let str = `
+            <li data-id="${movieId}" data-room-name="${roomId}">${slot}</li>
         `;
         return str;
     }

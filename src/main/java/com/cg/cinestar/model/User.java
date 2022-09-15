@@ -15,6 +15,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Calendar;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -65,6 +66,22 @@ public class User extends BaseEntity implements Validator {
 
     @OneToOne(targetEntity = Role.class,fetch = FetchType.EAGER)
     private Role role;
+
+    @OneToMany(mappedBy = "customer")
+    private Set<Invoice> invoices;
+
+    public User(Long id, String username, String password, String fullName, String phone, String email, String address, String dateOfBirth, Status status, Role role) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.fullName = fullName;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.dateOfBirth = dateOfBirth;
+        this.status = status;
+        this.role = role;
+    }
 
     @Override
     public String toString() {

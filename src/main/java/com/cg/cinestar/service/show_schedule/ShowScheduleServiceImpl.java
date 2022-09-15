@@ -2,6 +2,7 @@ package com.cg.cinestar.service.show_schedule;
 
 import com.cg.cinestar.model.*;
 import com.cg.cinestar.model.dto.ShowScheduleDTO;
+import com.cg.cinestar.model.dto.ShowScheduleDetailsDTO;
 import com.cg.cinestar.repository.BranchRepository;
 import com.cg.cinestar.repository.MovieRepository;
 import com.cg.cinestar.repository.RoomRepository;
@@ -52,6 +53,10 @@ public class ShowScheduleServiceImpl implements IShowScheduleService{
     @Override
     public List<ShowScheduleDTO> findAllShowScheduleDTO() {
         return showScheduleRepository.findAllShowScheduleDTO();
+    }
+    @Override
+    public List<ShowScheduleDetailsDTO> findAllShowScheduleDetailsDTOByBranchId(Long id){
+        return showScheduleRepository.findAllShowScheduleDetailsDTOByBranchId(id);
     }
 
     @Override

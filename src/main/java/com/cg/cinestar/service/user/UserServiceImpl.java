@@ -66,6 +66,16 @@ public class UserServiceImpl implements IUserService {
         return listSearch;
     }
 
+    @Override
+    public User create(User user) {
+//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//
+//        String encodedPassword = encoder.encode(user.getPassword());
+//        user.setPassword(encodedPassword);
+        userRepository.save(user);
+        return user;
+    }
+
 
     @Override
     public User updateUser(Optional<User> user, User userUpdate) {

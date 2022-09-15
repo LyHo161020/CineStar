@@ -1,8 +1,15 @@
 package com.cg.cinestar.controller.api;
 
+
 import com.cg.cinestar.model.*;
 import com.cg.cinestar.model.dto.MovieDTO;
 import com.cg.cinestar.model.dto.ShowScheduleDTO;
+
+import com.cg.cinestar.model.FileMedia;
+import com.cg.cinestar.model.ShowSchedule;
+import com.cg.cinestar.model.dto.ShowScheduleDetailsDTO;
+import com.cg.cinestar.repository.FileMediaRepository;
+
 import com.cg.cinestar.repository.ShowScheduleRepository;
 import com.cg.cinestar.service.branch.IBranchService;
 import com.cg.cinestar.service.movie.IMovieService;
@@ -16,7 +23,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,6 +41,9 @@ public class ShowScheduleAPI {
 
     @Autowired
     private IRoomService roomService;
+
+    @Autowired
+    FileMediaRepository fileMediaRepository;
 
     @Autowired
     private IShowScheduleService showScheduleService;
@@ -62,16 +71,55 @@ public class ShowScheduleAPI {
         return new ResponseEntity<>(showScheduleDTOS.getContent(), HttpStatus.OK);
     }
 
-//    @GetMapping("/show-time-slot/{roomId}/{showDate}")
-//    public ResponseEntity<?> showListShowSchedule(@PathVariable Long roomId, @PathVariable String showDate) {
-//        List<ShowSchedule> showSchedule = showScheduleService.findAllShowTimeSlotByRoomAndShowDate(roomId, showDate);
-//
-//        if(showSchedule.isEmpty()) {
-//            return new ResponseEntity<>("danh sach trong", HttpStatus.NO_CONTENT);
-//        }
-//
-//        return new ResponseEntity<>(showSchedule, HttpStatus.OK);
-//    }
+    @GetMapping("/branch/{id}")
+    public ResponseEntity<?> findShowScheduleDetailsFTOListByBranch(@PathVariable Long id) {
+        List<ShowScheduleDetailsDTO> showScheduleDetailsDTOS = showScheduleService.findAllShowScheduleDetailsDTOByBranchId(id);
+
+        if(showScheduleDetailsDTOS.isEmpty()) {
+            return new ResponseEntity<>("danh sach trong", HttpStatus.NO_CONTENT);
+        }
+
+        for (ShowScheduleDetailsDTO scDTO: showScheduleDetailsDTOS) {
+            Optional<FileMedia> movieMedia = fileMediaRepository.findByMovie(scDTO.getMovie().toMovie());
+            scDTO.getMovie().setFileUrl(movieMedia.get().getFileUrl());
+        }
+
+        return new ResponseEntity<>(showScheduleDetailsDTOS, HttpStatus.OK);
+    }
+
+    @GetMapping("/branch/showdate/{branchId}/{movieId}")
+    public ResponseEntity<?> findByBranchAndMovieGroupByMovieAndShowDate(@PathVariable Long branchId, @PathVariable String movieId) {
+        List<ShowScheduleDetailsDTO> showScheduleDetailsDTOS = showScheduleRepository.findByBranchAndMovieGroupByMovieAndShowDate(branchId, movieId);
+
+        if(showScheduleDetailsDTOS.isEmpty()) {
+            return new ResponseEntity<>("danh sach trong", HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(showScheduleDetailsDTOS, HttpStatus.OK);
+    }
+
+    @GetMapping("/branch/showtimeslot/{branchId}/{movieId}/{showDate}")
+    public ResponseEntity<?> findSCGroupByMovieAndShowDateAndShowTimeSlot(@PathVariable Long branchId, @PathVariable String movieId, @PathVariable String showDate) {
+        List<ShowScheduleDetailsDTO> showScheduleDetailsDTOS = showScheduleRepository.findSCGroupByMovieAndShowDateAndShowTimeSlot(branchId, movieId, showDate);
+
+        if(showScheduleDetailsDTOS.isEmpty()) {
+            return new ResponseEntity<>("danh sach trong", HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(showScheduleDetailsDTOS, HttpStatus.OK);
+    }
+
+    @GetMapping("/{roomId}/{showDate}")
+    public ResponseEntity<?> findALlScheduleByRoomAndShowDate(@PathVariable Long roomId, @PathVariable String showDate) {
+        List<ShowScheduleDetailsDTO> showScheduleDetailsDTOS = showScheduleRepository.findALlScheduleByRoomAndShowDate(roomId, showDate);
+
+        if(showScheduleDetailsDTOS.isEmpty()) {
+            return new ResponseEntity<>("danh sach trong", HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(showScheduleDetailsDTOS, HttpStatus.OK);
+    }
+
 
 
     @GetMapping("/{id}")
@@ -137,7 +185,6 @@ public class ShowScheduleAPI {
             showScheduleService.save(showSchedule);
 
 
-
             return new ResponseEntity<>(showSchedule.toShowScheduleDTO(), HttpStatus.OK);
 
         } catch (Exception e) {
@@ -153,7 +200,6 @@ public class ShowScheduleAPI {
         if (!showScheduleDTO.isPresent()) {
             return new ResponseEntity<>("Không tìm thấy customer có id là:" + id + "!", HttpStatus.NO_CONTENT);
         }
-
 
         try{
             showScheduleService.deleteShowScheduleById(id);
@@ -259,11 +305,4 @@ public class ShowScheduleAPI {
 
         return new ResponseEntity<>(showTimeSlots, HttpStatus.OK);
     }
-
-//    @GetMapping("/pagination")
-//    public ResponseEntity<?> findAllPagination() {
-//        Page<ShowScheduleDTO> showScheduleDTOS = showScheduleRepository.findAllShowScheduleDTOLimit(PageRequest.of(0,5));
-//
-//        return new ResponseEntity<>(showScheduleDTOS.getContent(),HttpStatus.OK);
-//    }
 }

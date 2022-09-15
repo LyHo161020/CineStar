@@ -1,21 +1,28 @@
 package com.cg.cinestar.service.room;
 
-import com.cg.cinestar.model.Movie;
+import com.cg.cinestar.mapper.RoomMapper;
+
 import com.cg.cinestar.model.Room;
+import com.cg.cinestar.model.dto.RoomDTO;
 import com.cg.cinestar.repository.RoomRepository;
 import com.cg.cinestar.utils.ValidDateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 
 @Service
 @Transactional
 public class RoomServiceImpl implements IRoomService {
     @Autowired
     private RoomRepository roomRepository;
+
+    @Autowired
+    private RoomMapper roomMapper;
 
     @Override
     public List<Room> findAll() {
@@ -43,8 +50,18 @@ public class RoomServiceImpl implements IRoomService {
     }
 
     @Override
-    public List<Room> findAllRoomByBranchId(Long id) {
-        return roomRepository.findAllRoomByBranchId(id);
+    public List<RoomDTO> findAllRoomByBranchId(Long id) {
+        List<RoomDTO> roomDTOS = new ArrayList<>();
+
+        roomRepository.findAllRoomByBranchId(id).forEach(room -> roomDTOS.add(roomMapper.toRoomDTO(room)));
+
+        return roomDTOS;
+
+//        Cach 2:
+//        return roomRepository.findAllRoomByBranchId(id)
+//                .stream().map(room -> roomMapper.toRoomDTO(room))
+//                .collect(Collectors.toList());
+
     }
 
     @Override
