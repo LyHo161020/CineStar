@@ -19,5 +19,4 @@ public class RoomMapper {
                 .setName(room.getName());
     }
 
-
 }
