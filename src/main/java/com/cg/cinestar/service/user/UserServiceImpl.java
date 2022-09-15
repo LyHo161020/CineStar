@@ -28,6 +28,11 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    public User getById(Long id) {
+        return null;
+    }
+
+    @Override
     public User save(User user) {
         return userRepository.save(user);
     }
@@ -59,6 +64,16 @@ public class UserServiceImpl implements IUserService {
         }
 
         return listSearch;
+    }
+
+    @Override
+    public User create(User user) {
+//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//
+//        String encodedPassword = encoder.encode(user.getPassword());
+//        user.setPassword(encodedPassword);
+        userRepository.save(user);
+        return user;
     }
 
 

@@ -41,14 +41,53 @@ label.error {
 }
 
 
+
+
 #search-input {
     position: relative;
+    bottom: 20px;
 }
 
 #search-icon {
     position: absolute;
-    top: 12px;
+    top: 11px;
     font-size: 20px;
     right: 25px;
     z-index: 1;
 }
+
+
+
+/*image preview*/
+
+.image-box, .image-box-up {
+    margin: 0 auto;
+    margin-top: 28px;
+    height: 350px;
+    width: 250px;
+    cursor: pointer;
+    overflow: hidden;
+}
+#viewImageCre, #viewImageUp {
+    height: 100%;
+    display: none;
+}
+
+#uploadIconCre, #uploadIconUp {
+    position: relative;
+    top: 45%;
+    font-size: 100px;
+    color: #1abc9c;
+}
+.tellUpload {
+    position: relative;
+    top: 38%;
+    color: #1abc9c;
+    font-weight: 300;
+}
+
+
+#search-icon:hover {
+    cursor: pointer;
+}
+

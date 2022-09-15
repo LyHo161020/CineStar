@@ -12,20 +12,8 @@ import java.util.Map;
 
 @Component
 public class AppUtils {
-    public static ResponseEntity<?> errors(BindingResult bindingResult) {
-        List<FieldError> errorList = bindingResult.getFieldErrors();
 
-        Map<String,String > errorMap = new HashMap<>();
-
-        for (FieldError fieldError : errorList) {
-            errorMap.put(fieldError.getField(), fieldError.getDefaultMessage());
-        }
-
-        return new ResponseEntity<>(errorMap, HttpStatus.BAD_REQUEST);
-    }
-
-
-    public ResponseEntity<?> mapErrorToResponse(BindingResult result) {
+    public static ResponseEntity<?> mapErrorToResponse(BindingResult result) {
         List<FieldError> fieldErrors = result.getFieldErrors();
         Map<String, String> errors = new HashMap<>();
         for (FieldError fieldError : fieldErrors) {
@@ -33,4 +21,5 @@ public class AppUtils {
         }
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
+
 }
