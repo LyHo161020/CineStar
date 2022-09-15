@@ -23,7 +23,6 @@ import java.util.Set;
 public class MovieDTO implements Serializable {
     private String id;
     private String title;
-
     private String premiereDate;
     private int showDuration;
 
