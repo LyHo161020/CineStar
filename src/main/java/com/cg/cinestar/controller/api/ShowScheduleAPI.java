@@ -221,22 +221,7 @@ public class ShowScheduleAPI {
         return new ResponseEntity<>(listSearch,HttpStatus.OK);
     }
 
-    @GetMapping("/{movieId}/{branchId}")
-    public ResponseEntity<?> findAllShowDateByMovieAndBranch(@PathVariable String movieId, @PathVariable Long branchId) {
-        MovieDTO movieDTO = movieService.findMovieDTOById(movieId);
 
-        if(movieDTO == null) {
-            return new ResponseEntity<>("Id khong ton tai", HttpStatus.BAD_REQUEST);
-        }
-
-        Set<String> showDates = showScheduleService.findAllShowDateByMovieAndBranch(movieId, branchId);
-
-        if(showDates.isEmpty()) {
-            return new ResponseEntity<>("Danh sach trong", HttpStatus.NO_CONTENT);
-        }
-
-        return new ResponseEntity<>(showDates, HttpStatus.OK);
-    }
 
     @GetMapping("/rooms/{movieId}/{branchId}")
     public ResponseEntity<?> findAllRoomByMovieAndBranch(@PathVariable String movieId, @PathVariable Long branchId) {
@@ -264,6 +249,23 @@ public class ShowScheduleAPI {
         }
 
         Set<String> showDates = showScheduleService.findAllShowDateByMovieAndRoom(movieId, roomId);
+
+        if(showDates.isEmpty()) {
+            return new ResponseEntity<>("Danh sach trong", HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(showDates, HttpStatus.OK);
+    }
+
+    @GetMapping("/show_date_customer_page/{movieId}/{branchId}")
+    public ResponseEntity<?> findAllShowDateByMovieAndBranch(@PathVariable String movieId, @PathVariable Long branchId) {
+        MovieDTO movieDTO = movieService.findMovieDTOById(movieId);
+
+        if(movieDTO == null) {
+            return new ResponseEntity<>("Id khong ton tai", HttpStatus.BAD_REQUEST);
+        }
+
+        Set<String> showDates = showScheduleService.findAllShowDateByMovieAndBranch(movieId, branchId);
 
         if(showDates.isEmpty()) {
             return new ResponseEntity<>("Danh sach trong", HttpStatus.NO_CONTENT);

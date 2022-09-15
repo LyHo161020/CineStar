@@ -4,6 +4,7 @@ class App {
     static BASE_URL = this.DOMAIN + "/api";
     static BASE_URL_MOVIE = this.DOMAIN + "/api/movies";
     static BASE_URL_CATEGORY = this.DOMAIN + "/api/categories";
+    static BASE_URL_CUSTOMER_NOW_SHOWING = this.DOMAIN + "/api/customer/list_nowShowing"
 
     static BASE_URL_FOOD = this.DOMAIN + "/api/foods";
     static BASE_URL_SIZE = this.DOMAIN + "/api/sizes";
@@ -95,7 +96,7 @@ class App {
             Swal.fire({
                 icon: 'error',
                 title: 'Warning',
-                text: t,
+                text: t
             })
         }
     }
@@ -259,9 +260,9 @@ class App {
 }
 
 class User {
-    constructor(id, userName, password, fullName, phone, email, address,dateOfBirth, status, role) {
+    constructor(id, username, password, fullName, phone, email, address, dateOfBirth, status, role) {
         this.id = id;
-        this.username = userName;
+        this.username = username;
         this.password = password;
         this.fullName = fullName;
         this.phone = phone;
@@ -274,19 +275,7 @@ class User {
 }
 
 
-class Movie {
-    constructor(id, title, premiereDate, showDuration, categories, director, actor, language, description) {
-        this.id = id;
-        this.title = title;
-        this.premiereDate = premiereDate;
-        this.showDuration = showDuration;
-        this.categories = categories;
-        this.director = director;
-        this.actor = actor;
-        this.language = language;
-        this.description = description;
-    }
-}
+
 
 class ShowSchedule {
     constructor(id, movieId, movieName, roomId,roomName, branchId, branchName, showDate, showTimeSlot) {
@@ -335,6 +324,23 @@ class Role {
         this.name = name;
     }
 }
+
+
+class Movie {
+    constructor(id, title, premiereDate, showDuration, categories, fileUrl, director, actor, language, description) {
+        this.id = id;
+        this.title = title;
+        this.premiereDate = premiereDate;
+        this.showDuration = showDuration;
+        this.categories = categories;
+        this.fileUrl = fileUrl;
+        this.director = director;
+        this.actor = actor;
+        this.language = language;
+        this.description = description;
+    }
+}
+
 
 class Category {
     constructor(id, name) {

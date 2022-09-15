@@ -8,10 +8,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/customers")
-
 public class CustomerController {
+    @GetMapping("/phimdangchieu")
+    public ModelAndView getListNowShowing() {
+        return new ModelAndView("/customer/list_nowShowing");
+    }
     @GetMapping
     public ModelAndView showHomePage() {
         return new ModelAndView("/customer_page/index");
     }
 }
+
