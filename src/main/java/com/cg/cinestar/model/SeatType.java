@@ -15,6 +15,9 @@ import javax.persistence.*;
 @Entity
 @Table(name = "seat_types")
 @Accessors(chain = true)
+
+
+
 public class SeatType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,4 +25,5 @@ public class SeatType {
 
     private String name;
 
+    private Long price;
 }

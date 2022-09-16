@@ -1,8 +1,13 @@
 package com.cg.cinestar.service.user;
 
 import com.cg.cinestar.model.User;
+import com.cg.cinestar.model.UserPrinciple;
+import com.cg.cinestar.model.dto.UserDTO;
 import com.cg.cinestar.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -48,8 +53,19 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public void unlockUser(Long id) {
+    public Optional<UserDTO> unlockUser(Long id) {
         userRepository.unlockUser(id);
+        return null;
+    }
+
+    @Override
+    public User create(User user) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+        String encodedPassword = encoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+        userRepository.save(user);
+        return user;
     }
 
     @Override
@@ -66,15 +82,6 @@ public class UserServiceImpl implements IUserService {
         return listSearch;
     }
 
-    @Override
-    public User create(User user) {
-//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-//
-//        String encodedPassword = encoder.encode(user.getPassword());
-//        user.setPassword(encodedPassword);
-        userRepository.save(user);
-        return user;
-    }
 
 
     @Override
@@ -86,5 +93,28 @@ public class UserServiceImpl implements IUserService {
                 .setEmail(userUpdate.getEmail())
                 .setAddress(userUpdate.getAddress())
                 .setDateOfBirth(userUpdate.getDateOfBirth());
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<User> userOptional = userRepository.findByUsername(username);
+        if (!userOptional.isPresent()) {
+            throw new UsernameNotFoundException(username);
+        }
+        return UserPrinciple.build(userOptional.get());
+    }
+
+    public Optional<UserDTO> findUserDTOByID(Long id) {
+        return userRepository.findUserDTOByID(id);
+    }
+
+    @Override
+    public Optional<UserDTO> findUserDTOByUsername(String username) {
+        return userRepository.findUserDTOByUsername(username);
+    }
+
+    @Override
+    public User getByUsername(String username) {
+        return userRepository.getByUsername(username);
     }
 }
