@@ -44,5 +44,4 @@ public class Food {
                 .setDeleted(deleted);
     }
 
-
 }

@@ -21,16 +21,34 @@ class App {
     static ERROR_404 = "An error occurred. Please try again later!";
     static ERROR_500 = "Lưu dữ liệu không thành công, vui lòng liên hệ quản trị hệ thống.";
 
-    static UNLOCK_SUCCESS = "Unlock user success!";
-    static BLOCK_SUCCESS = "Block user success!";
-    static CREATE_SUCCESS = "Create user success!";
-    static UPDATE_SUCCESS = "Update user success!";
+    static UNLOCK_USER_SUCCESS = "Unlock user success!";
+    static BLOCK_USER_SUCCESS = "Block user success!";
+    static CREATE_USER_SUCCESS = "Create user success!";
+    static UPDATE_USER_SUCCESS = "Update user success!";
+
+
+    static CREATE_SHOW_SCHEDULE_SUCCESS = "Create show schedule success!";
+    static UPDATE_SHOW_SCHEDULE_SUCCESS = "Update show schedule success!";
+    static DELETE_SHOW_SCHEDULE_SUCCESS = "Delete show schedule success!";
 
     static SweetAlert = class {
-        static showSuspendConfirmDialog() {
+
+        static showConfirmDelete(mess, ok, notOk) {
             return Swal.fire({
                 icon: 'warning',
-                text: 'Bạn có chắc muốn xoá sản phẩm này không?',
+                text: mess,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: ok,
+                cancelButtonText: notOk,
+            })
+        }
+
+        static showRemoveConfirmDialog() {
+            return Swal.fire({
+                icon: 'warning',
+                text: 'Bạn có chắc muốn xoá đi lịch chiếu này không?',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
@@ -69,7 +87,7 @@ class App {
                 title: t,
                 position: 'center',
                 showConfirmButton: false,
-                timer: 2500
+                timer: 1500
             })
         }
 
@@ -79,7 +97,7 @@ class App {
                 title: 'Warning',
                 text: t,
                 position: 'center',
-                timer: 2500
+                timer: 1500
             })
         }
     }
@@ -104,7 +122,7 @@ class App {
         }
     }
 
-    static drawRowMovie(id, title, image, premiereDate, showDuration, director, actor, language, description) {
+    static drawRowMovie(id, title, image, premiereDate, showDuration, director, actor, language) {
         let str = `
             <tr id="tr_${id}" >
                 <td>
@@ -123,8 +141,8 @@ class App {
                     ${showDuration}
                 </td>
                 <td id="tdCategory_${id}">
-                    <span class="badge badge-secondary">Low</span>
-                    <span class="badge badge-success">Open</span>
+<!--                    <span class="badge badge-secondary">Low</span>-->
+<!--                    <span class="badge badge-success">Open</span>-->
                 </td>
                 <td>
                     ${director}
@@ -136,18 +154,14 @@ class App {
                     ${language}
                 </td>
                 <td>
-                    ${description}
-                </td>
-                <td>
-                    <button type="button" id="btn_edit_movie_${id}" data-toggle="modal" data-target="#md_update_movie" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light btn_edit_movie">
-                        Edit
+                    <button type="button" id="btn_edit_movie_${id}" class="btn btn-primary btn-sm waves-effect waves-light btn_edit_movie mb-1">
+                        <i class="fas fa-edit"></i></i>
+                    </button>
+                    <button type="button" id="btn_delete_movie_${id}" class="btn btn-danger btn-sm waves-effect waves-light btn_delete_movie">
+                        <i class="fas fa-ban"></i></i>
                     </button>
                 </td>
-                <td>
-                    <button type="button" id="btn_delete_movie_${id}" data-toggle="modal" class="btn btn-warning btn-sm btn-rounded waves-effect waves-light">
-                        Delete
-                    </button>
-                </td>
+              
         `;
 
         return str;
@@ -169,11 +183,77 @@ class App {
         let str = `
             <div class="col-lg-4">
                 <div class="custom-control custom-checkbox custom-checkbox-info mb-3">
-                    <input type="checkbox" class="custom-control-input category" id="category_${id}" name="${category}">
-                    <label class="custom-control-label" for="category_${id}">${category}</label>
+                    <input type="checkbox" class="custom-control-input categoryUp ${category}" id="categoryUp_${id}" name="${category}">
+                    <label class="custom-control-label" for="categoryUp_${id}">${category}</label>
                 </div>    
             </div>
                 
+        `;
+        return str;
+    }
+
+    static drawBranchesOnShowSchedulePage(branchId, branchName){
+        let str = `
+            <li>
+                <a href="javascript:void(0);"
+                   data-target="${branchId}">
+                   <h3>${branchName}</h3>
+                </a>
+            </li>
+        `;
+        return str;
+    }
+
+    static drawScheduleDetails(movieId, movieName, moviePic, movieDes){
+        let str = `
+            <div class="schedule-item"  cine-id="${movieId}" cine-name="${movieName}">
+                <div class="film-item cl-org t-2d">
+                    <a href="http://cinestar.com.vn/phim/886acb7c-a361-478a-8922-7c33d7200137">
+                                    <div class="film-item-pic">
+                            <img src="${moviePic}" alt="${movieName}">
+                        </div>
+                                    <div class="film-item-txt">
+                            <h3>${movieName}</h3>
+                            <p>${movieDes}</p>
+                        </div>
+                    </a>
+                    <div class="film-item-type">
+                        <span class="icon-2d"></span>
+                    </div>
+                </div>
+            
+                <div class="schedule" id="schedule-${movieId}">
+                                            
+<!--                    <div class="row">-->
+                        
+<!--                        <div class="row-date" data-date="08/09/2022"><span>08/09<br>2022</span></div>-->
+            
+<!--                        <div class="row-hour">-->
+<!--                            <ul>-->
+<!--                            </ul>-->
+<!--                        </div>            -->
+<!--                    </div>-->
+                                    
+                </div>
+            </div>
+        `;
+
+        return str;
+    }
+
+    static drawShowDate(showDate, date, year){
+        let str = `
+            <div class="row ${showDate}">
+                <div class="row-date" data-date="${showDate}"><span>${date}<br>${year}</span></div>
+<!--                <div class="row-date" data-date="${showDate}"><span>${showDate}</span></div>-->
+            </div>
+        `;
+        return str;
+    }
+
+    static drawShowTimeSlot(movieId,roomId, slot){
+        let str = `
+            <li data-id="${movieId}" data-room-name="${roomId}">${slot}</li>
         `;
         return str;
     }
@@ -187,7 +267,6 @@ class User {
         this.password = password;
         this.fullName = fullName;
         this.phone = phone;
-
         this.email = email;
         this.address = address;
         this.dateOfBirth = dateOfBirth;
@@ -195,6 +274,42 @@ class User {
         this.role = role;
     }
 }
+
+
+
+
+class ShowSchedule {
+    constructor(id, movieId, movieName, roomId,roomName, branchId, branchName, showDate, showTimeSlot) {
+        this.id = id;
+        this.movieId = movieName;
+        this.movieName = movieName;
+        this.roomId = roomId;
+        this.roomName = roomName;
+        this.branchId = branchId;
+        this.branchName = branchName;
+        this.showDate = showDate;
+        this.showTimeSlot = showTimeSlot;
+    }
+}
+
+class Branch {
+    constructor(id, name, address) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+    }
+}
+
+
+class Room {
+    constructor(id, name, capacity, numberOfRows) {
+        this.id = id;
+        this.name = name;
+        this.capacity = capacity;
+        this.numberOfRows = numberOfRows;
+    }
+}
+
 
 class Status {
     constructor(id, status) {
@@ -226,6 +341,8 @@ class Movie {
         this.description = description;
     }
 }
+
+
 class Category {
     constructor(id, name) {
         this.id = id;
@@ -248,6 +365,14 @@ class Size {
     constructor(id, size) {
         this.id = id;
         this.size = size;
+    }
+}
+
+class SeatType {
+    constructor(id , name , price) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
     }
 }
 

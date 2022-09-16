@@ -1,15 +1,12 @@
 package com.cg.cinestar.controller;
 
-import com.cg.cinestar.model.dto.UserDTO;
 import com.cg.cinestar.service.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/home")
@@ -26,12 +23,13 @@ public class HomeController {
 //    }
 
     @GetMapping("/admin")
-    public  ModelAndView showHomeAdmin() {
+    public ModelAndView showHomeAdmin() {
         ModelAndView modelAndView = new ModelAndView("homeAdmin");
         return modelAndView;
     }
+
     @GetMapping("/staff")
-    public  ModelAndView showHomeStaff() {
+    public ModelAndView showHomeStaff() {
         ModelAndView modelAndView = new ModelAndView("homeStaff");
         return modelAndView;
     }

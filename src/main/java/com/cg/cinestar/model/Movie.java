@@ -9,6 +9,9 @@ import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -24,12 +27,16 @@ public class Movie extends BaseEntity {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @JoinColumn(name = "movie_id", referencedColumnName = "id")
+
     private String id;
 
     private String title;
 
+
     @Column(name="premiere_date")
     private String premiereDate;
+
 
     @Column(name="show_duration")
     private int showDuration;
@@ -41,7 +48,6 @@ public class Movie extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     private List<Category> categories;
-
     private String director;
 
     private String actor;
@@ -49,6 +55,8 @@ public class Movie extends BaseEntity {
     private String language;
 
     private String description;
+
+    private String trailer;
 
 
     @OneToMany(mappedBy = "movie")
@@ -60,11 +68,11 @@ public class Movie extends BaseEntity {
                 .setTitle(title)
                 .setPremiereDate(premiereDate)
                 .setShowDuration(showDuration)
-//                .setCategories(categories)
                 .setDirector(director)
                 .setActor(actor)
                 .setLanguage(language)
-                .setDescription(description);
+                .setDescription(description)
+                .setTrailer(trailer);
     }
 
 }

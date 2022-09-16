@@ -1,13 +1,12 @@
 package com.cg.cinestar.service.movie;
 
-import com.cg.cinestar.enums.FileType;
 import com.cg.cinestar.exception.DataInputException;
 import com.cg.cinestar.model.Category;
 import com.cg.cinestar.model.FileMedia;
 import com.cg.cinestar.model.Movie;
 import com.cg.cinestar.model.dto.IMovieDTO;
 import com.cg.cinestar.model.dto.MovieDTO;
-
+import com.cg.cinestar.model.enums.FileType;
 import com.cg.cinestar.repository.FileMediaRepository;
 import com.cg.cinestar.repository.MovieRepository;
 import com.cg.cinestar.service.upload.IUploadService;
@@ -18,12 +17,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 @Service
+@Transactional
 public class MovieServiceImpl implements IMovieService{
 
     @Autowired
@@ -74,7 +75,9 @@ public class MovieServiceImpl implements IMovieService{
     public Movie create(MovieDTO movieDTO) {
 
         String categories = movieDTO.getCategories();
+
         ObjectMapper mapper = new ObjectMapper();
+
         List<Category> categoryList;
         try {
             categoryList = Arrays.asList(mapper.readValue(categories, Category[].class));
@@ -106,8 +109,61 @@ public class MovieServiceImpl implements IMovieService{
     }
 
     @Override
+    public Movie update(MovieDTO movieDTO) {
+
+        String categories = movieDTO.getCategories();
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        List<Category> categoryList;
+        try {
+            categoryList = Arrays.asList(mapper.readValue(categories, Category[].class));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+        Movie movie = movieRepository.save(movieDTO.toMovie().setCategories(categoryList));
+
+        FileMedia fileMedia = fileMediaRepository.findByMovie(movie).get();
+
+
+        if(movieDTO.getFile() != null){
+            String fileType = movieDTO.getFile().getContentType();
+
+            assert fileType != null;
+
+            fileType = fileType.substring(0, 5);
+
+            movieDTO.setFileType(fileType);
+
+            if (fileType.equals(FileType.IMAGE.getValue())) {
+                uploadAndSaveProductImage(movieDTO, movie, fileMedia);
+            }
+
+            if (fileType.equals(FileType.VIDEO.getValue())) {
+                uploadAndSaveProductVideo(movieDTO, movie, fileMedia);
+            }
+
+        }
+
+        return movie;
+    }
+
+    @Override
     public MovieDTO findMovieDTOById(String id) {
         return movieRepository.findMovieDTOById(id);
+    }
+
+    @Override
+    public boolean checkValidMovieId(String id) {
+        List<Movie> movies = findAll();
+
+        for (Movie movie : movies) {
+            if(movie.getId().equals(id)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void uploadAndSaveProductImage(MovieDTO movieDTO, Movie movie, FileMedia movieMedia) {

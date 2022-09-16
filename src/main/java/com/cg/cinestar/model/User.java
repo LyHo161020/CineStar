@@ -15,6 +15,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Calendar;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,7 +32,6 @@ User extends BaseEntity implements Validator {
 //    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private Long id;
 
-
     @NotNull(message = "Vui lòng nhập tên đăng nhập!")
     @Size(min = 8, max = 32, message = "Tên đăng nhập chỉ từ 8-32 kí tự!")
     private String username;
@@ -45,7 +45,6 @@ User extends BaseEntity implements Validator {
     @Size(min = 5, max = 50, message = "Tên phải gồm 5-50 kí tự!")
     private String fullName;
 
-
     @NotBlank(message = "Vui lòng nhập số điện thoại!")
     private String phone;
 
@@ -57,7 +56,6 @@ User extends BaseEntity implements Validator {
     @NotBlank( message = "Vui lòng nhập địa chỉ!")
     private String address;
 
-
     @Column(name = "date_of_birth")
     private String dateOfBirth;
 
@@ -66,6 +64,23 @@ User extends BaseEntity implements Validator {
 
     @OneToOne(targetEntity = Role.class,fetch = FetchType.EAGER)
     private Role role;
+
+    @OneToMany(mappedBy = "customer")
+    private Set<Invoice> invoices;
+
+    public User(Long id, String username, String password, String fullName, String phone, String email, String address, String dateOfBirth, Status status, Role role) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.fullName = fullName;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.dateOfBirth = dateOfBirth;
+        this.status = status;
+        this.role = role;
+    }
+
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -76,7 +91,6 @@ User extends BaseEntity implements Validator {
     public void validate(Object o, Errors errors) {
         User user = (User) o;
         String dateOfBirth = user.getDateOfBirth();
-
 
 
         if(dateOfBirth == null || dateOfBirth.equals("")) {
@@ -106,7 +120,6 @@ User extends BaseEntity implements Validator {
                 }
             }
         }
-
     }
 
     @Override

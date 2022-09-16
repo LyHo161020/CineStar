@@ -40,7 +40,7 @@
 						<span class="login100-form-title p-b-43">
 							Login to continue
 						</span>
-                    <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+                    <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
                         <input id="name" class="input100" type="text" name="email">
                         <span class="focus-input100"></span>
                         <span class="label-input100">Email</span>
@@ -92,8 +92,7 @@
                             <i class="fa fa-google" aria-hidden="true"></i>
                         </a>
 
-                        <a href="#" class="login100-form-social-item flex-c-m bg1 m-r-5"
-                           style="background-image: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);">
+                        <a href="#" class="login100-form-social-item flex-c-m bg1 m-r-5" style="background-image: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);">
                             <i class="fa fa-instagram" aria-hidden="true"></i>
                         </a>
 
@@ -143,7 +142,7 @@
         }
     }
 
-    page.dialogs.element.btnLogin = $("#btnLogin")
+    page.dialogs.element.btnLogin = $("#btnLogin");
 
 
     page.dialogs.element.btnLogin.on("click", (e) => {
@@ -164,30 +163,25 @@
         })
             .done((resp) => {
                 if (resp.status.id === 2) {
-                    App.SweetAlert.showErrorAlert("Your account has been lock!");
+                    App.SweetAlert.showErrorAlert("Login Failed! Your account has been lock!");
                 } else if (resp.role.id === 2) {
-                    App.SweetAlert.showErrorAlert("Your account is not authorized to perform this function!!");
+                    App.SweetAlert.showErrorAlert("Login Failed! Your account is not authorized to perform this function!!");
                 } else {
                     App.SweetAlert.showSuccessAlert('Login successful!');
                     if (resp.role.id === 1) {
                         setTimeout(function () {
                             window.location.href = `/home/admin`;
                         }, 1000);
-                        return;
                     } else if (resp.role.id === 3) {
                         setTimeout(function () {
                             window.location.href = `/home/staff`;
                         }, 1000);
-                        return;
                     }
-                    setTimeout(function () {
-                        window.location.href = `/movies`;
-                    }, 1000);
                 }
             })
             .fail(() => {
-                App.SweetAlert.showErrorAlert('Email or Password is incorrect!');
+                App.SweetAlert.showErrorAlert('Login Failed! Email or Password is incorrect!');
             })
-    });
+    })
 </script>
 </html>

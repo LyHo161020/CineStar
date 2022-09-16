@@ -12,7 +12,8 @@ public class MovieController {
     public ModelAndView getHome() {
         return new ModelAndView("/movie/list_movie");
     }
-    @GetMapping("/movies/{id}")
+
+    @GetMapping("/{id}")
     public ModelAndView getDescription() {
         return new ModelAndView("/customer/movie_description");
     }

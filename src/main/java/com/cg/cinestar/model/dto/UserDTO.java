@@ -36,6 +36,19 @@ public class UserDTO {
 
     private Role role;
 
+
+    public UserDTO(Long id, String username, String fullName, String phone, String email, String address, String dateOfBirth, Status status, Role role) {
+        this.id = id;
+        this.username = username;
+        this.fullName = fullName;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.dateOfBirth = dateOfBirth;
+        this.status = status;
+        this.role = role;
+    }
+
     public User toUser() {
         return new User()
                 .setUsername(username)

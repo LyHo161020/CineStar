@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -25,10 +26,27 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("UPDATE User AS u SET u.status.id = 1 WHERE u.id = :id")
     void unlockUser(@Param("id") Long id);
 
+
     @Query ("SELECT NEW com.cg.cinestar.model.dto.UserDTO (" +
             "u.id, " +
             "u.username," +
-            "u.password," +
+            "u.fullName, " +
+            "u.phone, " +
+            "u.email, " +
+            "u.address, " +
+            "u.dateOfBirth, " +
+            "u.status, " +
+            "u.role " +
+            ") " +
+            "FROM User u " +
+            "WHERE u.deleted = false"
+    )
+    List<UserDTO> findAllUserDTO();
+
+
+    @Query ("SELECT NEW com.cg.cinestar.model.dto.UserDTO (" +
+            "u.id, " +
+            "u.username," +
             "u.fullName, " +
             "u.phone, " +
             "u.email, " +
@@ -39,7 +57,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
             ") " +
             "FROM User AS u " +
             "WHERE u.id = :id"
-
     )
     Optional<UserDTO> findUserDTOByID(@Param("id") long id);
 

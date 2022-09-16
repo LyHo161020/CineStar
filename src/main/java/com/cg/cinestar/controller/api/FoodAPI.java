@@ -59,7 +59,7 @@ public class FoodAPI {
 
 
         if (bindingResult.hasErrors()) {
-            return AppUtils.errors(bindingResult);
+            return AppUtils.mapErrorToResponse(bindingResult);
         }
 
         Food food = foodDTO.toFood();
@@ -89,7 +89,7 @@ public class FoodAPI {
         new FoodDTO().validate(foodDTO,bindingResult);
 
         if (bindingResult.hasErrors()) {
-            return AppUtils.errors(bindingResult);
+            return AppUtils.mapErrorToResponse(bindingResult);
         }
 
         try {

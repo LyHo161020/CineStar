@@ -13,6 +13,7 @@ import java.util.Optional;
 public interface IUserService extends IGeneralService<User>, UserDetailsService {
 
     User getByUsername(String username);
+
     void blockUser(Long id);
 
     Optional<UserDTO> unlockUser(Long id);
@@ -20,7 +21,6 @@ public interface IUserService extends IGeneralService<User>, UserDetailsService 
     User updateUser(Optional<User> user, User userUpdate);
 
     User create(User user);
-
 
     List<User> search(String searchInput);
 

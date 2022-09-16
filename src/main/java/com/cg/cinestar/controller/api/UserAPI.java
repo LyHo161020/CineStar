@@ -2,6 +2,8 @@ package com.cg.cinestar.controller.api;
 
 import com.cg.cinestar.model.Status;
 import com.cg.cinestar.model.User;
+import com.cg.cinestar.model.dto.UserDTO;
+import com.cg.cinestar.repository.UserRepository;
 import com.cg.cinestar.service.user.IUserService;
 import com.cg.cinestar.utils.AppUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +22,13 @@ public class UserAPI {
     @Autowired
     private IUserService userService;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @GetMapping
     public ResponseEntity<?> showListUser() {
-        List<User> users = userService.findAll();
+//        List<User> users = userService.findAll();
+        List<UserDTO> users = userRepository.findAllUserDTO();
 
         if(users.isEmpty()) {
             return new ResponseEntity<>("danh sach trong", HttpStatus.NO_CONTENT);
@@ -30,6 +36,8 @@ public class UserAPI {
 
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
+
+
 
     @GetMapping("/{id}")
 //    @PreAuthorize("hasAnyAuthority('USER')")
@@ -50,7 +58,7 @@ public class UserAPI {
         new User().validate(user, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            return AppUtils.errors(bindingResult);
+            return AppUtils.mapErrorToResponse(bindingResult);
         }
 
         try {
@@ -58,7 +66,7 @@ public class UserAPI {
             user.setId(0L);
             user.setStatus(new Status(1L,"ACTIVE"));
             user = userService.save(user);
-//            user = userService.create(user);
+            user = userService.create(user);
 
             return new ResponseEntity<>(user, HttpStatus.CREATED);
         } catch (Exception e) {
@@ -104,7 +112,7 @@ public class UserAPI {
 
 
         if (bindingResult.hasErrors()) {
-            return AppUtils.errors(bindingResult);
+            return AppUtils.mapErrorToResponse(bindingResult);
         }
 
         try {
