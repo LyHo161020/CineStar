@@ -25,9 +25,14 @@ public class HomeController {
 //        return modelAndView;
 //    }
 
-    @GetMapping
-    public  ModelAndView showHome() {
-        ModelAndView modelAndView = new ModelAndView("/home");
+    @GetMapping("/admin")
+    public  ModelAndView showHomeAdmin() {
+        ModelAndView modelAndView = new ModelAndView("homeAdmin");
+        return modelAndView;
+    }
+    @GetMapping("/staff")
+    public  ModelAndView showHomeStaff() {
+        ModelAndView modelAndView = new ModelAndView("homeStaff");
         return modelAndView;
     }
 }

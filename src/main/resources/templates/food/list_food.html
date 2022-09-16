@@ -11,7 +11,16 @@
 <div id="wrapper">
 
     <th:block th:replace="/layout/navbar :: navbar"/>
-    <th:block th:replace="/layout/left_sidebar :: left_side"/>
+    <th:block th:replace="/layout/left_sidebar_admin :: left_side_admin"/>
+
+
+<!--   <th:block th:if="${user.status.id == 1}">-->
+<!--       <th:block th:replace="/layout/left_sidebar_admin :: left_side_admin"/>-->
+<!--   </th:block>-->
+
+<!--   <th:block th:if="${user.status.id == 3}">-->
+<!--       <th:block th:replace="/layout/left_sidebar_staff :: left_side_staff"/>-->
+<!--   </th:block>-->
 
     <div class="content-page">
         <div class="content">

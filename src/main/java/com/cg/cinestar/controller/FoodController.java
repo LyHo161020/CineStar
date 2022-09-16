@@ -13,6 +13,6 @@ public class FoodController {
 
     @GetMapping
     public ModelAndView showListFood() {
-        return new ModelAndView("food/listFood");
+        return new ModelAndView("/food/list_food");
     }
 }

@@ -24,7 +24,8 @@ import java.util.Calendar;
 @Entity
 @Accessors(chain = true)
 
-public class User extends BaseEntity implements Validator {
+public class
+User extends BaseEntity implements Validator {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    @GenericGenerator(name = "uuid", strategy = "uuid2")
