@@ -80,6 +80,50 @@
                                 </div>
                             </div>
 
+                            <div class="row mb-1">
+                               <h6>
+                                   <i class="icon-copy fa fa-glass" aria-hidden="true"></i>
+                                   <strong style="font-size: 23px;">Bộ lọc</strong>
+                               </h6>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label class="form-label" for="movieFilter">Movie</label>
+                                    <select class = "form-control" id="movieFilter" name="movieFilter">
+
+                                    </select>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <label class="form-label" for="branchFilter">Branch</label>
+                                    <select class = "form-control" id="branchFilter" name="branchFilter">
+
+                                    </select>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <label class="form-label" for="roomFilter">Room</label>
+                                    <select class = "form-control" id="roomFilter" name="roomFilter">
+
+                                    </select>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <label class="form-label" for="showDateFilter">Show Date</label>
+                                    <select class = "form-control" id="showDateFilter" name="showDateFilter">
+
+                                    </select>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <label class="form-label" for="showTimeSlotFilter">Show Time Slot</label>
+                                    <select class = "form-control" id="showTimeSlotFilter" name="showTimeSlotFilter">
+
+                                    </select>
+                                </div>
+                            </div>
+
                             <div class="row">
                                 <div class="col-sm-5">
                                     <h4 style="font-size: 30px">
@@ -89,46 +133,106 @@
                                 </div>
                             </div>
 
-                            <div class="row mt-3">
+<!--                            <div class="row mt-1">-->
 
-                                <div class="col-sm-8 ">
-                                    <div id="DataTables_Table_0_filter" class="dataTables_filter">
-                                        <a style="box-shadow: 0 0 1px 1px #4a4b59;" class="btn btn-light create-modal float-end">
-                                            <i class="icon-copy fa fa-plus-square" aria-hidden="true"></i>
-                                            <span><strong> Add New Show Schedule</strong></span>
-                                        </a>
+<!--                                <div class="col-sm-4 ">-->
+<!--                                    <div id="DataTables_Table_0_filter" class="dataTables_filter">-->
+<!--                                        <a style="box-shadow: 0 0 1px 1px #4a4b59;" class="btn btn-light create-modal float-end">-->
+<!--                                            <i class="icon-copy fa fa-plus-square" aria-hidden="true"></i>-->
+<!--                                            <span><strong> Add New Show Schedule</strong></span>-->
+<!--                                        </a>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+<!--                                <div class="col-sm-4 header-search">-->
+<!--                                    <form>-->
+<!--                                        <div class="form-group mb-0">-->
+<!--                                            <i id="search-icon" class="icon-copy fa fa-search" aria-hidden="true"></i>-->
+<!--                                            <input id="search-input" type="text" class="form-control search-input" placeholder="Search Here">-->
+<!--                                        </div>-->
+<!--                                    </form>-->
+<!--                                </div>-->
+<!--                            </div>-->
+
+                            <div id="tickets-table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="dataTables_length" id="tickets-table_length"><label>Show <select name="tickets-table_length"
+                                                                                                                     aria-controls="tickets-table" class="custom-select custom-select-sm form-control form-control-sm">
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select> entries</label></div>
+                                    </div>
+
+                                    <div class="col-sm-4 ">
+                                        <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                                            <a style="box-shadow: 0 0 1px 1px #4a4b59;" class="btn btn-light create-modal float-end">
+                                                <i class="icon-copy fa fa-plus-square" aria-hidden="true"></i>
+                                                <span><strong> Add New Show Schedule</strong></span>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4 header-search">
+                                        <form>
+                                            <div class="form-group mb-0">
+                                                <i id="search-icon" class="icon-copy fa fa-search" aria-hidden="true"></i>
+                                                <input id="search-input" type="text" class="form-control search-input" placeholder="Search Here">
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
 
-                                <div class="col-sm-4 header-search">
-                                    <form>
-                                        <div class="form-group mb-0">
-                                            <i id="search-icon" class="icon-copy fa fa-search" aria-hidden="true"></i>
-                                            <input id="search-input" type="text" class="form-control search-input" placeholder="Search Here">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table class="table table-hover m-0 table-centered dt-responsive nowrap w-100" cellspacing="0" id="tickets-table">
+                                            <thead class="bg-light">
+                                            <tr>
+                                                <th class="font-weight-medium">ID</th>
+                                                <th class="font-weight-medium">Movie</th>
+                                                <th class="font-weight-medium">Room</th>
+                                                <th class="font-weight-medium">Branch</th>
+                                                <th class="font-weight-medium">Show Time SLot </th>
+                                                <th class="font-weight-medium">Show Date</th>
+                                                <th class="font-weight-medium">Create By</th>
+                                                <th class="font-weight-medium" style="width: 120px">Action</th>
+                                            </tr>
+                                            </thead>
+
+                                            <tbody class="font-14">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-5">
+                                        <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
+                                            Showing <span id = "start"></span> to <span id="end">  </span> of <span id="numOfData"></span> entries
                                         </div>
-                                    </form>
+                                    </div>
+                                    <div class="col-sm-12 col-md-7">
+                                        <div class="dataTables_paginate paging_simple_numbers" id="tickets-table_paginate">
+                                            <ul class="pagination pagination-rounded">
+<!--                                                <li class="paginate_button page-item previous disabled" id="tickets-table_previous"><a href="#"-->
+<!--                                                                                                                                       aria-controls="tickets-table" data-dt-idx="0" tabindex="0" class="page-link"><i-->
+<!--                                                        class="mdi mdi-chevron-left"></i></a></li>-->
+<!--                                                <li class="paginate_button page-item active"><a href="#" aria-controls="tickets-table"-->
+<!--                                                                                                data-dt-idx="1" tabindex="0" class="page-link">1</a></li>-->
+<!--                                                <li class="paginate_button page-item "><a href="#" aria-controls="tickets-table" data-dt-idx="2"-->
+<!--                                                                                          tabindex="0" class="page-link">2</a></li>-->
+<!--                                                <li class="paginate_button page-item next" id="tickets-table_next"><a href="#"-->
+<!--                                                                                                                      aria-controls="tickets-table" data-dt-idx="3" tabindex="0" class="page-link"><i-->
+<!--                                                        class="mdi mdi-chevron-right"></i></a></li>-->
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
-
-                            <table class="table table-hover m-0 table-centered dt-responsive nowrap w-100" cellspacing="0" id="tickets-table">
-                                <thead class="bg-light">
-                                <tr>
-                                    <th class="font-weight-medium">ID</th>
-                                    <th class="font-weight-medium">Movie</th>
-                                    <th class="font-weight-medium">Room</th>
-                                    <th class="font-weight-medium">Branch</th>
-                                    <th class="font-weight-medium">Show Time SLot </th>
-                                    <th class="font-weight-medium">Show Date</th>
-                                    <th class="font-weight-medium">Create By</th>
-                                    <th class="font-weight-medium" style="width: 120px">Action</th>
-                                </tr>
-                                </thead>
-
-                                <tbody class="font-14">
-
-                                </tbody>
-                            </table>
                         </div>
                     </div><!-- end col -->
                 </div>
@@ -178,7 +282,8 @@
 
     let page = {
         url: {
-            getAllSchedule: App.BASE_URL + "/show-schedules",
+            getDataLength: App.BASE_URL + "/show-schedules",
+            getSchedulesPaging: App.BASE_URL + "/show-schedules/paging/",
             getScheduleById: App.BASE_URL + "/show-schedules/",
             createShowSchedule: App.BASE_URL + "/show-schedules/create",
             updateShowSchedule: App.BASE_URL + "/show-schedules/update/",
@@ -186,7 +291,11 @@
             searchShowSchedule: App.BASE_URL + "/show-schedules/search",
             getAllBranch: App.BASE_URL + "/branches",
             getAllRoomByBranchId: App.BASE_URL + "/rooms/",
-            getAllMovie: App.BASE_URL + "/movies"
+            getAllMovie: App.BASE_URL + "/movies",
+            getAllBranchByMovieId: App.BASE_URL + "/branches/",
+            getAllRoomByMovieAndBranch: App.BASE_URL + "/show-schedules/rooms/",
+            getAllShowDateByMovieAndRoom: App.BASE_URL + "/show-schedules/show-date/",
+            getAllShowTimeSlot: App.BASE_URL + "/show-schedules/show-time-slot/"
         },
         element: {},
         loadData: {},
@@ -201,6 +310,12 @@
     page.element.searchIcon = $('#search-icon');
     page.element.searchInput = $("#search-input");
     page.element.tempShowSchedule = $("#tempShowSchedule");
+    page.element.movieFilter = $("#movieFilter");
+    page.element.branchFilter = $("#branchFilter");
+    page.element.roomFilter = $("#roomFilter");
+    page.element.showDateFilter = $("#showDateFilter");
+    page.element.showTimeSlotFilter = $("#showTimeSlotFilter");
+    page.element.ulPaging = $("#tickets-table_paginate ul");
 
 
     page.dialogs.element.handleCre = $(".create-modal");
@@ -237,6 +352,9 @@
 
 
     let showSchedule = new ShowSchedule();
+    let pageSize = 5;
+    let maxNavigationPage = 2;
+    let dataLength = 0;
 
 
     let tempShowSchedule = $.validator.format($.trim(page.element.tempShowSchedule.val().toString()));
@@ -271,6 +389,7 @@
     }
 
     page.dialogs.element.handleCre.on("click", function () {
+        page.commands.loadShowScheduleInfo();
         page.dialogs.element.mdCreate.modal("show");
     })
 
@@ -301,7 +420,6 @@
             let id = $(this).data("id");
 
             page.commands.findById(id).then(function () {
-                console.log(showSchedule);
                 App.SweetAlert.showRemoveConfirmDialog()
                     .then((result) => {
 
@@ -330,6 +448,20 @@
         page.dialogs.element.frmUpdate.submit();
     })
 
+    page.commands.getDataLength = () => {
+
+        return $.ajax({
+            type: "GET",
+            url: page.url.getDataLength,
+        }).done((data) => {
+            console.log(data);
+            dataLength = data;
+        })
+            .fail((err) => {
+                alert("Get data length fail!");
+            })
+    }
+
     page.commands.getMovie = () => {
 
         return $.ajax({
@@ -338,12 +470,13 @@
         }).done((data) => {
             page.dialogs.element.movieId.empty();
             page.dialogs.element.movieIdUp.empty();
+            page.element.movieFilter.empty();
 
             $.each(data, (i, item) => {
                 let  str = `<option value="${item.id}">${item.title}</option>`;
                 page.dialogs.element.movieId.append(str);
-                page.dialogs.element.movieIdUp.append(str);
-
+                page.dialogs.element.movieIdUp.append(str)
+                page.element.movieFilter.append(str);
             })
         })
             .fail((err) => {
@@ -394,6 +527,210 @@
             })
     }
 
+    page.commands.getAllBranchByMovie = (movieId) => {
+        return $.ajax({
+            type: "GET",
+            url: page.url.getAllBranchByMovieId + movieId,
+        }).done((data) => {
+            page.element.branchFilter.empty();
+
+            $.each(data, (i, item) => {
+
+                let  str = `<option value="${item.id}">${item.name}</option>`;
+                page.element.branchFilter.append(str);
+
+            })
+        })
+            .fail((err) => {
+                alert("Load branch fail!");
+            })
+    }
+
+    page.commands.getAllRoomByMovieAndBranch = (movieId , branchId) => {
+        return $.ajax({
+            type: "GET",
+            url: page.url.getAllRoomByMovieAndBranch + movieId + "/" + branchId,
+        }).done((data) => {
+            page.element.roomFilter.empty();
+
+            $.each(data, (i, item) => {
+
+                let  str = `<option value="${item.id}">${item.name}</option>`;
+                page.element.roomFilter.append(str);
+
+            })
+        })
+            .fail((err) => {
+                alert("Load room fail!");
+            })
+    }
+
+    page.commands.getAllShowDateByMovieAndRoom = (movieId , roomId) => {
+        return $.ajax({
+            type: "GET",
+            url: page.url.getAllShowDateByMovieAndRoom + movieId + "/" + roomId,
+        }).done((data) => {
+            page.element.showDateFilter.empty();
+
+            $.each(data, (i, item) => {
+
+                let  str = `<option value="${item}">${item}</option>`;
+                page.element.showDateFilter.append(str);
+
+            })
+        })
+            .fail((err) => {
+                alert("Load show date fail!");
+            })
+    }
+
+    page.commands.getAllShowTimeSlotBy = (movieId , roomId, showDate) => {
+        return $.ajax({
+            type: "GET",
+            url: page.url.getAllShowTimeSlot + movieId + "/" + roomId + "/"  + showDate,
+        }).done((data) => {
+            page.element.showTimeSlotFilter.empty();
+
+            $.each(data, (i, item) => {
+
+                let  str = `<option value="${item}">${item}</option>`;
+                page.element.showTimeSlotFilter.append(str);
+
+            })
+        })
+            .fail((err) => {
+                alert("Load show time slot fail!");
+            })
+    }
+
+    page.commands.draw = (start, end) => {
+        let numberOfPage = Math.ceil(dataLength / pageSize );
+        let tabIndex = end / maxNavigationPage;
+
+        end = (end > numberOfPage) ? numberOfPage : end;
+
+
+        console.log(end);
+
+        page.element.ulPaging.empty();
+
+
+        page.element.ulPaging.append(`<li class="paginate_button page-item previous" id="tickets-table_previous">
+                                            <a href="#" aria-controls="tickets-table"  tabindex="${tabIndex}" class="page-link">
+                                                <i class="mdi mdi-chevron-left"></i>
+                                            </a>
+                                      </li>`);
+
+        for(let i = start; i < end; i++ ) {
+                let str = `<li class="paginate_button page-item">
+                                <a href="#" aria-controls="tickets-table" data-dt-idx="${i + 1}" tabindex="${tabIndex}"
+                                    class="page-link btn-paging">${i + 1}
+                                </a>
+                           </li>`;
+            page.element.ulPaging.append(str);
+        }
+
+        // $(`.paginate_button a[ data-dt-idx = ${start + 1}] `).parent().addClass("active");
+
+
+        page.element.ulPaging.append(`<li class="paginate_button page-item next" id="tickets-table_next">
+                                           <a href="#" aria-controls="tickets-table"  tabindex="${tabIndex}" class="page-link">
+                                               <i class="mdi mdi-chevron-right"></i>
+                                           </a>
+                                      </li>`);
+    }
+
+    $(document).on("click","#tickets-table_next a", function (e) {
+        e.preventDefault();
+        let tabIndex = $(this).attr("tabindex");
+        let start = tabIndex * maxNavigationPage;
+        let end = (1 + Number(tabIndex)) * maxNavigationPage;
+        let numberTabIndex = Math.ceil(Math.ceil(dataLength / pageSize) / maxNavigationPage);
+
+        if(tabIndex == numberTabIndex) {
+            $(this).parent().addClass("disabled");
+        } else {
+            page.commands.draw(start , end);
+        }
+
+    })
+
+    $(document).on("click","#tickets-table_previous a", function (e) {
+        e.preventDefault();
+        let tabIndex = $(this).attr("tabindex");
+        let start = (tabIndex - 2) * maxNavigationPage;
+        let end = (Number(tabIndex) - 1) * maxNavigationPage;
+
+        if(tabIndex == 1) {
+            $(this).parent().addClass("disabled");
+        } else {
+            page.commands.draw(start , end);
+
+        }
+    })
+
+    $(document).on("click", ".btn-paging", function (e) {
+        e.preventDefault();
+
+        let dataIndex = $(this).attr("data-dt-idx");
+        let startData = (Number(dataIndex) - 1) * pageSize + 1;
+        let endData = dataIndex * pageSize;
+
+        $(this).parent().parent().find(' > li').removeClass('active');
+        $(this).parent().addClass('active');
+
+        $("#start").text(startData);
+        $("#end").text(endData);
+
+        console.log(dataIndex);
+        page.loadData.loadShowSchedule(dataIndex);
+    })
+
+    page.element.movieFilter.on("change", function () {
+        let movieIdFilter = page.element.movieFilter.val();
+        page.commands.getAllBranchByMovie(movieIdFilter).then( () => {
+            let branchIdFilter = page.element.branchFilter.val();
+            page.commands.getAllRoomByMovieAndBranch(movieIdFilter, branchIdFilter).then(() => {
+                let roomIdFilter = page.element.roomFilter.val();
+                page.commands.getAllShowDateByMovieAndRoom(movieIdFilter, roomIdFilter).then(() => {
+                    let showDateFilter = page.element.showDateFilter.val();
+                    page.commands.getAllShowTimeSlotBy(movieIdFilter, roomIdFilter, showDateFilter);
+                })
+            })
+        })
+    })
+
+    page.element.branchFilter.on("change", function () {
+        let movieIdFilter = page.element.movieFilter.val();
+        let branchIdFilter = page.element.branchFilter.val();
+
+        page.commands.getAllRoomByMovieAndBranch(movieIdFilter, branchIdFilter).then(() => {
+            let roomIdFilter = page.element.roomFilter.val();
+            page.commands.getAllShowDateByMovieAndRoom(movieIdFilter, roomIdFilter).then(() => {
+                let showDateFilter = page.element.showDateFilter.val();
+                page.commands.getAllShowTimeSlotBy(movieIdFilter, roomIdFilter, showDateFilter);
+            })
+        })
+    })
+
+    page.element.roomFilter.on("change", function () {
+        let movieIdFilter = page.element.movieFilter.val();
+        let roomIdFilter = page.element.roomFilter.val();
+
+        page.commands.getAllShowDateByMovieAndRoom(movieIdFilter, roomIdFilter).then(() => {
+            let showDateFilter = page.element.showDateFilter.val();
+            page.commands.getAllShowTimeSlotBy(movieIdFilter, roomIdFilter, showDateFilter);
+        })
+
+    })
+
+    page.element.showDateFilter.on("change", function () {
+        let movieIdFilter = page.element.movieFilter.val();
+        let roomIdFilter = page.element.roomFilter.val();
+        let showDateFilter = page.element.showDateFilter.val();
+        page.commands.getAllShowTimeSlotBy(movieIdFilter, roomIdFilter, showDateFilter);
+    })
+
     page.dialogs.element.branchId.on("input", function () {
         let branchId = page.dialogs.element.branchId.val();
         page.commands.getRoom(branchId);
@@ -413,13 +750,31 @@
         })
     }
 
+    page.commands.loadShowScheduleFilter = () => {
+        page.commands.getMovie().then( () => {
+            let movieIdFilter = page.element.movieFilter.val();
+            page.commands.getAllBranchByMovie(movieIdFilter).then( () => {
+                let branchIdFilter = page.element.branchFilter.val();
+                page.commands.getAllRoomByMovieAndBranch(movieIdFilter, branchIdFilter).then(() => {
+                    let roomIdFilter = page.element.roomFilter.val();
+                    page.commands.getAllShowDateByMovieAndRoom(movieIdFilter, roomIdFilter).then(() => {
+                        let showDateFilter = page.element.showDateFilter.val();
+                        page.commands.getAllShowTimeSlotBy(movieIdFilter, roomIdFilter, showDateFilter);
+                    })
+                })
+            })
+        })
+    }
 
-    page.loadData.loadShowSchedule = () => {
+
+    page.loadData.loadShowSchedule = (dataIndex) => {
         $.ajax({
             type: "GET",
-            url: page.url.getAllSchedule
+            url: page.url.getSchedulesPaging + (Number(dataIndex) - 1) + "/" + pageSize,
         })
             .done((item) => {
+                page.element.tbBody.empty();
+
                 $.each(item, (i, item) => {
                     showSchedule = item;
                     page.commands.addRow();
@@ -428,7 +783,6 @@
 
 
                 })
-                page.commands.loadShowScheduleInfo();
 
             })
             .fail((jqXHR) => {
@@ -486,7 +840,7 @@
 
                 page.commands.addRow();
 
-                // page.commands.handleBtn();
+                page.commands.handleBtn();
 
                 page.dialogs.element.mdCreate.modal("hide");
 
@@ -552,6 +906,10 @@
 
                 App.SweetAlert.showSuccessAlert(App.UPDATE_SHOW_SCHEDULE_SUCCESS);
 
+                dataLength++;
+
+                $("#numOfData").text(dataLength);
+
             })
             .fail((jqXHR) => {
 
@@ -595,6 +953,9 @@
                 page.commands.handleBtn();
 
                App.SweetAlert.showSuccessAlert(App.DELETE_SHOW_SCHEDULE_SUCCESS);
+
+               dataLength--;
+               $("#numOfData").text(dataLength);
             })
             .fail((jqXHR) => {
 
@@ -712,8 +1073,17 @@
             })
     })
 
-    page.loadData.loadShowSchedule();
+    page.commands.getDataLength().then(() => {
+        page.loadData.loadShowSchedule(1);
+        page.commands.draw(0, maxNavigationPage);
+        $(`.paginate_button a[ data-dt-idx = '1'] `).parent().addClass("active");
+        $("#start").text("1");
+        $("#end").text(pageSize);
+        $("#numOfData").text(dataLength);
+    })
 
+    page.commands.loadShowScheduleInfo();
+    page.commands.loadShowScheduleFilter();
 
 
 

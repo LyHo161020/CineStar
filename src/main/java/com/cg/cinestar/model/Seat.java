@@ -8,6 +8,9 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 
+
+
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -20,13 +23,13 @@ public class Seat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "room_id")
-    private Room room;
 
     private String name;
 
-    @OneToOne(targetEntity = SeatType.class)
-    @JoinColumn(name = "seat_type", referencedColumnName = "id")
+    @OneToOne(targetEntity = SeatType.class, fetch = FetchType.EAGER)
     private SeatType seatType;
+
+    @ManyToOne
+    @JoinColumn(name = "room_id")
+    private Room room;
 }

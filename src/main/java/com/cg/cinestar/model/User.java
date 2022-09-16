@@ -84,11 +84,6 @@ public class User extends BaseEntity implements Validator {
     }
 
     @Override
-    public String toString() {
-        return id + " " + username + " " + fullName + " " + phone + " " + email + " " + address + " " + dateOfBirth + " " + status.getStatusName() + " " + role.getName() ;
-    }
-
-    @Override
     public boolean supports(Class<?> clazz) {
         return User.class.isAssignableFrom(clazz);
     }
@@ -128,5 +123,21 @@ public class User extends BaseEntity implements Validator {
             }
         }
 
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                ", dateOfBirth='" + dateOfBirth + '\'' +
+                ", status=" + status +
+                ", role=" + role +
+                '}';
     }
 }

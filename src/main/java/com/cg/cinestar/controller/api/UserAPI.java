@@ -65,8 +65,9 @@ public class UserAPI {
 
             user.setId(0L);
             user.setStatus(new Status(1L,"ACTIVE"));
-//            user = userService.save(user);
+            user = userService.save(user);
             user = userService.create(user);
+
 
             return new ResponseEntity<>(user, HttpStatus.CREATED);
         } catch (Exception e) {

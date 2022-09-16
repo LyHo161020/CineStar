@@ -28,13 +28,6 @@ public class Invoice extends BaseEntity{
     @JoinColumn(name = "customer_id")
     private User customer;
 
-//    @OneToMany(mappedBy = "invoice")
-//    private Set<Ticket> tickets;
-
-
-//    @OneToMany(mappedBy = "invoice")
-//    private Set<OrderItemFood> OrderItemFoodList;
-
 
     @Column(name = "grand_total")
     private BigDecimal grandTotal;

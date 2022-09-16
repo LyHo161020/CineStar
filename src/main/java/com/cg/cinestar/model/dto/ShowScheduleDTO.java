@@ -65,6 +65,8 @@ public class ShowScheduleDTO {
         this.showTimeSlot = showTimeSlot;
     }
 
+
+
     @Override
     public String toString() {
         String str = id + " " + movieId + " " + movieName + " " + branchId + " " + branchName + " " + roomId + " " + roomName + " " + showDate + " " + showTimeSlot;
