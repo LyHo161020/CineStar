@@ -1180,7 +1180,39 @@
 
         <!--//cinema-part//-->
         <div id="cinema-content" class="cinema-content">
-            <!-- getSeats -->
+            <div class="cinema-name">
+                <h2></h2>
+            </div>
+
+            <div class="cinema-wrap">
+                <h3 class="cinema-title">Màn hình</h3>
+                <div class="cinema-wrap seat-scroll " style="">
+                    <div class="cinema-seat " data-server="2" data-room-name="02" style="display: block;">
+                        <div class="seat-container">
+                        </div>
+                    </div>
+
+                    <div style="width: 592.54px; height: 436.23333333333px;"></div>
+                </div>
+                <ul class="cinema-note">
+                    <li class="single">Ghế đơn</li>
+                    <li class="couple">Ghế đôi</li>
+                    <li class="choosing">Ghế đang chọn</li>
+                    <li class="busy">Ghế đã chọn</li>
+                    <li class="road">Lối đi</li>
+                </ul>
+
+                <div class="cons-but">
+                    <div class="cons-icon show"></div>
+                    <div class="cons-total"><div class="cons-value"><span></span><sup>đ</sup></div><div class="cons-text"></div></div>
+                </div>
+
+                <div class="cinema-btn">
+                    <input type="button" id="cinema-back" value="Quay lại">
+                    <input type="button" id="cons-chose" class="cons-chose" value="Chọn Đồ Ăn">
+                    <input type="button" id="cinema-next" value="Thanh toán">
+                </div>
+            </div>
         </div>
 
         <!--COMBO-->
@@ -2503,7 +2535,8 @@
             getAllShowDateByMovieAndBranch: App.BASE_URL + "/show-schedules/show_date_customer_page/",
             getAllShowTimeSlot: App.BASE_URL + "/show-schedules/",
             getAllMovie: App.BASE_URL + "/movies",
-            getAllSeatType: App.BASE_URL + "/seat_types"
+            getAllSeatType: App.BASE_URL + "/seat_types",
+            getSeatsByRoomId: App.BASE_URL + "/seats/"
         },
         element: {},
         loadData: {},
@@ -2516,11 +2549,13 @@
 
     let movieCine = new Movie();
     let seatType = new SeatType();
+    let seat = new Seat();
 
     page.element.tempLoadMovieHome = $("#tempLoadMovieHome");
     page.element.tempContentPrice = $("#tempContentPrice");
     page.element.tbBodyHomeMovie = $("#homeMovie");
     page.element.tbcontentPrice = $("#content-price");
+    page.element.divSeat = $(".seat-container");
 
     page.dialogs.element.ulMovie = $("#selectMovie ul");
     page.dialogs.element.ulBranch = $("#selectBranch ul");
@@ -2539,6 +2574,13 @@
 
     page.commands.addRowPrice = () => {
         page.element.tbcontentPrice.prepend($(tempContentPrice(seatType.id, seatType.name, seatType.price)));
+    }
+
+    page.commands.addSeat = (left, top) => {
+
+        let str = App.drawSeat(seat.id, seat.name, seat.seatType.price, left , top);
+        console.log(str);
+        $(".seat-container").prepend(str);
     }
 
     page.commands.loadMovies = () => {
@@ -2634,7 +2676,7 @@
 
             $.each(data, (i, item) => {
 
-                let  str = `<li class="show"><a href="javascript:void(0);" data-hour="${item}"><h3>${item}</h3></a></li>`;
+                let  str = `<li class="show"><a href="javascript:void(0);" data-room-id = "${item.room.id} "data-hour="${item.showTimeSlot}"><h3>${item.showTimeSlot}</h3></a></li>`;
                 page.dialogs.element.ulShowTimeSlot.append(str);
 
             })
@@ -2655,6 +2697,45 @@
                 seatType = item;
                 page.commands.addRowPrice();
             })
+        }).fail((err) => {
+            alert("Load seatType fail");
+        })
+    }
+
+    page.commands.getSeatsByRoomId = (roomId) => {
+        return $.ajax({
+            type: "GET",
+            url : page.url.getSeatsByRoomId + roomId
+        }).done( (data) => {
+            $(".seat-container").empty();
+            console.log(Math.ceil(data.length / 10));
+
+            let left = 50;
+            let top = 43;
+            let size = data.length;
+            let count = 0;
+
+            for(let j = 0; j < Math.ceil(data.length / 10); j++) {
+             let  row = (size > 10) ? 10 : size;
+
+                for(let i = 0; i < row; i++) {
+                    seat = data[count];
+                    page.commands.addSeat(left, top);
+                    left += 50;
+                    count++;
+                }
+                size -= 10;
+                left = 50;
+                top += 50;
+            }
+
+            // $.each(data , (i , item) => {
+            //     console.log(data);
+            //     seat = item;
+            //     page.commands.addSeat();
+            // })
+        }).fail((err) => {
+            alert("Load seat fail");
         })
     }
 
@@ -2734,6 +2815,9 @@
 
        $('.container').css({'height': $(window).height(), 'overflow-y': 'hidden', 'opacity': 0.5});
 
+        $(this).parent().parent().find(' > li').removeClass('selected');
+        $(this).parent().addClass('selected');
+
        $(".order-overview h2 span").text(movieName);
        $(".about-ticket li:nth-child(1) p.value").text(showTimeSlot);
        $(".about-ticket li:nth-child(2) p.value").text(showDate)
@@ -2755,6 +2839,27 @@
 
     $('.movie-content .movie-load').on("mouseleave", ".movie-item", function (e) {
         leaveMovie($(this));
+    })
+
+    $("#ticket-next").on("click", function () {
+        $(".final-content").attr("style","display:none");
+        $(".ticket-content").attr("style","display:none");
+        $(".user-content").attr("style","display:none");
+        $('.section-order').css({'height': 'auto'});
+
+
+        $("#cinema-content").css({"opacity": "1", "display": "block"});
+
+        let branchName = $(".cart-content .select-list[data-cate = 'cine'] .select-header h3").text();
+        console.log(branchName);
+
+        $(".cinema-name h2").text(branchName);
+
+        let roomId = $("#selectShowTimeSlot li.selected a").attr("data-room-id");
+        console.log(roomId);
+
+        page.commands.getSeatsByRoomId(roomId);
+
     })
 
 

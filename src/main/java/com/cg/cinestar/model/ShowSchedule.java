@@ -31,6 +31,11 @@ public class ShowSchedule extends BaseEntity{
         this.movie = movie;
     }
 
+    public ShowSchedule(String showTimeSlot, Room room) {
+        this.showTimeSlot = showTimeSlot;
+        this.room = room;
+    }
+
     @OneToOne(targetEntity = Movie.class, fetch = FetchType.EAGER)
     private Movie movie;
 

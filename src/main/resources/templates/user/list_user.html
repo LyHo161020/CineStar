@@ -641,52 +641,31 @@
             })
     })
 
-    page.element.searchInput.on('input', () => {
-        let searchInput = page.element.searchInput.val();
+    $(document).on('keydown', function(e) {
+        if(e.keyCode === 13) {
+            e.preventDefault();
+            let searchInput = page.element.searchInput.val();
 
-        $.ajax({
-            "headers": {
-                "accept": "application/json",
-                "content-type": "application/json"
-            },
-            "type": "POST",
-            "url": page.url.searchUser,
-            "data": JSON.stringify(searchInput)
-        })
-            .done((item) => {
-                page.element.tbBody.html("");
-
-                $.each(item, (i, data) => {
-                    user = data;
-                    page.commands.addRow();
-                })
-                page.commands.handleBtn();
-
+            $.ajax({
+                "headers": {
+                    "accept": "application/json",
+                    "content-type": "application/json"
+                },
+                "type": "POST",
+                "url": page.url.searchUser,
+                "data": JSON.stringify(searchInput)
             })
-    })
+                .done((item) => {
+                    page.element.tbBody.html("");
 
-    page.element.searchInput.on('change', () => {
-        let searchInput = page.element.searchInput.val();
-
-        $.ajax({
-            "headers": {
-                "accept": "application/json",
-                "content-type": "application/json"
-            },
-            "type": "POST",
-            "url": page.url.searchUser,
-            "data": JSON.stringify(searchInput)
-        })
-            .done((item) => {
-                page.element.tbBody.html("");
-
-                $.each(item, (i, data) => {
-                    user= data;
-                    page.commands.addRow();
+                    $.each(item, (i, data) => {
+                        user = data;
+                        page.commands.addRow();
+                    })
+                    page.commands.handleBtn();
                 })
-                page.commands.handleBtn();
-            })
-    })
+        }
+    });
 
     page.dialogs.element.btnClose.on('click', () => {
         page.dialogs.element.mdCreate.modal('hide');

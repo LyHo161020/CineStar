@@ -892,31 +892,27 @@ function ContentLoad(){
 		//END POPUP-PICS
 
 
-		// $('.sub-tab li a').click(function(e) {
-		// 	e.preventDefault();
-		// 	$('.sub-tab li').removeClass('current');
-		// 	$(this).parent().addClass('current');
-		// 	var url = $(this).attr('href');
-		//     var dataName = $(this).attr('data-name');
-		// 	$('.movie-load').stop().animate({'opacity': 1}, 600, 'linear', function() {
-		// 		if( $('.movie-load').children().length > 0){
-		// 			// $('.movie-load').children().remove();
-		// 		}
-		//         var status = 2;
-		//         if(dataName == "coming"){
-		//             status = 1;
-		//         }else if(dataName == "special"){
-		//             status = 3;
-		//         }
-		// 		// LoadFilms(url, {status: status});
-		// 	});
-		//
-		// 	// $('.movie-load').attr("style","opacity:1");
-		//
-		// 	return false;
-		// });
+		$('.sub-tab li a').click(function(e) {
+			e.preventDefault();
+			$('.sub-tab li').removeClass('current');
+			$(this).parent().addClass('current');
+			var url = $(this).attr('href');
+			var dataName = $(this).attr('data-name');
+			$('.movie-load').stop().animate({'opacity': 0}, 600, 'linear', function() {
+				if( $('.movie-load').children().length > 0){
+					$('.movie-load').children().remove();
+				}
+				var status = 2;
+				if(dataName == "coming"){
+					status = 1;
+				}else if(dataName == "special"){
+					status = 3;
+				}
+				LoadFilms(url, {status: status});
+			});
 
-
+			return false;
+		});
 		$('.sub-tab li:first-child a').trigger('click');
 		detect_linkpage(true);
 
@@ -964,12 +960,7 @@ function ContentLoad(){
 		});
 
 		$('.sub-tab li a[data-name="'+$('#movie_status').val()+'"]').trigger('click');
-		/*
-		if(window.location.hash) {
-			LocationHash();
-		} else {
-			$('.sub-tab li:first-child a').trigger('click');
-		}*/
+
 
 
 	}
@@ -1014,15 +1005,12 @@ function ContentLoad(){
 
 			}
 		});
-
 		$(document).on( "click", ".cinema-list .select-box li a", function(e){
-			e.preventDefault();
+			// e.preventDefault();
 
 			var cate = $(this).parents('.select-list').attr('data-cate');
 			var target = $(this).attr('data-target');
-			console.log(target);
 			var theater_id = $(this).attr('data-value');
-			console.log(theater_id);
 
 			$(this).parent().parent().find(' > li').removeClass('selected');
 			$(this).parent().addClass('selected');
@@ -1030,17 +1018,19 @@ function ContentLoad(){
 			$(this).closest('.select-box').fadeOut(200, 'linear');
 
 			if(cate == 'location') {
-				getPage(BASE_URL + "gettheaterbyarea", "GET", {id:target}, function(data){
-					$('.loadicon').fadeOut(300, 'linear', function() {
-						$('.loadicon').remove();
-					});
-					data = JSON.parse(data);
-					$('.select-list[data-cate="location-cine"] .select-box ul').html("");
-					$.each( data, function( key, value ) {
-						$('.select-list[data-cate="location-cine"] .select-box ul').append('<li class="show"><a href="' + BASE_URL + 'schedulelist" data-value="'+value.ID+'" cinema-id="1" data-cine="1/1" cine-open="1" cine-address="'+value.ADDRESS+'" cine-call="'+value.TELEPHONE+'"><h3>'+value.NAME+'</h3></a></li>');
-					});
-					$('.select-list[data-cate="location-cine"] .select-box li').first().find('> a').trigger('click');
-				});
+				LoadScheduleMovie(target);
+
+				// getPage(BASE_URL + "gettheaterbyarea", "GET", {id:target}, function(data){
+				//     $('.loadicon').fadeOut(300, 'linear', function() {
+				//         $('.loadicon').remove();
+				//     });
+				//     data = JSON.parse(data);
+				//     $('.select-list[data-cate="location-cine"] .select-box ul').html("");
+				//     $.each( data, function( key, value ) {
+				//         $('.select-list[data-cate="location-cine"] .select-box ul').append('<li class="show"><a href="' + BASE_URL + 'schedulelist" data-value="'+value.ID+'" cinema-id="1" data-cine="1/1" cine-open="1" cine-address="'+value.ADDRESS+'" cine-call="'+value.TELEPHONE+'"><h3>'+value.NAME+'</h3></a></li>');
+				//     });
+				//     $('.select-list[data-cate="location-cine"] .select-box li').first().find('> a').trigger('click');
+				// });
 			}else {
 				movie.theater_id = $(this).attr('data-value');
 				$('.c_name').html($(this).text().replace("CineStar ",""));
@@ -1050,16 +1040,6 @@ function ContentLoad(){
 
 				$('body').append('<div class="loadicon" style="display:block"><span class="circle"></span></div>');
 
-				$('.schedule-load').stop().animate({'opacity': 0}, 600, 'linear', function() {
-					if( $('.schedule-load').children().length > 0){
-						$('.schedule-load').children().remove();
-					}
-					var data = {
-						area_id: $('.select-list[data-cate="location"] li.selected a').attr('data-target'),
-						theater_id: theater_id
-					};
-					LoadSchedule(url, data);
-				});
 			}
 
 			return  false;
@@ -1112,7 +1092,7 @@ function ContentLoad(){
 						area_id: $('.select-list[data-cate="location"] .select-box li.selected a').attr('data-target'),
 						date: date
 					};
-					LoadScheduleDetail(url, data);
+					// c(url, data);
 				});
 
 			}else{
@@ -1121,8 +1101,8 @@ function ContentLoad(){
 
 			return  false;
 		});
-		$('.select-list[data-cate="location"] .select-box li:first-child a').trigger('click');
-		$('.select-list[data-cate="dayofweek"] .select-box li:first-child a').trigger('click');
+		// $('.select-list[data-cate="location"] .select-box li:first-child a').trigger('click');
+		// $('.select-list[data-cate="dayofweek"] .select-box li:first-child a').trigger('click');
 
 	}
 	//FILM
@@ -1250,12 +1230,8 @@ function ContentLoad(){
 			}
 		});
 
-		$('.select-list[data-cate="location"] .select-box li:first-child a').trigger('click');
-		/*if(window.location.hash) {
-			LocationHash();
-		}else {
-			$('.select-list[data-cate="location"] .select-box li:first-child a').trigger('click');
-		}*/
+		// $('.select-list[data-cate="location"] .select-box li:first-child a').trigger('click');
+
 
 	}
 	//FILM
@@ -1419,12 +1395,7 @@ function ContentLoad(){
 			$('.sub-tab.news li:first-child').addClass('current');
 			viewPage($('.sub-tab.news li:first-child a').attr('href'));
 		}
-		/*
-        if(window.location.hash) {
-            LocationHash();
-        }else {
-            $('.sub-tab.news li:nth-child(1) a').trigger('click');
-        }*/
+
 	}
 	else if ($('#news-detail-page').length) {
 		//$('.nav li:nth-child(6)').addClass('current');
@@ -1481,11 +1452,6 @@ function ContentLoad(){
 			$('.sub-tab.about li:first-child').addClass('current');
 			viewPage($('.sub-tab.about li:first-child a').attr('data-name'));
 		}
-		/*if(window.location.hash) {
-			LocationHash();
-		}else {
-			$('.sub-tab.about li:first-child a').trigger('click');
-		}*/
 
 
 		setTimeout(detect_cine_slide,800);
@@ -1500,36 +1466,170 @@ function ContentLoad(){
 }
 
 //LOAD SCHEDULE-LIST
-function LoadSchedule(url, data) {
-
-	$.ajax({url: url, type: "POST", data: data, cache: false, success: function(data) {
-
-			$('.schedule-load').append(data);
-			$('.schedule-load').stop().animate({'opacity': 1}, 1200, 'linear', function() {
-				$('.loadicon').fadeOut(300, 'linear', function() {
-					$('.loadicon').remove();
-				});
-
-			});
-		}
-	});
-}
+// function LoadSchedule(url, data) {
+//
+//       $.ajax({url: url, type: "POST", data: data, cache: false, success: function(data) {
+//
+// 		   $('.schedule-load').append(data);
+// 		   $('.schedule-load').stop().animate({'opacity': 1}, 1200, 'linear', function() {
+//                 $('.loadicon').fadeOut(300, 'linear', function() {
+// 					$('.loadicon').remove();
+//                });
+//
+//           });
+// 	   }
+//   });
+// }
 
 //LOAD SCHEDULE-DETAIL
-function LoadScheduleDetail(url, data) {
-	//console.log("=======", data);
-	$.ajax({url: url, type: 'POST', data: data, cache: false, success: function(data) {
+// function LoadScheduleDetail(url, data) {
+// 	//console.log("=======", data);
+//       $.ajax({url: url, type: 'POST', data: data, cache: false, success: function(data) {
+//
+// 		   $('.schedule-block-load').append(data);
+// 		   $('.schedule-block-load').stop().animate({'opacity': 1}, 1200, 'linear', function() {
+//                 $('.loadicon').fadeOut(300, 'linear', function() {
+// 					$('.loadicon').remove();
+//                });
+//
+//           });
+// 	   }
+//   });
+// }
 
-			$('.schedule-block-load').append(data);
-			$('.schedule-block-load').stop().animate({'opacity': 1}, 1200, 'linear', function() {
-				$('.loadicon').fadeOut(300, 'linear', function() {
-					$('.loadicon').remove();
-				});
 
-			});
-		}
-	});
+
+
+//LOAD SCHEDULE-DETAIL
+function LoadScheduleMovie(branchId) {
+	$('.schedule-load').html("");
+
+	$.ajax({
+		"headers": {
+			"accept": "application/json",
+			"content-type": "application/json"
+		},
+		"type": "GET",
+		"url": App.BASE_URL + "/show-schedules/branch/" + branchId,
+	})
+		.done((data) => {
+			$('.c_name').html(data[0].branchName);
+			$('.c_address').html(data[0].branchAddress);
+
+			$.each(data, (i, item) => {
+				console.log(1)
+				let str = App.drawScheduleDetails(item.movie.id, item.movie.title,item.movie.fileUrl, item.movie.description);
+				$('.schedule-load').append(str);
+
+				$.ajax({
+					"headers": {
+						"accept": "application/json",
+						"content-type": "application/json"
+					},
+					"type": "GET",
+					"url": App.BASE_URL + "/show-schedules/branch/showdate/" + branchId + "/" + item.movie.id,
+				})
+					.done((data) => {
+						$.each(data, (i, item) => {
+							let year = item.showDate.substring(0,4);
+							let day = item.showDate.substring(5,7) + "/" + item.showDate.substring(8);
+							let str = App.drawShowDate(item.showDate, day, year);
+							$('#schedule-' + item.movie.id).prepend(str);
+							$.ajax({
+								"headers": {
+									"accept": "application/json",
+									"content-type": "application/json"
+								},
+								"type": "GET",
+								"url": App.BASE_URL + "/show-schedules/branch/showtimeslot/" + branchId + "/" + item.movie.id + "/" + item.showDate,
+							})
+								.done((data) => {
+
+									let str = `
+											<div class="row-hour">
+												<ul>
+										`;
+									$.each(data, (i, item) => {
+										console.log(3)
+										str += App.drawShowTimeSlot(item.movie.id, item.roomId, item.showTimeSlot)
+
+									})
+									str += `
+													</ul>
+												</div>   			
+										`;
+
+									$('#schedule-' + item.movie.id +' .' + item.showDate).prepend(str);
+								})
+						})
+
+					})
+
+			})
+
+		})
+
 }
+
+function LoadScheduleDate(branchId, movieId) {
+
+	$.ajax({
+		"headers": {
+			"accept": "application/json",
+			"content-type": "application/json"
+		},
+		"type": "GET",
+		"url": App.BASE_URL + "/show-schedules/branch/" + branchId + "/" + movieId,
+	})
+		.done((data) => {
+			$.each(data, (i, item) => {
+				console.log(item);
+				let str = App.drawShowDate(item.showDate);
+				$('.schedule-load .schedule .row').prepend(str);
+
+			})
+
+		})
+
+}
+
+function LoadScheduleShowTimeSlot(branchId, movieId, showDate) {
+
+	$.ajax({
+		"headers": {
+			"accept": "application/json",
+			"content-type": "application/json"
+		},
+		"type": "GET",
+		"url": App.BASE_URL + "/show-schedules/branch/" + branchId + "/" + movieId + "/" + showDate,
+	})
+		.done((data) => {
+
+			let str = `
+					<div class="row-hour">
+						<ul>
+				`;
+
+			$.each(data, (i, item) => {
+				console.log(item);
+
+
+				str += App.drawShowTimeSlot(movieId, item.roomId, item.showTimeSlot)
+
+
+			})
+
+			str += `
+						</ul>
+                 	</div>   			
+			`;
+
+			$('.schedule-load .schedule .row').prepend(str);
+
+		})
+
+}
+
 
 
 //LOAD PRICE
@@ -2503,116 +2603,113 @@ $(document).ready(function() {
 
 		}
 	});
+	$(document).on( "click", ".cart-wrap .select-box li a", function(e){
+		e.preventDefault();
+		var cate = $(this).parents('.select-list').attr('data-cate');
+		var movie_id = $(this).attr('data-id');
+		var theater_id = $(this).attr('data-value');
+		var date = $(this).attr('data-date');
 
-//     $(document).on( "click", ".cart-wrap .select-box li a", function(e){
-// 		e.preventDefault();
-// 		var cate = $(this).parents('.select-list').attr('data-cate');
-// 		var movie_id = $(this).attr('data-id');
-// 		console.log(movie_id);
-// 		var theater_id = $(this).attr('data-value');
-// 		console.log(theater_id);
-// 		var date = $(this).attr('data-date');
-//
-// 		$(this).parent().parent().find(' > li').removeClass('selected');
-// 		$(this).parent().addClass('selected');
-// 		$(this).parents('.select-list').find('.select-header h3').text($(this).text());
-// 		$(this).closest('.select-box').fadeOut(200, 'linear');
-// 		//movie.movie_img = $(this).attr('data-img');
-// 		if(cate == 'film') {
-//             //
-//             getPage(BASE_URL + "gettheaterbymovie", "POST", {id:movie_id}, function(data){
-//                 $('.loadicon').fadeOut(300, 'linear', function() {
-//                     $('.loadicon').remove();
-//                 });
-//                 data = JSON.parse(data);
-// 				// console.log(data, "===============")
-//                 $('.select-list[data-cate="cine"] .select-box ul').html("");
-//                 $('.select-list[data-cate="day"] .select-box ul').html("");
-//                 $.each( data, function( key, value ) {
-//                     $('.select-list[data-cate="cine"] .select-box ul').append('<li class="show" ><a href="javascript:void(0);" data-value="'+value.ID+'"><h3>'+value.NAME+'</h3></a></li>');
-//                 });
-//                 resetForm();
-//                 //$('.select-list[data-cate="cine"] .select-box li').first().find('> a').trigger('click');
-//             });
-//
-//             /*
-// 			resetForm();
-// 			sortDataFilm($(this));*/
-// 		}
-//         else if(cate == 'cine'){
-//
-//             var params = {
-//                 movie_id: $('.select-list[data-cate="film"] .select-box ul li.selected a').attr('data-id'),
-//                 theater_id: theater_id
-//             };
-// 			movie.theater_id = theater_id;
-//             getPage(BASE_URL + "getdate", "POST", params, function(data){
-//                 $('.loadicon').fadeOut(300, 'linear', function() {
-//                     $('.loadicon').remove();
-//                 });
-//                 data=JSON.parse(data);
-//                 $('.select-list[data-cate="day"] .select-box ul').html("");
-//                 $.each( data, function( key, value ) {
-// //                    console.log(key, value);
-//                     $('.select-list[data-cate="day"] .select-box ul').append('<li class="show" ><a href="javascript:void(0);" data-date="'+value.value+'"><h3>'+value.name+'</h3></a></li>');
-//                 });
-//
-//                 /*
-//                 $('.select-list[data-cate="day"] .select-box').html(data);
-//                 $('.block-list').addClass('is-'+$('.select-list[data-cate="film"] .select-box ul li.selected a').attr('data-format'));
-//                 //<li class="show" ><a href="javascript:void(0);" data-date="<?php echo $item['value'];?>"><h3><?php echo $item['name'];?></h3></a></li>
-//                 */
-//             });
-//         }
-// 		else if(cate == 'day') {
-//             //cart/getShowTimes
-//             var params = {
-//                 movie_id: $('.select-list[data-cate="film"] .select-box ul li.selected a').attr('data-id'),
-//                 theater_id: $('.select-list[data-cate="cine"] .select-box ul li.selected a').attr('data-value'),
-//                 date: date,
-//                 format: $('.select-list[data-cate="film"] .select-box ul li.selected a').attr('data-format')
-//             };
-//             getPage(BASE_URL + "getshowtimes", "POST", params, function(data){
-//                 $('.loadicon').fadeOut(300, 'linear', function() {
-//                     $('.loadicon').remove();
-//                 });
-//
-//                 $('.select-list[data-cate="hour"] .select-box').html(data);
-//                 $('.block-list').addClass('is-'+$('.select-list[data-cate="film"] .select-box ul li.selected a').attr('data-format'));
-//             });
-//
-// 			/*$('.block-list').removeClass('is-2d').removeClass('is-3d')
-// 			var l_class = 'is-' + $('.select-list[data-cate="film"] li.selected a').attr('film-ref');
-// 			$('.block-list').addClass(l_class);*/
-// 		}
-// 		else if(cate == 'hour') { //IF HOUSE LIST IS CHOSE WILL OPEN ODER POPUP
-// 			if($(this).parent().hasClass('disable-time')) return false;
-// 			var l_film = $('.select-list[data-cate="film"] .select-box li.selected a');
-// 			var l_cine = $('.select-list[data-cate="cine"] .select-box li.selected a');
-// 			var l_day  = $('.select-list[data-cate="day"] .select-box li.selected a');
-// 			movie.showtimes_id = $(this).attr('data-id');
-// 			/*window.location = 'http://www.123phim.vn/checkout?merchantCode=16&cinemaCode=' + movie.theater_id + '&sessionCode='  + movie.showtimes_id;
-//             //window.location = 'http://123phim.vn/checkout/cinestar?sessionCode=' + movie.showtimes_id;
-//             return false;
-// 			*/
-//             movie.room_name = $(this).attr('data-room-name');
-// 			movie.movie_img  = l_film.attr('data-img');
-// 			movie.movie_name = l_film.text();
-// 			movie.movie_type= l_film.attr('data-format');
-//
-// 			movie.cinema_id = parseInt(l_cine.attr('data-value'));
-// 			movie.cinema_name = l_cine.text();
-//
-// 			movie.movie_date = l_day.attr('data-date');
-//
-// 			movie.movie_hour = $(this).text();
-//
-// 			order();
-// 		}
-// 		var _class = 'is-' + cate;
-// 		$('.block-list').addClass(_class);
-// 		return  false;
-// 	});
+		$(this).parent().parent().find(' > li').removeClass('selected');
+		$(this).parent().addClass('selected');
+		$(this).parents('.select-list').find('.select-header h3').text($(this).text());
+		$(this).closest('.select-box').fadeOut(200, 'linear');
+		//movie.movie_img = $(this).attr('data-img');
+		if(cate == 'film') {
+			//
+			getPage(BASE_URL + "gettheaterbymovie", "POST", {id:movie_id}, function(data){
+				$('.loadicon').fadeOut(300, 'linear', function() {
+					$('.loadicon').remove();
+				});
+				data = JSON.parse(data);
+				// console.log(data, "===============")
+				$('.select-list[data-cate="cine"] .select-box ul').html("");
+				$('.select-list[data-cate="day"] .select-box ul').html("");
+				$.each( data, function( key, value ) {
+					$('.select-list[data-cate="cine"] .select-box ul').append('<li class="show" ><a href="javascript:void(0);" data-value="'+value.ID+'"><h3>'+value.NAME+'</h3></a></li>');
+				});
+				resetForm();
+				//$('.select-list[data-cate="cine"] .select-box li').first().find('> a').trigger('click');
+			});
+
+			/*
+            resetForm();
+            sortDataFilm($(this));*/
+		}
+		else if(cate == 'cine'){
+
+			var params = {
+				movie_id: $('.select-list[data-cate="film"] .select-box ul li.selected a').attr('data-id'),
+				theater_id: theater_id
+			};
+			movie.theater_id = theater_id;
+			getPage(BASE_URL + "getdate", "POST", params, function(data){
+				$('.loadicon').fadeOut(300, 'linear', function() {
+					$('.loadicon').remove();
+				});
+				data=JSON.parse(data);
+				$('.select-list[data-cate="day"] .select-box ul').html("");
+				$.each( data, function( key, value ) {
+//                    console.log(key, value);
+					$('.select-list[data-cate="day"] .select-box ul').append('<li class="show" ><a href="javascript:void(0);" data-date="'+value.value+'"><h3>'+value.name+'</h3></a></li>');
+				});
+
+				/*
+                $('.select-list[data-cate="day"] .select-box').html(data);
+                $('.block-list').addClass('is-'+$('.select-list[data-cate="film"] .select-box ul li.selected a').attr('data-format'));
+                //<li class="show" ><a href="javascript:void(0);" data-date="<?php echo $item['value'];?>"><h3><?php echo $item['name'];?></h3></a></li>
+                */
+			});
+		}
+		else if(cate == 'day') {
+			//cart/getShowTimes
+			var params = {
+				movie_id: $('.select-list[data-cate="film"] .select-box ul li.selected a').attr('data-id'),
+				theater_id: $('.select-list[data-cate="cine"] .select-box ul li.selected a').attr('data-value'),
+				date: date,
+				format: $('.select-list[data-cate="film"] .select-box ul li.selected a').attr('data-format')
+			};
+			getPage(BASE_URL + "getshowtimes", "POST", params, function(data){
+				$('.loadicon').fadeOut(300, 'linear', function() {
+					$('.loadicon').remove();
+				});
+
+				$('.select-list[data-cate="hour"] .select-box').html(data);
+				$('.block-list').addClass('is-'+$('.select-list[data-cate="film"] .select-box ul li.selected a').attr('data-format'));
+			});
+
+			/*$('.block-list').removeClass('is-2d').removeClass('is-3d')
+			var l_class = 'is-' + $('.select-list[data-cate="film"] li.selected a').attr('film-ref');
+			$('.block-list').addClass(l_class);*/
+		}
+		else if(cate == 'hour') { //IF HOUSE LIST IS CHOSE WILL OPEN ODER POPUP
+			if($(this).parent().hasClass('disable-time')) return false;
+			var l_film = $('.select-list[data-cate="film"] .select-box li.selected a');
+			var l_cine = $('.select-list[data-cate="cine"] .select-box li.selected a');
+			var l_day  = $('.select-list[data-cate="day"] .select-box li.selected a');
+			movie.showtimes_id = $(this).attr('data-id');
+			/*window.location = 'http://www.123phim.vn/checkout?merchantCode=16&cinemaCode=' + movie.theater_id + '&sessionCode='  + movie.showtimes_id;
+            //window.location = 'http://123phim.vn/checkout/cinestar?sessionCode=' + movie.showtimes_id;
+            return false;
+			*/
+			movie.room_name = $(this).attr('data-room-name');
+			movie.movie_img  = l_film.attr('data-img');
+			movie.movie_name = l_film.text();
+			movie.movie_type= l_film.attr('data-format');
+
+			movie.cinema_id = parseInt(l_cine.attr('data-value'));
+			movie.cinema_name = l_cine.text();
+
+			movie.movie_date = l_day.attr('data-date');
+
+			movie.movie_hour = $(this).text();
+
+			order();
+		}
+		var _class = 'is-' + cate;
+		$('.block-list').addClass(_class);
+		return  false;
+	});
 
 
 ////////////////////////////////// ORDER POPUP EVENTS///////////////////////////////////
@@ -3687,19 +3784,7 @@ function resetForm(){
 
 //RESET INFORMATION IN POPUP ORDER
 function resetOrder() {
-	/*
-	cinema_id = 0,
-	cinema_name = '',
 
-	movie_id = 0,
-	movie_name = '',
-	movie_date = '',
-	movie_type = '',
-	movie_img = '',
-	movie_hour = '',
-	ticket_number = 0, // Num of Tickets whose user bought
-	chair_num = 0, // Num of seat user choosing
-	*/
 	movie.cinema_id = '';
 	movie.cinema_id = 0;
 	movie.cinema_name = '';
@@ -3806,8 +3891,6 @@ function order() {
 
 		if(isLogin){
 			$('.ticket-content').css({'display': 'block'});
-
-			//$('.user-content').css({'display': 'none'});
 
 			$('.final-content, .cinema-content, .user-content').css({'display': 'none'});
 			$('.order-content > .cinema-name').remove();
@@ -3934,13 +4017,13 @@ $(window).on('resize', function() {
 		if($('.dragscroll').length){
 			$('.dragscroll').draptouch();
 		}
-		// $('.movie-item').unbind('click').unbind('mouseenter').unbind('mouseleave');
-		// $('.movie-item').mouseenter(function(e){
-		// 	$('.movie-item.show').removeClass('show').addClass('hide');
-		// 	hoverMovie($(this));
-		// }).mouseleave(function(e){
-		// 	leaveMovie($(this));
-		// });
+		$('.movie-item').unbind('click').unbind('mouseenter').unbind('mouseleave');
+		$('.movie-item').mouseenter(function(e){
+			$('.movie-item.show').removeClass('show').addClass('hide');
+			hoverMovie($(this));
+		}).mouseleave(function(e){
+			leaveMovie($(this));
+		});
 
 		//DETECT MEMBER POPUP TOP
 		if($('.member-details-content').css('display')=='block') {
@@ -4006,58 +4089,58 @@ $(window).on('resize', function() {
 	$('.faq li.active .answer-wrap').css({'height': 'auto'});
 }, 250);
 
-// function LoadFilms(url, data) {
-// 	$.ajax({url: url, cache: false, type: "POST", data: data, success: function(data) {
-// 		$('.movie-load').append(data);
-// 		$('.movie-load').stop().animate({'opacity': 1}, 600, 'linear', function() {
-// 			$('.loadicon').fadeOut(300, 'linear', function() {
-// 				$('.loadicon').remove();
-// 			});
-// 		});
-// 		//create slideshow
-// 		if( $('.movie-slide').length){
-// 			$('.movie-slide').BTQSlider({
-// 				itemsCustom : [
-// 				[0, 1],
-// 				[300, 1],
-// 				[400, 2],
-// 				[500, 2],
-// 				[600, 3],
-// 				[700, 3],
-// 				[800, 3],
-// 				[900, 4],
-// 				[1000, 4],
-// 				[1100, 4],
-// 				[1200, 5],
-// 				[1210, 5],
-// 				[1400, 5],
-// 				[1600, 5],
-// 				[1900, 5],
-// 				],
-// 				navigation : true,
-// 				pagination : true,
-// 				lazyLoad : true,
-// 				lazyEffect : "fade"
-// 			});
-// 			detect_movie_slide();
-// 		}
-// 		if($(window).width() > 1100) {
-// 			$('.movie-item').mouseenter(function(e){
-// 				$('.movie-item.show').removeClass('show').addClass('hide');
-// 				hoverMovie($(this));
-// 			}).mouseleave(function(e){
-// 				leaveMovie($(this));
-// 			});
-// 		} else {
-// 			$('.movie-item').click(function(e){
-// 			   $('.movie-item.show').removeClass('show').addClass('hide');
-// 				hoverMovie($(this));
-// 			});
-// 		}
-// 		detectBut();
-// 	}});
-//
-// }
+function LoadFilms(url, data) {
+	$.ajax({url: url, cache: false, type: "POST", data: data, success: function(data) {
+			$('.movie-load').append(data);
+			$('.movie-load').stop().animate({'opacity': 1}, 600, 'linear', function() {
+				$('.loadicon').fadeOut(300, 'linear', function() {
+					$('.loadicon').remove();
+				});
+			});
+			//create slideshow
+			if( $('.movie-slide').length){
+				$('.movie-slide').BTQSlider({
+					itemsCustom : [
+						[0, 1],
+						[300, 1],
+						[400, 2],
+						[500, 2],
+						[600, 3],
+						[700, 3],
+						[800, 3],
+						[900, 4],
+						[1000, 4],
+						[1100, 4],
+						[1200, 5],
+						[1210, 5],
+						[1400, 5],
+						[1600, 5],
+						[1900, 5],
+					],
+					navigation : true,
+					pagination : true,
+					lazyLoad : true,
+					lazyEffect : "fade"
+				});
+				detect_movie_slide();
+			}
+			if($(window).width() > 1100) {
+				$('.movie-item').mouseenter(function(e){
+					$('.movie-item.show').removeClass('show').addClass('hide');
+					hoverMovie($(this));
+				}).mouseleave(function(e){
+					leaveMovie($(this));
+				});
+			} else {
+				$('.movie-item').click(function(e){
+					$('.movie-item.show').removeClass('show').addClass('hide');
+					hoverMovie($(this));
+				});
+			}
+			detectBut();
+		}});
+
+}
 
 function hoverMovie(byThis) {
 	$(byThis).removeClass('hide').addClass('show');
@@ -4069,25 +4152,7 @@ function leaveMovie(byThis){
 	$(byThis).removeClass('show').addClass('hide');
 }
 
-function LocationHash () {
-	/*var PageActive = window.location.hash;
-     PageActive = PageActive.slice(1);
-     Arrhash = PageActive.split('/');
-
-      if($('#price-page').length) {
-          if(Arrhash[1] != undefined) {
-              oldHash = PageActive;
-              $('.select-list[data-cate="location"] .select-box li a[data-target='+ Arrhash[0] +']').trigger('click');
-          }
-      }else {
-          $('.link-page a[data-details=' + PageActive + ']').trigger('click');
-          $('.sub-nav li a[data-name=' + PageActive + ']').trigger('click');
-          $('.sub-tab li a[data-name=' + PageActive + ']').trigger('click');
-      }
-      */
-}
-
 $(window).bind("popstate", function(e) {
 	e.preventDefault();
-	//LocationHash();
+
 });

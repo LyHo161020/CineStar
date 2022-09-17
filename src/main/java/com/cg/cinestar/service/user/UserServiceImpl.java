@@ -1,7 +1,10 @@
 package com.cg.cinestar.service.user;
 
+import com.cg.cinestar.mapper.RoomMapper;
+import com.cg.cinestar.mapper.UserMapper;
 import com.cg.cinestar.model.User;
 import com.cg.cinestar.model.UserPrinciple;
+import com.cg.cinestar.model.dto.RoomDTO;
 import com.cg.cinestar.model.dto.UserDTO;
 import com.cg.cinestar.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,9 @@ import java.util.Optional;
 public class UserServiceImpl implements IUserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     public List<User> findAll() {
@@ -69,13 +75,13 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public List<User> search(String searchInput) {
-        List<User> users = findAll();
-        List<User> listSearch = new ArrayList<>();
+    public List<UserDTO> search(String searchInput) {
+        List<UserDTO> users = userRepository.findAllUserDTO();
+        List<UserDTO> listSearch = new ArrayList<>();
 
-        for(User user : users){
-            if(user.toString().toLowerCase().contains(searchInput)){
-                listSearch.add(user);
+        for(UserDTO userDTO : users){
+            if(userDTO.toString().toLowerCase().contains(searchInput)){
+                listSearch.add(userDTO);
             }
         }
 
@@ -85,14 +91,22 @@ public class UserServiceImpl implements IUserService {
 
 
     @Override
-    public User updateUser(Optional<User> user, User userUpdate) {
+    public User updateUser(UserDTO userDTO) {
 
-        return user.get()
-                .setFullName(userUpdate.getFullName())
-                .setPhone(userUpdate.getPhone())
-                .setEmail(userUpdate.getEmail())
-                .setAddress(userUpdate.getAddress())
-                .setDateOfBirth(userUpdate.getDateOfBirth());
+    User user = findById(userDTO.getId()).get();
+
+        return new User()
+                .setId(userDTO.getId())
+                .setUsername(user.getUsername())
+                .setPassword(user.getPassword())
+                .setFullName(userDTO.getFullName())
+                .setPhone(userDTO.getPhone())
+                .setEmail(userDTO.getEmail())
+                .setAddress(userDTO.getAddress())
+                .setDateOfBirth(userDTO.getDateOfBirth())
+                .setStatus(user.getStatus())
+                .setRole(user.getRole());
+
     }
 
     @Override
@@ -104,8 +118,10 @@ public class UserServiceImpl implements IUserService {
         return UserPrinciple.build(userOptional.get());
     }
 
-    public Optional<UserDTO> findUserDTOByID(Long id) {
-        return userRepository.findUserDTOByID(id);
+    public UserDTO findUserDTOByID(Long id) {
+        Optional<User> user = userRepository.findById(id);
+        return user.map(value -> userMapper.toUserDTO(value)).orElse(null);
+
     }
 
     @Override

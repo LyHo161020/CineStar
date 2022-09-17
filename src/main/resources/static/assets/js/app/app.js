@@ -257,6 +257,14 @@ class App {
         return str;
     }
 
+    static drawSeat(id, name, price, left, top) {
+        let str = `<div class="single" data-type-seat-id="${id}" data-price="${price}" 
+                        style="left:${left + 'px'}; top: ${top + 'px'}; width: 43px; height: 46px;position: absolute; padding: 12px; text-align: center; vertical-align: middle; font-family: 'Futurab'; font-weight: normal; font-size: 11px; color: #fff; text-transform: uppercase;">
+                        ${name}
+                   </div>`
+        return str;
+    }
+
 }
 
 class User {
@@ -364,6 +372,15 @@ class Size {
     constructor(id, size) {
         this.id = id;
         this.size = size;
+    }
+}
+
+class Seat {
+    constructor(id, name, seatType, room) {
+        this.id = id;
+        this.name = name;
+        this.seatType = seatType;
+        this.room = room;
     }
 }
 

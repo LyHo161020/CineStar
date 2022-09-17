@@ -1,14 +1,17 @@
 package com.cg.cinestar.controller.api;
 
+import com.cg.cinestar.mapper.UserMapper;
 import com.cg.cinestar.model.Status;
 import com.cg.cinestar.model.User;
 import com.cg.cinestar.model.dto.UserDTO;
+import com.cg.cinestar.model.dto.UserDTOCreate;
 import com.cg.cinestar.repository.UserRepository;
 import com.cg.cinestar.service.user.IUserService;
 import com.cg.cinestar.utils.AppUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -23,11 +26,13 @@ public class UserAPI {
     private IUserService userService;
 
     @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
     private UserRepository userRepository;
 
     @GetMapping
     public ResponseEntity<?> showListUser() {
-//        List<User> users = userService.findAll();
         List<UserDTO> users = userRepository.findAllUserDTO();
 
         if(users.isEmpty()) {
@@ -42,34 +47,36 @@ public class UserAPI {
     @GetMapping("/{id}")
 //    @PreAuthorize("hasAnyAuthority('USER')")
 
-    public ResponseEntity<?> getProductById(@PathVariable Long id) {
-        Optional<User> user = userService.findById(id);
+    public ResponseEntity<?> findUserDTO(@PathVariable Long id) {
+        UserDTO userDTO = userService.findUserDTOByID(id);
 
-        if (!user.isPresent()) {
+        if (userDTO == null) {
             return new ResponseEntity<>("Wine ID :" + id + "not found" + "!", HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(user.get(), HttpStatus.OK);
+        return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> doCreate(@Validated @RequestBody User user, BindingResult bindingResult) {
+        public ResponseEntity<?> doCreate(@Validated @RequestBody UserDTOCreate userDTOCreate, BindingResult bindingResult) {
 
 
-        new User().validate(user, bindingResult);
+        new UserDTOCreate().validate(userDTOCreate, bindingResult);
 
         if (bindingResult.hasErrors()) {
             return AppUtils.mapErrorToResponse(bindingResult);
         }
 
         try {
+            User user = userDTOCreate.toUser();
 
             user.setId(0L);
             user.setStatus(new Status(1L,"ACTIVE"));
-            user = userService.save(user);
+
             user = userService.create(user);
 
+            UserDTO userDTO = userMapper.toUserDTO(user);
 
-            return new ResponseEntity<>(user, HttpStatus.CREATED);
+            return new ResponseEntity<>(userDTO, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Server ko xử lý được", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -95,7 +102,7 @@ public class UserAPI {
             user = userService.findById(id);
 
 
-            return new ResponseEntity<>(user.get(),HttpStatus.OK);
+            return new ResponseEntity<>(userMapper.toUserDTO(user.get()),HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>("Server không xử lý được", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -103,7 +110,7 @@ public class UserAPI {
 
     @PutMapping("/update/{id}")
 //    @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<?> doUpdateAccount(@PathVariable Long id,@Validated @RequestBody User user,
+    public ResponseEntity<?> doUpdateAccount(@PathVariable Long id, @Validated @RequestBody UserDTO userDTO,
                                              BindingResult bindingResult) {
         Optional<User> u = userService.findById(id);
 
@@ -117,10 +124,11 @@ public class UserAPI {
         }
 
         try {
-            user = userService.updateUser(u,user);
+            userDTO.setId(id);
+            User user = userService.updateUser(userDTO);
             userService.save(user);
 
-            return new ResponseEntity<>(user, HttpStatus.OK);
+            return new ResponseEntity<>(userMapper.toUserDTO(user), HttpStatus.OK);
 
         } catch (Exception e) {
             return new ResponseEntity<>("Server error!!", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -130,7 +138,7 @@ public class UserAPI {
     @PostMapping("/search")
     public ResponseEntity<?> search(@RequestBody String searchInput) {
         searchInput = searchInput.replace('"',' ').trim().toLowerCase();
-        List<User> listSearch = userService.search(searchInput);
+        List<UserDTO> listSearch = userService.search(searchInput);
 
         if(listSearch.size() == 0) {
             return new ResponseEntity<>("Danh sach trong", HttpStatus.NO_CONTENT);

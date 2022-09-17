@@ -32,11 +32,13 @@ public interface IShowScheduleService extends IGeneralService<ShowSchedule> {
 
     Set<String> findAllShowDateByMovieAndRoom(String movieId, Long roomId);
 
-    Set<String> findAllShowTimeSlot(String movieId, Long branchId, String showDate);
+    List<ShowSchedule> findAllShowTimeSlot(String movieId, Long branchId, String showDate);
 
     List<ShowSchedule> findAllShowTimeSlotByRoomAndShowDate(Long id, String showDate);
 
     Set<String> findShowTimeSlotsByMovieAndRoomAndShowDate(String movieId, Long roomId, String showDate);
+
+
 
 
     List<ShowScheduleDTO> findAllShowScheduleDTOByMovie(String id);
