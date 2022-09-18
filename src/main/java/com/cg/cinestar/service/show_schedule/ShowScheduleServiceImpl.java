@@ -110,7 +110,7 @@ public class ShowScheduleServiceImpl implements IShowScheduleService{
     }
 
     @Override
-    public Set<String> findAllShowTimeSlot(String movieId, Long branchId, String showDate) {
+    public List<ShowSchedule> findAllShowTimeSlot(String movieId, Long branchId, String showDate) {
         return showScheduleRepository.findAllShowTimeSlot(movieId, branchId, showDate);
     }
 

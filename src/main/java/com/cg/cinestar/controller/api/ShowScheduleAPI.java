@@ -299,12 +299,12 @@ public class ShowScheduleAPI {
             return new ResponseEntity<>("Id khong ton tai", HttpStatus.BAD_REQUEST);
         }
 
-        Set<String> showTimeSlots = showScheduleService.findAllShowTimeSlot(movieId, branchId, showTimeSlot);
+        List<ShowSchedule> showSchedules = showScheduleService.findAllShowTimeSlot(movieId, branchId, showTimeSlot);
 
-        if(showTimeSlots.isEmpty()) {
+        if(showSchedules.isEmpty()) {
             return new ResponseEntity<>("Danh sach trong", HttpStatus.NO_CONTENT);
         }
 
-        return new ResponseEntity<>(showTimeSlots, HttpStatus.OK);
+        return new ResponseEntity<>(showSchedules, HttpStatus.OK);
     }
 }

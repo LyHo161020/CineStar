@@ -4154,4 +4154,5 @@ function leaveMovie(byThis){
 
 $(window).bind("popstate", function(e) {
 	e.preventDefault();
+
 });

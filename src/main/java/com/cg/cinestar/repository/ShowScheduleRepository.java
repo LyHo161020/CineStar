@@ -63,13 +63,15 @@ public interface ShowScheduleRepository extends JpaRepository<ShowSchedule, Long
     @Query("SELECT s.showDate FROM ShowSchedule AS s WHERE s.movie.id = :movieId AND s.branch.id = :branchId AND s.deleted = false")
     Set<String> findAllShowDateByMovieAndBranch(String movieId, Long branchId);
 
-    @Query("SELECT s.showTimeSlot " +
+    @Query("SELECT NEW com.cg.cinestar.model.ShowSchedule(" +
+            "s.showTimeSlot, " +
+            "s.room )" +
             "FROM ShowSchedule AS s " +
             "WHERE s.movie.id = :movieId " +
             "AND s.branch.id = :branchId " +
             "AND s.showDate = :showDate " +
             "AND s.deleted = false")
-    Set<String> findAllShowTimeSlot(String movieId, Long branchId, String showDate);
+    List<ShowSchedule> findAllShowTimeSlot(String movieId, Long branchId, String showDate);
 
     @Query("SELECT NEW com.cg.cinestar.model.ShowSchedule(" +
             "s.showTimeSlot," +

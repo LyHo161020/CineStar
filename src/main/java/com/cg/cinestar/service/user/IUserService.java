@@ -18,15 +18,16 @@ public interface IUserService extends IGeneralService<User>, UserDetailsService 
 
     Optional<UserDTO> unlockUser(Long id);
 
-    User updateUser(Optional<User> user, User userUpdate);
+    User updateUser(UserDTO userDTO);
 
     User create(User user);
 
-    List<User> search(String searchInput);
+    List<UserDTO> search(String searchInput);
+
 
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 
-    Optional<UserDTO> findUserDTOByID(Long id);
+    UserDTO findUserDTOByID(Long id);
 
     Optional<UserDTO> findUserDTOByUsername(String username);
 }

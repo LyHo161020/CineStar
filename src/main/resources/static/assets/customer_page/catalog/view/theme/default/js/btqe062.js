@@ -2641,32 +2641,32 @@ $(document).ready(function() {
 
 ///////////////////TICKET EVENTS//////////////////////
     //addd ticket
-    $(document).on('click','.add', function(e) {
-        e.preventDefault();
-        var totalSeat = 0;
-        $('.ticket-num input').each(function(i, obj) {
-            totalSeat += parseInt($(obj).val());
-        });
-
-        if(totalSeat >= 8){
-            alert("Vui lòng chọn tối đa 8 ghế.");
-            return false;
-        }
-
-        var row =  $(this).parent().parent();
-        // console.log(row.attr('data-seatstyle-id'), "row.attr('data-seatstyle-id')");
-        var isDouble = row.attr('data-seatstyle-id') == 30 ? 1 : 0;
-        isDouble = (isDouble === 0 && row.attr('data-ticket-id') == 27) ? -1: isDouble;
-        cal_total_on_row(row,'asc', isDouble);
-        var key = row.attr('data-seatstyle-id')+"_"+row.attr('data-ticket-id');
-        var val = parseInt(row.find('.ticket-num input').val());
-        if(val==0 && movie.pseats.hasOwnProperty(key)){
-            delete movie.pseats[key];
-        } else {
-            movie.pseats[key] = val;
-        }
-        return false;
-    });
+    // $(document).on('click','.add', function(e) {
+    //     e.preventDefault();
+    //     var totalSeat = 0;
+    //     $('.ticket-num input').each(function(i, obj) {
+    //         totalSeat += parseInt($(obj).val());
+    //     });
+    //
+    //     if(totalSeat >= 8){
+    //         alert("Vui lòng chọn tối đa 8 ghế.");
+    //         return false;
+    //     }
+    //
+    //     var row =  $(this).parent().parent();
+    //     // console.log(row.attr('data-seatstyle-id'), "row.attr('data-seatstyle-id')");
+    //     var isDouble = row.attr('data-seatstyle-id') == 30 ? 1 : 0;
+    //     isDouble = (isDouble === 0 && row.attr('data-ticket-id') == 27) ? -1: isDouble;
+    //     cal_total_on_row(row,'asc', isDouble);
+    //     var key = row.attr('data-seatstyle-id')+"_"+row.attr('data-ticket-id');
+    //     var val = parseInt(row.find('.ticket-num input').val());
+    //     if(val==0 && movie.pseats.hasOwnProperty(key)){
+    //         delete movie.pseats[key];
+    //     } else {
+    //         movie.pseats[key] = val;
+    //     }
+    //     return false;
+    // });
     //minus ticket
     $(document).on('click', '.minus', function(e) {
         e.preventDefault();
@@ -2731,37 +2731,37 @@ $(document).ready(function() {
 
         });
     });
-    //next cinema-next
-    $(document).on('click', '#ticket-next', function() {
-        if (movie && movie.pseats && movie.pseats['29_27'] && movie.pseats['29_27'] > 0) {
-            const mess = 'Giá vé này chỉ áp dụng cho Học Sinh Sinh Viên. Phải xuất trình thẻ HSSV khi thanh toán tại quầy. Nếu không xuất trình được thẻ HSSV, bạn sẽ không được hoàn tiền và hủy vé theo quy định của rạp!';
-            if (confirm(mess) != true) {
-                return;
-            }
-        }
-        //lay danh sach ghe
-        //order/getSeat
-        getPage(BASE_URL + 'getseat', 'POST', { cinema_id: movie.theater_id, showtimes_id: movie.showtimes_id, room_name: movie.room_name, theater_name: movie.cinema_name}, function(data){
-            $('.loadicon').fadeOut(300, 'linear', function() {
-                $('.loadicon').remove();
-            });
-            $('#cinema-content').html(data);
-
-            myClock.start();
-            $('.ticket-content').css({'display': 'none'});
-            $('.cinema-seat').css({'display': 'none'});
-            $(document).find('div.cinema-seat').css({'display': 'block'});
-            //		$('.cinema-seat[data-cine="'+ movie.cinema_id +'"]').css({'display': 'block'});
-            $('.cinema-content').css({'display': 'block', 'opacity': 0});
-            $('.section-order').css({'height': 'auto'});
-
-            $('.cinema-content').stop().animate({'opacity': 1}, 500, 'linear', function(){
-                //Q add
-                $('.opera').css({width: $(window).width()});
-                $('.cons-icon').addClass('show');
-            });
-        });
-    });
+    // next cinema-next
+    // $(document).on('click', '#ticket-next', function() {
+    //     if (movie && movie.pseats && movie.pseats['29_27'] && movie.pseats['29_27'] > 0) {
+    //         const mess = 'Giá vé này chỉ áp dụng cho Học Sinh Sinh Viên. Phải xuất trình thẻ HSSV khi thanh toán tại quầy. Nếu không xuất trình được thẻ HSSV, bạn sẽ không được hoàn tiền và hủy vé theo quy định của rạp!';
+    //         if (confirm(mess) != true) {
+    //             return;
+    //         }
+    //     }
+    //     //lay danh sach ghe
+    //     //order/getSeat
+    //     getPage(BASE_URL + 'getseat', 'POST', { cinema_id: movie.theater_id, showtimes_id: movie.showtimes_id, room_name: movie.room_name, theater_name: movie.cinema_name}, function(data){
+    //         $('.loadicon').fadeOut(300, 'linear', function() {
+    //             $('.loadicon').remove();
+    //         });
+    //         $('#cinema-content').html(data);
+    //
+    //         myClock.start();
+    //         $('.ticket-content').css({'display': 'none'});
+    //         $('.cinema-seat').css({'display': 'none'});
+    //         $(document).find('div.cinema-seat').css({'display': 'block'});
+    //         //		$('.cinema-seat[data-cine="'+ movie.cinema_id +'"]').css({'display': 'block'});
+    //         $('.cinema-content').css({'display': 'block', 'opacity': 0});
+    //         $('.section-order').css({'height': 'auto'});
+    //
+    //         $('.cinema-content').stop().animate({'opacity': 1}, 500, 'linear', function(){
+    //             //Q add
+    //             $('.opera').css({width: $(window).width()});
+    //             $('.cons-icon').addClass('show');
+    //         });
+    //     });
+    // });
 
 ///////////////////CHOOSE CHAIR EVENTS//////////////////////
     //$('.cinema-seat').on('click', '.single, .couple',function() {

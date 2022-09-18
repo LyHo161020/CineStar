@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class SeatTypeImpl implements ISeatTypeService{
+public class SeatTypeServiceImpl implements ISeatTypeService{
 
     @Autowired
     private SeatTypeRepository seatTypeRepository;

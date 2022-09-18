@@ -21,19 +21,22 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Calendar;
 
+
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Accessors(chain = true)
-
-public class UserDTO implements Validator {
+public class UserDTOCreate implements Validator {
     private Long id;
 
     @NotNull(message = "Vui lòng nhập tên đăng nhập!")
     @Size(min = 8, max = 32, message = "Tên đăng nhập chỉ từ 8-32 kí tự!")
     private String username;
 
+    @NotNull(message = "Vui lòng nhập mật khẩu")
+    @Size(min = 8, max = 32, message = "Mật khẩu phải gồm 8-32 kí tự!")
+    private String password;
 
     @Column(name = "full_name")
     @NotNull(message = "Vui lòng nhập mật khẩu")
@@ -64,22 +67,22 @@ public class UserDTO implements Validator {
 
 
 
-//    public UserDTO(Long id, String username, String fullName, String phone, String email, String address, String dateOfBirth, Status status, Role role) {
-//        this.id = id;
-//        this.username = username;
-//        this.fullName = fullName;
-//        this.phone = phone;
-//        this.email = email;
-//        this.address = address;
-//        this.dateOfBirth = dateOfBirth;
-//        this.status = status;
-//        this.role = role;
-//    }
+    public UserDTOCreate(Long id, String username, String fullName, String phone, String email, String address, String dateOfBirth, Status status, Role role) {
+        this.id = id;
+        this.username = username;
+        this.fullName = fullName;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.dateOfBirth = dateOfBirth;
+        this.status = status;
+        this.role = role;
+    }
 
     public User toUser() {
         return new User()
-                .setId(id)
                 .setUsername(username)
+                .setPassword(password)
                 .setFullName(fullName)
                 .setPhone(phone)
                 .setEmail(email)
@@ -90,19 +93,14 @@ public class UserDTO implements Validator {
     }
 
     @Override
-    public String toString() {
-        return id + " " + username + " " + fullName + " " + phone + " " + email + " " + address + " " + dateOfBirth + " " + status.getStatusName() + " " + role.getName();
-    }
-
-    @Override
     public boolean supports(Class<?> clazz) {
-        return UserDTO.class.isAssignableFrom(clazz);
+        return UserDTOCreate.class.isAssignableFrom(clazz);
     }
 
     @Override
     public void validate(Object o, Errors errors) {
-        UserDTO userDTO = (UserDTO) o;
-        String dateOfBirth = userDTO.getDateOfBirth();
+        UserDTOCreate userDTOCreate = (UserDTOCreate) o;
+        String dateOfBirth = userDTOCreate.getDateOfBirth();
 
 
 
