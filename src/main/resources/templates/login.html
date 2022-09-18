@@ -27,7 +27,7 @@
     <link rel="stylesheet" type="text/css" href="/assets/login/css/main.css">
     <!--===============================================================================================-->
 </head>
-<body style="background-color: #666666;">
+<body style="background-color: #a9a6ff;;">
 <div class="preloader" id="preloader">
 
 </div>
@@ -37,8 +37,11 @@
         <div class="container-login100 ">
             <div class="wrap-login100">
                 <form class="login100-form validate-form align-items-center">
-						<span class="login100-form-title p-b-43">
-							Login to continue
+						<span class="login100-form-title-top p-b-43">
+							CINEMA MANAGEMENT
+						</span>
+						<span class="login100-form-title p-b-10">
+							<i> Login to continue </i>
 						</span>
                     <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
                         <input id="name" class="input100" type="text" name="email">
@@ -73,7 +76,7 @@
                         </button>
                     </div>
 
-                    <div class="text-center p-t-46 p-b-20">
+                    <div class="text-center p-t-20 p-b-20">
 							<span class="txt2">
 								or sign up using
 							</span>
@@ -99,7 +102,7 @@
                     </div>
                 </form>
 
-                <div class="login100-more" style="background-image: url('/assets/login/images/bg-01.jpg');">
+                <div class="login100-more" style="background-image: url('/assets/images/Screenshot_25.png');">
                 </div>
             </div>
         </div>
@@ -164,15 +167,15 @@
             .done((resp) => {
                 if (resp.status.id === 2) {
                     App.SweetAlert.showErrorAlert("Login Failed! Your account has been lock!");
-                } else if (resp.role.id === 2) {
+                } else if (resp.role.id === 1) {
                     App.SweetAlert.showErrorAlert("Login Failed! Your account is not authorized to perform this function!!");
                 } else {
                     App.SweetAlert.showSuccessAlert('Login successful!');
-                    if (resp.role.id === 1) {
+                    if (resp.role.id === 3) {
                         setTimeout(function () {
                             window.location.href = `/home/admin`;
                         }, 1000);
-                    } else if (resp.role.id === 3) {
+                    } else if (resp.role.id === 2) {
                         setTimeout(function () {
                             window.location.href = `/home/staff`;
                         }, 1000);

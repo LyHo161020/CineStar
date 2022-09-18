@@ -41,10 +41,13 @@ label.error {
 }
 
 
-#search-input {
+#search-input-food {
     position: relative;
     margin-bottom: 30px;
     margin-top: -18px;
+}
+#search-input-food {
+    position: relative;
 }
 
 #search-icon {
