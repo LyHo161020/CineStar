@@ -1,6 +1,5 @@
 package com.cg.cinestar.controller;
 
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,5 +16,6 @@ public class CustomerController {
     public ModelAndView showHomePage() {
         return new ModelAndView("/customer_page/index");
     }
+
 }
 

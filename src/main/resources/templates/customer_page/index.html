@@ -2729,11 +2729,6 @@
                 top += 50;
             }
 
-            // $.each(data , (i , item) => {
-            //     console.log(data);
-            //     seat = item;
-            //     page.commands.addSeat();
-            // })
         }).fail((err) => {
             alert("Load seat fail");
         })
@@ -2840,6 +2835,51 @@
     $('.movie-content .movie-load').on("mouseleave", ".movie-item", function (e) {
         leaveMovie($(this));
     })
+
+    $(document).on("click",".add", function (e) {
+        e.preventDefault();
+
+        let totalSeat = 0;
+        let totalPrice = 0;
+        let ticket_num = parseInt($(this).parent().parent().find(".ticket-num input").val());
+        ticket_num++;
+        $(this).parent().parent().find(".ticket-num input").val(ticket_num);
+        let ticket_price = parseInt($(this).parent().parent().find(".ticket-price").attr("data-price"));
+
+        $(".ticket-num input").each(function (i , item) {
+            console.log(item);
+            console.log($(item));
+            totalSeat += parseInt($(item).val());
+        })
+
+        if(totalSeat > 10) {
+            alert("Vui lòng chọn tối đa 10 ghế!");
+            return;
+        }
+
+
+
+
+        let ticket_total = ticket_num * ticket_price;
+
+        $(this).parent().parent().find(".ticket-total span").text(ticket_total);
+
+        $(".ticket-total span").each(function (i, item) {
+            totalPrice += parseInt($(item).text());
+        });
+
+
+        $(".about-ticket li:nth-child(3) p.value span").text(totalSeat);
+        $(".total-ticket-num span").text(totalSeat);
+        $(".about-ticket li:nth-child(4) p.value span").text(totalPrice)
+        $(".total-ticket-amount span").text(totalPrice);
+        console.log(totalSeat);
+        console.log(totalPrice);
+        console.log(ticket_num);
+        console.log(ticket_total);
+    })
+
+
 
     $("#ticket-next").on("click", function () {
         $(".final-content").attr("style","display:none");

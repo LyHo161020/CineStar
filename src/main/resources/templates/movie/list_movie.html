@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-    <title>Minton - Responsive Admin Dashboard Template</title>
+    <title>Movie</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
@@ -21,11 +20,10 @@
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="/assets/css/icons.min.css" rel="stylesheet" type="text/css">
     <link href="/assets/css/app.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/assets/css/style.css">
     <link href="/assets/css/upload-movie-img.css" rel="stylesheet" type="text/css">
     <link href="/assets/css/style.css" rel="stylesheet" type="text/css">
     <script src="/assets/js/app/jquery-3.6.0.min.js"></script>
-
-
 </head>
 
 <body>
@@ -34,11 +32,11 @@
 <div id="wrapper">
 
     <!-- Topbar Start -->
-    <th:block th:replace="/layout/navbar:: navbar" />
+    <th:block th:replace="/layout/navbar:: navbar"/>
     <!-- end Topbar -->
 
     <!-- ========== Left Sidebar Start ========== -->
-    <th:block th:replace="/layout/left_sidebar:: left_side" />
+    <th:block th:replace="/layout/left_sidebar_admin :: left_side_admin"/>
     <!-- Left Sidebar End -->
 
     <!-- ============================================================== -->
@@ -69,7 +67,9 @@
                 <!-- end page title -->
                 <div class="row">
                     <div class="col-3">
-                        <button class="btn btn-bordered-pink" data-toggle="modal" data-target="#md_add_movie" id="btn_open_create_movie">Add movie</button>
+                        <button class="btn btn-bordered-pink" data-toggle="modal" data-target="#md_add_movie"
+                                id="btn_open_create_movie">Add movie
+                        </button>
                     </div><!-- end col -->
 
                     <div class="col-5">
@@ -93,7 +93,8 @@
                         <div class="card-box">
 
 
-                            <table class="table table-hover m-0 table-centered dt-responsive nowrap w-100" cellspacing="0" id="tbMovies">
+                            <table class="table table-hover m-0 table-centered dt-responsive nowrap w-100"
+                                   cellspacing="0" id="tbMovies">
                                 <thead class="bg-light">
                                 <tr>
                                     <th class="font-weight-medium">ID</th>
@@ -145,9 +146,9 @@
 </div>
 
 <!-- END wrapper -->
-<th:block th:replace="/movie/md_create_movie:: md_create_movie" />
+<th:block th:replace="/movie/md_create_movie:: md_create_movie"/>
 
-<th:block th:replace="/movie/md_update_movie:: md_upate_movie" />
+<th:block th:replace="/movie/md_update_movie:: md_upate_movie"/>
 <!-- Vendor js -->
 <script src="/assets/js/vendor.min.js"></script>
 
@@ -168,12 +169,11 @@
 <script src="/assets/js/app/preview-image.js"></script>
 
 
-
 <script>
 
     let page = {
         urls: {
-            getAllMovies : App.BASE_URL_MOVIE,
+            getAllMovies: App.BASE_URL_MOVIE,
             getAllCategories: App.BASE_URL_CATEGORY,
             getAllCategoriesByMovieId: App.BASE_URL_CATEGORY + "/movie/",
             getMovieById: App.BASE_URL_MOVIE + "/",
@@ -185,7 +185,7 @@
         commands: {},
         dialogs: {
             element: {},
-            commands :{}
+            commands: {}
         }
     }
 
@@ -194,7 +194,7 @@
     let categoriesUp = [];
     let movie = new Movie();
 
-    function findById(id){
+    function findById(id) {
         return $.ajax({
             type: "GET",
             url: page.urls.getMovieById + id
@@ -224,13 +224,13 @@
                 $.each(data, (i, item) => {
                     console.log(item);
 
-                    let str = App.drawRowMovie(item.id, item.title,item.fileUrl, item.premiereDate, item.showDuration, item.director, item.actor, item.language);
+                    let str = App.drawRowMovie(item.id, item.title, item.fileUrl, item.premiereDate, item.showDuration, item.director, item.actor, item.language);
                     $('#tbMovies tbody').append(str);
 
                     $('#tdCategory_' + item.id).html('')
 
                     let strCategory = item.categories;
-                    let categoryList = strCategory.substring(1,strCategory.length-1).split(",");
+                    let categoryList = strCategory.substring(1, strCategory.length - 1).split(",");
 
                     $.each(categoryList, (i, category) => {
                         let str = `<span class="badge badge-warning">${category}</span>`;
@@ -243,33 +243,32 @@
             .fail((jqXHR) => {
                 console.log(jqXHR);
             })
-
     }
 
 
-    function getAllCategories(){
+    function getAllCategories() {
         return $.ajax({
-                "headers": {
-                    "accept": "application/json",
-                    "content-type": "application/json"
-                },
-                "type": "GET",
-                "url": page.urls.getAllCategories,
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: page.urls.getAllCategories,
+        })
+            .done((data) => {
+                $('#categoryContainer').html("");
+                $('#categoryContainerUp').html("");
+                $.each(data, (i, item) => {
+                    let str = App.drawCheckboxCategory(item.id, item.name.trim());
+                    let strUp = App.drawCheckboxCategoryUp(item.id, item.name.trim())
+                    $('#categoryContainer').append(str);
+                    $('#categoryContainerUp').append(strUp);
+                })
             })
-                .done((data) => {
-                    $('#categoryContainer').html("");
-                    $('#categoryContainerUp').html("");
-                    $.each(data, (i, item) => {
-                        let str = App.drawCheckboxCategory(item.id, item.name.trim());
-                        let strUp = App.drawCheckboxCategoryUp(item.id, item.name.trim())
-                        $('#categoryContainer').append(str);
-                        $('#categoryContainerUp').append(strUp);
-                    })
-                })
-                .fail((jqXHR) => {
-                    alert("fail")
-                    console.log(jqXHR);
-                })
+            .fail((jqXHR) => {
+                alert("fail")
+                console.log(jqXHR);
+            })
 
     }
 
@@ -277,7 +276,7 @@
         $("#frmCreateMovie").submit();
     });
 
-    function createMovie(){
+    function createMovie() {
         $('#btn_create_movie').prop("disabled", true);
         $('#btn_create_movie').html("<span class=\"spinner-border spinner-border-sm\"></span> Loading ...");
 
@@ -311,7 +310,7 @@
             .done((data) => {
 
                 let categoriesList = JSON.parse(data.categories)
-                let str = App.drawRowMovie(data.id, data.title,data.fileUrl, data.premiereDate, data.showDuration, data.director, data.actor, data.language);
+                let str = App.drawRowMovie(data.id, data.title, data.fileUrl, data.premiereDate, data.showDuration, data.director, data.actor, data.language);
                 $('#tbMovies tbody').prepend(str);
                 $('#tdCategory_' + data.id).html('')
 
@@ -359,15 +358,15 @@
 
     })
 
-    function addCategories(){
+    function addCategories() {
         categories = [];
         let categoryCheckboxes = $('.category');
 
-        for(let checkbox of categoryCheckboxes){
-            checkbox.addEventListener('click', function (e){
-                if(e.target.checked === true){
+        for (let checkbox of categoryCheckboxes) {
+            checkbox.addEventListener('click', function (e) {
+                if (e.target.checked === true) {
                     categories.push({id: e.target.id.replace("category_", ""), name: e.target.name.trim()})
-                }else{
+                } else {
                     categories = categories.filter(category => category.id !== e.target.id.replace("category_", ""))
                 }
             })
@@ -375,16 +374,17 @@
 
         return categories;
     }
-    function addCategoriesForUpdate(){
+
+    function addCategoriesForUpdate() {
 
         let categoryCheckboxes = $('.categoryUp');
 
-        for(let checkbox of categoryCheckboxes){
+        for (let checkbox of categoryCheckboxes) {
 
-            checkbox.addEventListener('click', function (e){
-                if(e.target.checked){
+            checkbox.addEventListener('click', function (e) {
+                if (e.target.checked) {
                     categoriesUp.push({id: e.target.id.replace("categoryUp_", ""), name: e.target.name.trim()})
-                }else{
+                } else {
                     categoriesUp = categoriesUp.filter(category => category.id !== e.target.id.replace("categoryUp_", ""))
                 }
             })
@@ -392,13 +392,13 @@
         return categoriesUp;
     }
 
-    function handlerUpdateMovie(){
+    function handlerUpdateMovie() {
 
-         $('.btn_edit_movie').on('click', function (){
-             $('#btn_save_update_movie').html("Update");
-             $('#btn_save_update_movie').prop("disabled", false);
+        $('.btn_edit_movie').on('click', function () {
+            $('#btn_save_update_movie').html("Update");
+            $('#btn_save_update_movie').prop("disabled", false);
 
-             $("#md_update_movie").modal("show");
+            $("#md_update_movie").modal("show");
 
             $("#md_update_movie .modal-alert-danger").removeClass("show").addClass("hide");
 
@@ -406,12 +406,12 @@
             let id = this.id.replace("btn_edit_movie_", "");
 
             $.ajax({
-                "headers": {
+                headers: {
                     "accept": "application/json",
                     "content-type": "application/json"
                 },
-                "type": "GET",
-                "url": page.urls.getMovieById + id
+                type: "GET",
+                url: page.urls.getMovieById + id
             })
                 .done((data) => {
                     console.log(data);
@@ -429,8 +429,8 @@
                     $('#uploadIconUp').css("display", "none");
 
 
-                    let strCategory =  data.categories;
-                    let categoriesList = strCategory.substring(1,strCategory.length-1).split(",");
+                    let strCategory = data.categories;
+                    let categoriesList = strCategory.substring(1, strCategory.length - 1).split(",");
 
                     $.each(categoriesList, (k, categoryUp) => {
                         $('.' + categoryUp.toString().trim().split(' ')[0]).prop('checked', true);
@@ -438,15 +438,15 @@
                     categoriesUp = [];
                     let categoryCheckboxes = $('.categoryUp');
 
-                    for(let checkbox of categoryCheckboxes){
+                    for (let checkbox of categoryCheckboxes) {
                         let id = checkbox.id;
-                        if($('#'+id).is(":checked")){
+                        if ($('#' + id).is(":checked")) {
                             categoriesUp.push({id: checkbox.id.replace("categoryUp_", ""), name: checkbox.name.trim()})
                         }
                     }
 
                 })
-                .fail((jqXHR) =>{
+                .fail((jqXHR) => {
                     console.log(jqXHR);
                 })
         })
@@ -459,7 +459,7 @@
     })
 
 
-    function updateMovie(){
+    function updateMovie() {
         $('#btn_save_update_movie').prop("disabled", true);
         $('#btn_save_update_movie').html("<span class=\"spinner-border spinner-border-sm\"></span> Updating ...");
         let formData = new FormData();
@@ -473,7 +473,7 @@
         formData.append("description", $('#descriptionUp').val().toString());
         formData.append("trailer", $('#trailerUp').val().toString());
 
-        if($("#imageUp").val() !== ""){
+        if ($("#imageUp").val() !== "") {
             formData.append("file", $("#imageUp")[0].files[0]);
         }
 
@@ -495,7 +495,7 @@
                 // console.log("after update: ")
                 // console.log(data);
                 let categoriesList = JSON.parse(data.categories)
-                let str = App.drawRowMovie(data.id, data.title,data.fileUrl, data.premiereDate, data.showDuration, data.director, data.actor, data.language);
+                let str = App.drawRowMovie(data.id, data.title, data.fileUrl, data.premiereDate, data.showDuration, data.director, data.actor, data.language);
                 $('#tbMovies tbody #tr_' + data.id).replaceWith(str);
                 $('#tdCategory_' + data.id).html('')
 
@@ -527,13 +527,12 @@
     }
 
 
-    function handleShowDelete(){
-        $('.btn_delete_movie').on('click', function(){
+    function handleShowDelete() {
+        $('.btn_delete_movie').on('click', function () {
             let id = this.id.replace("btn_delete_movie_", "");
             console.log(id);
 
             findById(id).then(
-
                 App.SweetAlert.showConfirmDelete("Bạn muốn xóa phim này à?", "Đồng ý", "Hủy")
                     .then((result) => {
                         if (result.isConfirmed) {
@@ -545,7 +544,7 @@
         })
     }
 
-    function doDelete(id){
+    function doDelete(id) {
         $.ajax({
             headers: {
                 "Content-Type": "Application/json",
@@ -565,18 +564,18 @@
             });
     }
 
-    $('#btn_search_movie').on('click', () =>{
+    $('#btn_search_movie').on('click', () => {
         let keyword = $('#key_search').val();
-        if(keyword === ""){
+        if (keyword === "") {
             loadMovies();
-        }else {
+        } else {
             searchMovie(keyword);
         }
 
     })
 
 
-    function searchMovie(keyword){
+    function searchMovie(keyword) {
 
         $.ajax({
             headers: {
@@ -591,13 +590,13 @@
 
                 $.each(data, (i, item) => {
 
-                    let str = App.drawRowMovie(item.id, item.title,item.fileUrl, item.premiereDate, item.showDuration, item.director, item.actor, item.language);
+                    let str = App.drawRowMovie(item.id, item.title, item.fileUrl, item.premiereDate, item.showDuration, item.director, item.actor, item.language);
                     $('#tbMovies tbody').append(str);
 
                     $('#tdCategory_' + item.id).html('')
 
                     let strCategory = item.categories;
-                    let categoryList = strCategory.substring(1,strCategory.length-1).split(",");
+                    let categoryList = strCategory.substring(1, strCategory.length - 1).split(",");
 
                     $.each(categoryList, (i, category) => {
                         let str = `<span class="badge badge-warning">${category}</span>`;
@@ -615,8 +614,7 @@
     }
 
 
-
-    function unbindAll(){
+    function unbindAll() {
         $('.btn_edit_movie').off();
         $('.btn_delete_movie').off();
     }
@@ -632,11 +630,10 @@
         loadMovies();
 
         initializeControlEvent();
-        getAllCategories().then(() =>{
+        getAllCategories().then(() => {
             addCategories();
             addCategoriesForUpdate();
         });
-
 
 
     });

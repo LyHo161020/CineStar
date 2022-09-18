@@ -1,7 +1,7 @@
 class App {
     static DOMAIN = location.origin;
-
     static BASE_URL = this.DOMAIN + "/api";
+    static BASE_URL_LOGIN = this.DOMAIN + "/api/auth/login";
     static BASE_URL_MOVIE = this.DOMAIN + "/api/movies";
     static BASE_URL_CATEGORY = this.DOMAIN + "/api/categories";
     static BASE_URL_CUSTOMER_NOW_SHOWING = this.DOMAIN + "/api/customer/list_nowShowing"
@@ -14,7 +14,6 @@ class App {
     static SUCCESS_EDITED = "Edit food successfully!";
     static SUCCESS_REMOVED = "Remove successfully!";
     static FAIL_LOAD = "Load data failed!";
-
 
     static ERROR_400 = "Giao dịch không thành công, vui lòng kiểm tra lại dữ liệu.";
     static ERROR_401 = "Bạn chưa đăng nhập! Vui lòng đăng nhập!";
@@ -86,9 +85,9 @@ class App {
             Swal.fire({
                 icon: 'success',
                 title: t,
-                position: 'top-end',
+                position: 'center',
                 showConfirmButton: false,
-                timer: 2500
+                timer: 1500
             })
         }
 
@@ -96,7 +95,9 @@ class App {
             Swal.fire({
                 icon: 'error',
                 title: 'Warning',
-                text: t
+                text: t,
+                position: 'center',
+                timer: 1500
             })
         }
     }
@@ -131,7 +132,7 @@ class App {
                     ${title}
                 </td>
                 <td>
-                    <img src="${image}" class="rounded mx-auto d-block img-thumbnail">
+                    <img src="${image}" class="rounded mx-auto d-block img-thumbnail" alt="">
                 </td>
                 <td>
                     ${premiereDate}

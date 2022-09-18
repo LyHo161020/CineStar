@@ -26,11 +26,10 @@ import java.util.Set;
 @Accessors(chain = true)
 
 public class User extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private Long id;
-
 
 
     private String username;
@@ -41,13 +40,11 @@ public class User extends BaseEntity {
     @Column(name = "full_name")
     private String fullName;
 
-
     private String phone;
 
     private String email;
 
     private String address;
-
 
     @Column(name = "date_of_birth")
     private String dateOfBirth;
@@ -73,5 +70,4 @@ public class User extends BaseEntity {
         this.status = status;
         this.role = role;
     }
-
 }

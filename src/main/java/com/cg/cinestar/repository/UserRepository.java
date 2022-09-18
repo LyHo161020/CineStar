@@ -43,7 +43,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     )
     List<UserDTO> findAllUserDTO();
 
+
     Optional<User> findById(long id);
+
 
     @Query("SELECT NEW com.cg.cinestar.model.dto.UserDTO (" +
             "u.id, " +

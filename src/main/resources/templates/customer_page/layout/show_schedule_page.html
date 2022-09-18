@@ -3268,7 +3268,138 @@ Giấy CNĐKDN số: 0312742744, đăng ký lần đầu ngày 18/04/2014, đăn
             })
     }
 
+<<<<<<< HEAD
     // drawBranchOnSchedulePage();
+=======
+
+    function LoadScheduleMovie(branchId) {
+        $('.schedule-load').html("");
+
+        $.ajax({
+            "headers": {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            "type": "GET",
+            "url": App.BASE_URL + "/show-schedules/branch/" + branchId,
+        })
+            .done((data) => {
+                $('.c_name').html(data[0].branchName);
+                $('.c_address').html(data[0].branchAddress);
+
+                $.each(data, (i, item) => {
+                    console.log(1)
+                    let str = App.drawScheduleDetails(item.movie.id, item.movie.title,item.movie.fileUrl, item.movie.description);
+                    $('.schedule-load').append(str);
+
+                    $.ajax({
+                        "headers": {
+                            "accept": "application/json",
+                            "content-type": "application/json"
+                        },
+                        "type": "GET",
+                        "url": App.BASE_URL + "/show-schedules/branch/showdate/" + branchId + "/" + item.movie.id,
+                    })
+                        .done((data) => {
+                            $.each(data, (i, item) => {
+                                let year = item.showDate.substring(0,4);
+                                let day = item.showDate.substring(5,7) + "/" + item.showDate.substring(8);
+                                let str = App.drawShowDate(item.showDate, day, year);
+                                $('#schedule-' + item.movie.id).prepend(str);
+                                $.ajax({
+                                    "headers": {
+                                        "accept": "application/json",
+                                        "content-type": "application/json"
+                                    },
+                                    "type": "GET",
+                                    "url": App.BASE_URL + "/show-schedules/branch/showtimeslot/" + branchId + "/" + item.movie.id + "/" + item.showDate,
+                                })
+                                    .done((data) => {
+
+                                        let str = `
+											<div class="row-hour">
+												<ul>
+										`;
+                                        $.each(data, (i, item) => {
+                                            console.log(3)
+                                            str += App.drawShowTimeSlot(item.movie.id, item.roomId, item.showTimeSlot)
+
+                                        })
+                                        str += `
+													</ul>
+												</div>
+										`;
+
+                                        $('#schedule-' + item.movie.id +' .' + item.showDate).prepend(str);
+                                    })
+                            })
+
+                        })
+
+                })
+
+            })
+
+    }
+
+    function LoadScheduleDate(branchId, movieId) {
+
+        $.ajax({
+            "headers": {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            "type": "GET",
+            "url": App.BASE_URL + "/show-schedules/branch/" + branchId + "/" + movieId,
+        })
+            .done((data) => {
+                $.each(data, (i, item) => {
+                    console.log(item);
+                    let str = App.drawShowDate(item.showDate);
+                    $('.schedule-load .schedule .row').prepend(str);
+
+                })
+
+            })
+
+    }
+
+    function LoadScheduleShowTimeSlot(branchId, movieId, showDate) {
+
+        $.ajax({
+            "headers": {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            "type": "GET",
+            "url": App.BASE_URL + "/show-schedules/branch/" + branchId + "/" + movieId + "/" + showDate,
+        })
+            .done((data) => {
+
+                let str = `
+					<div class="row-hour">
+						<ul>
+				`;
+
+                $.each(data, (i, item) => {
+                    console.log(item);
+
+
+                    str += App.drawShowTimeSlot(movieId, item.roomId, item.showTimeSlot)
+
+
+                })
+
+                str += `
+						</ul>
+                 	</div>
+			`;
+
+                $('.schedule-load .schedule .row').prepend(str);
+
+            })
+
+    }
 
 </script>
 <form id="payment" method="post" action="https://cinestar.com.vn/redirectpayment">

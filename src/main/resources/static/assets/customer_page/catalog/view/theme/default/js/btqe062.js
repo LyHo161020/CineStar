@@ -2641,32 +2641,32 @@ $(document).ready(function() {
 
 ///////////////////TICKET EVENTS//////////////////////
     //addd ticket
-    $(document).on('click','.add', function(e) {
-        e.preventDefault();
-        var totalSeat = 0;
-        $('.ticket-num input').each(function(i, obj) {
-            totalSeat += parseInt($(obj).val());
-        });
-
-        if(totalSeat >= 8){
-            alert("Vui lòng chọn tối đa 8 ghế.");
-            return false;
-        }
-
-        var row =  $(this).parent().parent();
-        // console.log(row.attr('data-seatstyle-id'), "row.attr('data-seatstyle-id')");
-        var isDouble = row.attr('data-seatstyle-id') == 30 ? 1 : 0;
-        isDouble = (isDouble === 0 && row.attr('data-ticket-id') == 27) ? -1: isDouble;
-        cal_total_on_row(row,'asc', isDouble);
-        var key = row.attr('data-seatstyle-id')+"_"+row.attr('data-ticket-id');
-        var val = parseInt(row.find('.ticket-num input').val());
-        if(val==0 && movie.pseats.hasOwnProperty(key)){
-            delete movie.pseats[key];
-        } else {
-            movie.pseats[key] = val;
-        }
-        return false;
-    });
+    // $(document).on('click','.add', function(e) {
+    //     e.preventDefault();
+    //     var totalSeat = 0;
+    //     $('.ticket-num input').each(function(i, obj) {
+    //         totalSeat += parseInt($(obj).val());
+    //     });
+    //
+    //     if(totalSeat >= 8){
+    //         alert("Vui lòng chọn tối đa 8 ghế.");
+    //         return false;
+    //     }
+    //
+    //     var row =  $(this).parent().parent();
+    //     // console.log(row.attr('data-seatstyle-id'), "row.attr('data-seatstyle-id')");
+    //     var isDouble = row.attr('data-seatstyle-id') == 30 ? 1 : 0;
+    //     isDouble = (isDouble === 0 && row.attr('data-ticket-id') == 27) ? -1: isDouble;
+    //     cal_total_on_row(row,'asc', isDouble);
+    //     var key = row.attr('data-seatstyle-id')+"_"+row.attr('data-ticket-id');
+    //     var val = parseInt(row.find('.ticket-num input').val());
+    //     if(val==0 && movie.pseats.hasOwnProperty(key)){
+    //         delete movie.pseats[key];
+    //     } else {
+    //         movie.pseats[key] = val;
+    //     }
+    //     return false;
+    // });
     //minus ticket
     $(document).on('click', '.minus', function(e) {
         e.preventDefault();

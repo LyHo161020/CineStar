@@ -8,11 +8,11 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/movies")
 public class MovieController {
-
     @GetMapping
     public ModelAndView getHome() {
         return new ModelAndView("/movie/list_movie");
     }
+
     @GetMapping("/{id}")
     public ModelAndView getDescription() {
         return new ModelAndView("/customer/movie_description");

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Minton - Responsive Admin Dashboard Template</title>
+    <title>User</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
     <meta content="Coderthemes" name="author">
@@ -15,7 +15,7 @@
 <body>
     <div id = "wrapper">
         <th:block th:replace="/layout/navbar :: navbar"/>
-        <th:block th:replace="/layout/left_sidebar :: left_side"/>
+        <th:block th:replace="/layout/left_sidebar_admin :: left_side_admin"/>
 
         <!-- ============================================================== -->
         <!-- Start Page Content here -->
@@ -142,22 +142,7 @@
             </div> <!-- content -->
 
             <!-- Footer Start -->
-            <footer class="footer">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-6">
-                            2016 - 2019 &copy; Minton theme by <a href="">Coderthemes</a>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="text-md-right footer-links d-none d-sm-block">
-                                <a href="javascript:void(0);">About Us</a>
-                                <a href="javascript:void(0);">Help</a>
-                                <a href="javascript:void(0);">Contact Us</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </footer>
+            <th:block th:replace="layout/footer :: footer"/>
             <!-- end Footer -->
 
         </div>

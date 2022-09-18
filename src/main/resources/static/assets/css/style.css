@@ -41,10 +41,10 @@ label.error {
 }
 
 
-
-
 #search-input {
     position: relative;
+    margin-bottom: 30px;
+    margin-top: -18px;
 }
 
 #search-icon {
@@ -55,10 +55,7 @@ label.error {
     z-index: 1;
 }
 
-
-
 /*image preview*/
-
 .image-box, .image-box-up {
     margin: 0 auto;
     margin-top: 28px;
@@ -71,7 +68,6 @@ label.error {
     height: 100%;
     display: none;
 }
-
 #uploadIconCre, #uploadIconUp {
     position: relative;
     top: 45%;
@@ -84,15 +80,15 @@ label.error {
     color: #1abc9c;
     font-weight: 300;
 }
-
-
 #search-icon:hover {
     cursor: pointer;
 }
-<<<<<<< HEAD
-
-=======
 .film-details-content {
 
 }
->>>>>>> origin/qanh_dev
+.dropdown-toggle {
+    text-align: center;
+    margin-left: 25px;
+    margin-right: 25px;
+    border-radius: 5px;
+}
