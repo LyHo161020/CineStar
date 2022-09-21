@@ -39,7 +39,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "u.role " +
             ") " +
             "FROM User u " +
-            "WHERE u.deleted = false"
+            "WHERE u.deleted = false " +
+            "ORDER BY u.id"
     )
     List<UserDTO> findAllUserDTO();
 

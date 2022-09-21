@@ -12,9 +12,17 @@
     <script src="/assets/js/app/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-<div id = "wrapper">
+<div id="wrapper">
     <th:block th:replace="/layout/navbar :: navbar"/>
-    <th:block th:replace="/layout/left_sidebar :: left_side"/>
+
+    <!-- ========== Left Sidebar Start ========== -->
+    <div th:if="${user.role.getId() == 3}">
+        <th:block  th:replace="/layout/left_sidebar_admin :: left_side_admin"/>
+    </div>
+    <div th:if="${user.role.getId() == 2}">
+        <th:block  th:replace="/layout/left_sidebar_staff :: left_side_staff"/>
+    </div>
+    <!-- Left Sidebar End -->
 
     <!-- ============================================================== -->
     <!-- Start Page Content here -->
@@ -60,7 +68,8 @@
                                         <div class="card-box">
                                             <i class="fe-archive font-24"></i>
                                             <h3 class="text-warning">6952</h3>
-                                            <p class="text-uppercase mb-1 font-13 font-weight-medium">Pending Tickets</p>
+                                            <p class="text-uppercase mb-1 font-13 font-weight-medium">Pending
+                                                Tickets</p>
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-xl-3">
@@ -74,51 +83,52 @@
                                         <div class="card-box">
                                             <i class="fe-delete font-24"></i>
                                             <h3 class="text-danger">250</h3>
-                                            <p class="text-uppercase mb-1 font-13 font-weight-medium">Deleted Tickets</p>
+                                            <p class="text-uppercase mb-1 font-13 font-weight-medium">Deleted
+                                                Tickets</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row mb-1">
-                               <h6>
-                                   <i class="icon-copy fa fa-glass" aria-hidden="true"></i>
-                                   <strong style="font-size: 23px;">Bộ lọc</strong>
-                               </h6>
+                                <h6>
+                                    <i class="icon-copy fa fa-glass" aria-hidden="true"></i>
+                                    <strong style="font-size: 23px;">Bộ lọc</strong>
+                                </h6>
                             </div>
 
                             <div class="row mb-3">
                                 <div class="col-md-4">
                                     <label class="form-label" for="movieFilter">Movie</label>
-                                    <select class = "form-control" id="movieFilter" name="movieFilter">
+                                    <select class="form-control" id="movieFilter" name="movieFilter">
 
                                     </select>
                                 </div>
 
                                 <div class="col-md-2">
                                     <label class="form-label" for="branchFilter">Branch</label>
-                                    <select class = "form-control" id="branchFilter" name="branchFilter">
+                                    <select class="form-control" id="branchFilter" name="branchFilter">
 
                                     </select>
                                 </div>
 
                                 <div class="col-md-2">
                                     <label class="form-label" for="roomFilter">Room</label>
-                                    <select class = "form-control" id="roomFilter" name="roomFilter">
+                                    <select class="form-control" id="roomFilter" name="roomFilter">
 
                                     </select>
                                 </div>
 
                                 <div class="col-md-2">
                                     <label class="form-label" for="showDateFilter">Show Date</label>
-                                    <select class = "form-control" id="showDateFilter" name="showDateFilter">
+                                    <select class="form-control" id="showDateFilter" name="showDateFilter">
 
                                     </select>
                                 </div>
 
                                 <div class="col-md-2">
                                     <label class="form-label" for="showTimeSlotFilter">Show Time Slot</label>
-                                    <select class = "form-control" id="showTimeSlotFilter" name="showTimeSlotFilter">
+                                    <select class="form-control" id="showTimeSlotFilter" name="showTimeSlotFilter">
 
                                     </select>
                                 </div>
@@ -133,32 +143,34 @@
                                 </div>
                             </div>
 
-<!--                            <div class="row mt-1">-->
+                            <!--                            <div class="row mt-1">-->
 
-<!--                                <div class="col-sm-4 ">-->
-<!--                                    <div id="DataTables_Table_0_filter" class="dataTables_filter">-->
-<!--                                        <a style="box-shadow: 0 0 1px 1px #4a4b59;" class="btn btn-light create-modal float-end">-->
-<!--                                            <i class="icon-copy fa fa-plus-square" aria-hidden="true"></i>-->
-<!--                                            <span><strong> Add New Show Schedule</strong></span>-->
-<!--                                        </a>-->
-<!--                                    </div>-->
-<!--                                </div>-->
+                            <!--                                <div class="col-sm-4 ">-->
+                            <!--                                    <div id="DataTables_Table_0_filter" class="dataTables_filter">-->
+                            <!--                                        <a style="box-shadow: 0 0 1px 1px #4a4b59;" class="btn btn-light create-modal float-end">-->
+                            <!--                                            <i class="icon-copy fa fa-plus-square" aria-hidden="true"></i>-->
+                            <!--                                            <span><strong> Add New Show Schedule</strong></span>-->
+                            <!--                                        </a>-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
 
-<!--                                <div class="col-sm-4 header-search">-->
-<!--                                    <form>-->
-<!--                                        <div class="form-group mb-0">-->
-<!--                                            <i id="search-icon" class="icon-copy fa fa-search" aria-hidden="true"></i>-->
-<!--                                            <input id="search-input" type="text" class="form-control search-input" placeholder="Search Here">-->
-<!--                                        </div>-->
-<!--                                    </form>-->
-<!--                                </div>-->
-<!--                            </div>-->
+                            <!--                                <div class="col-sm-4 header-search">-->
+                            <!--                                    <form>-->
+                            <!--                                        <div class="form-group mb-0">-->
+                            <!--                                            <i id="search-icon" class="icon-copy fa fa-search" aria-hidden="true"></i>-->
+                            <!--                                            <input id="search-input" type="text" class="form-control search-input" placeholder="Search Here">-->
+                            <!--                                        </div>-->
+                            <!--                                    </form>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
 
                             <div id="tickets-table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <div class="dataTables_length" id="tickets-table_length"><label>Show <select name="tickets-table_length"
-                                                                                                                     aria-controls="tickets-table" class="custom-select custom-select-sm form-control form-control-sm">
+                                        <div class="dataTables_length" id="tickets-table_length"><label>Show <select
+                                                name="tickets-table_length"
+                                                aria-controls="tickets-table"
+                                                class="custom-select custom-select-sm form-control form-control-sm">
                                             <option value="10">10</option>
                                             <option value="25">25</option>
                                             <option value="50">50</option>
@@ -168,7 +180,8 @@
 
                                     <div class="col-sm-4 ">
                                         <div id="DataTables_Table_0_filter" class="dataTables_filter">
-                                            <a style="box-shadow: 0 0 1px 1px #4a4b59;" class="btn btn-light create-modal float-end">
+                                            <a style="box-shadow: 0 0 1px 1px #4a4b59;"
+                                               class="btn btn-light create-modal float-end">
                                                 <i class="icon-copy fa fa-plus-square" aria-hidden="true"></i>
                                                 <span><strong> Add New Show Schedule</strong></span>
                                             </a>
@@ -178,8 +191,10 @@
                                     <div class="col-sm-4 header-search">
                                         <form>
                                             <div class="form-group mb-0">
-                                                <i id="search-icon" class="icon-copy fa fa-search" aria-hidden="true"></i>
-                                                <input id="search-input" type="text" class="form-control search-input" placeholder="Search Here">
+                                                <i id="search-icon" class="icon-copy fa fa-search"
+                                                   aria-hidden="true"></i>
+                                                <input id="search-input" type="text" class="form-control search-input"
+                                                       placeholder="Search Here">
                                             </div>
                                         </form>
                                     </div>
@@ -187,14 +202,15 @@
 
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <table class="table table-hover m-0 table-centered dt-responsive nowrap w-100" cellspacing="0" id="tickets-table">
+                                        <table class="table table-hover m-0 table-centered dt-responsive nowrap w-100"
+                                               cellspacing="0" id="tickets-table">
                                             <thead class="bg-light">
                                             <tr>
                                                 <th class="font-weight-medium">ID</th>
                                                 <th class="font-weight-medium">Movie</th>
                                                 <th class="font-weight-medium">Room</th>
                                                 <th class="font-weight-medium">Branch</th>
-                                                <th class="font-weight-medium">Show Time SLot </th>
+                                                <th class="font-weight-medium">Show Time SLot</th>
                                                 <th class="font-weight-medium">Show Date</th>
                                                 <th class="font-weight-medium">Create By</th>
                                                 <th class="font-weight-medium" style="width: 120px">Action</th>
@@ -210,23 +226,26 @@
 
                                 <div class="row">
                                     <div class="col-sm-12 col-md-5">
-                                        <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">
-                                            Showing <span id = "start"></span> to <span id="end">  </span> of <span id="numOfData"></span> entries
+                                        <div class="dataTables_info" id="tickets-table_info" role="status"
+                                             aria-live="polite">
+                                            Showing <span id="start"></span> to <span id="end">  </span> of <span
+                                                id="numOfData"></span> entries
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-7">
-                                        <div class="dataTables_paginate paging_simple_numbers" id="tickets-table_paginate">
+                                        <div class="dataTables_paginate paging_simple_numbers"
+                                             id="tickets-table_paginate">
                                             <ul class="pagination pagination-rounded">
-<!--                                                <li class="paginate_button page-item previous disabled" id="tickets-table_previous"><a href="#"-->
-<!--                                                                                                                                       aria-controls="tickets-table" data-dt-idx="0" tabindex="0" class="page-link"><i-->
-<!--                                                        class="mdi mdi-chevron-left"></i></a></li>-->
-<!--                                                <li class="paginate_button page-item active"><a href="#" aria-controls="tickets-table"-->
-<!--                                                                                                data-dt-idx="1" tabindex="0" class="page-link">1</a></li>-->
-<!--                                                <li class="paginate_button page-item "><a href="#" aria-controls="tickets-table" data-dt-idx="2"-->
-<!--                                                                                          tabindex="0" class="page-link">2</a></li>-->
-<!--                                                <li class="paginate_button page-item next" id="tickets-table_next"><a href="#"-->
-<!--                                                                                                                      aria-controls="tickets-table" data-dt-idx="3" tabindex="0" class="page-link"><i-->
-<!--                                                        class="mdi mdi-chevron-right"></i></a></li>-->
+                                                <!--                                                <li class="paginate_button page-item previous disabled" id="tickets-table_previous"><a href="#"-->
+                                                <!--                                                                                                                                       aria-controls="tickets-table" data-dt-idx="0" tabindex="0" class="page-link"><i-->
+                                                <!--                                                        class="mdi mdi-chevron-left"></i></a></li>-->
+                                                <!--                                                <li class="paginate_button page-item active"><a href="#" aria-controls="tickets-table"-->
+                                                <!--                                                                                                data-dt-idx="1" tabindex="0" class="page-link">1</a></li>-->
+                                                <!--                                                <li class="paginate_button page-item "><a href="#" aria-controls="tickets-table" data-dt-idx="2"-->
+                                                <!--                                                                                          tabindex="0" class="page-link">2</a></li>-->
+                                                <!--                                                <li class="paginate_button page-item next" id="tickets-table_next"><a href="#"-->
+                                                <!--                                                                                                                      aria-controls="tickets-table" data-dt-idx="3" tabindex="0" class="page-link"><i-->
+                                                <!--                                                        class="mdi mdi-chevron-right"></i></a></li>-->
                                             </ul>
                                         </div>
                                     </div>
@@ -268,15 +287,15 @@
     <!-- ============================================================== -->
 </div>
 
-    <th:block th:replace="/show_schedule/modal_create_show_schedule :: modal_create_show_schedule"/>
-    <th:block th:replace="/show_schedule/modal_update_show_schedule :: modal_update_show_schedule"/>
-    <th:block th:replace="/show_schedule/temp_show_schedule :: temp_list_show_schedule"/>
+<th:block th:replace="/show_schedule/modal_create_show_schedule :: modal_create_show_schedule"/>
+<th:block th:replace="/show_schedule/modal_update_show_schedule :: modal_update_show_schedule"/>
+<th:block th:replace="/show_schedule/temp_show_schedule :: temp_list_show_schedule"/>
 
-    <script src="/assets/js/app/custom-validation-schedule.js"></script>
-    <th:block th:replace="/layout/script :: script-app"/>
-    <th:block th:replace="/layout/script :: script-page"/>
+<script src="/assets/js/app/custom-validation-schedule.js"></script>
+<th:block th:replace="/layout/script :: script-app"/>
+<th:block th:replace="/layout/script :: script-page"/>
 
-    <script src="/assets/js/app/jquery.validate.js"></script>
+<script src="/assets/js/app/jquery.validate.js"></script>
 </body>
 <script>
 
@@ -302,7 +321,7 @@
         commands: {},
         dialogs: {
             element: {},
-            commands :{}
+            commands: {}
         }
     }
 
@@ -350,7 +369,6 @@
     page.dialogs.element.inputErrorUp = $("#frmUpdateShowSchedule input.error");
 
 
-
     let showSchedule = new ShowSchedule();
     let pageSize = 5;
     let maxNavigationPage = 2;
@@ -373,7 +391,7 @@
     }
 
     page.commands.addRow = () => {
-            page.element.tbBody.prepend($(tempShowSchedule(showSchedule.id, showSchedule.movieName, showSchedule.roomName, showSchedule.branchName, showSchedule.showDate, showSchedule.showTimeSlot)));
+        page.element.tbBody.prepend($(tempShowSchedule(showSchedule.id, showSchedule.movieName, showSchedule.roomName, showSchedule.branchName, showSchedule.showDate, showSchedule.showTimeSlot)));
     }
 
     page.commands.updateRow = () => {
@@ -394,7 +412,6 @@
     })
 
 
-
     page.commands.handleUpdateBtn = () => {
 
         $(".update").on('click', function () {
@@ -406,7 +423,7 @@
 
                 page.dialogs.element.branchIdUp.val(showSchedule.branchId);
 
-                page.commands.getRoom(showSchedule.branchId).then( () => {
+                page.commands.getRoom(showSchedule.branchId).then(() => {
                     page.dialogs.element.roomIdUp.val(showSchedule.roomId);
                 })
 
@@ -415,7 +432,7 @@
         });
     }
 
-    page.commands.handleDeleteBtn = () =>  {
+    page.commands.handleDeleteBtn = () => {
         $(".delete").on("click", function () {
             let id = $(this).data("id");
 
@@ -473,7 +490,7 @@
             page.element.movieFilter.empty();
 
             $.each(data, (i, item) => {
-                let  str = `<option value="${item.id}">${item.title}</option>`;
+                let str = `<option value="${item.id}">${item.title}</option>`;
                 page.dialogs.element.movieId.append(str);
                 page.dialogs.element.movieIdUp.append(str)
                 page.element.movieFilter.append(str);
@@ -495,7 +512,7 @@
 
 
             $.each(data, (i, item) => {
-                  let  str = `<option value="${item.id}">${item.name}</option>`;
+                let str = `<option value="${item.id}">${item.name}</option>`;
                 page.dialogs.element.branchId.append(str);
                 page.dialogs.element.branchIdUp.append(str);
 
@@ -511,19 +528,20 @@
         return $.ajax({
             type: "GET",
             url: page.url.getAllRoomByBranchId + branchId,
-        }).done((data) => {
-            page.dialogs.element.roomId.empty();
-            page.dialogs.element.roomIdUp.empty();
-
-
-            $.each(data, (i, item) => {
-                let  str = `<option value="${item.id}">${item.name}</option>`;
-                page.dialogs.element.roomId.append(str);
-                page.dialogs.element.roomIdUp.append(str);
-            })
         })
+            .done((data) => {
+                page.dialogs.element.roomId.empty();
+                page.dialogs.element.roomIdUp.empty();
+
+
+                $.each(data, (i, item) => {
+                    let str = `<option value="${item.id}">${item.name}</option>`;
+                    page.dialogs.element.roomId.append(str);
+                    page.dialogs.element.roomIdUp.append(str);
+                })
+            })
             .fail((err) => {
-                alert("Load room fail!");
+                alert("Load room failed!");
             })
     }
 
@@ -531,12 +549,13 @@
         return $.ajax({
             type: "GET",
             url: page.url.getAllBranchByMovieId + movieId,
-        }).done((data) => {
+        })
+            .done((data) => {
             page.element.branchFilter.empty();
 
             $.each(data, (i, item) => {
 
-                let  str = `<option value="${item.id}">${item.name}</option>`;
+                let str = `<option value="${item.id}">${item.name}</option>`;
                 page.element.branchFilter.append(str);
 
             })
@@ -546,7 +565,7 @@
             })
     }
 
-    page.commands.getAllRoomByMovieAndBranch = (movieId , branchId) => {
+    page.commands.getAllRoomByMovieAndBranch = (movieId, branchId) => {
         return $.ajax({
             type: "GET",
             url: page.url.getAllRoomByMovieAndBranch + movieId + "/" + branchId,
@@ -555,7 +574,7 @@
 
             $.each(data, (i, item) => {
 
-                let  str = `<option value="${item.id}">${item.name}</option>`;
+                let str = `<option value="${item.id}">${item.name}</option>`;
                 page.element.roomFilter.append(str);
 
             })
@@ -565,7 +584,7 @@
             })
     }
 
-    page.commands.getAllShowDateByMovieAndRoom = (movieId , roomId) => {
+    page.commands.getAllShowDateByMovieAndRoom = (movieId, roomId) => {
         return $.ajax({
             type: "GET",
             url: page.url.getAllShowDateByMovieAndRoom + movieId + "/" + roomId,
@@ -574,7 +593,7 @@
 
             $.each(data, (i, item) => {
 
-                let  str = `<option value="${item}">${item}</option>`;
+                let str = `<option value="${item}">${item}</option>`;
                 page.element.showDateFilter.append(str);
 
             })
@@ -584,16 +603,16 @@
             })
     }
 
-    page.commands.getAllShowTimeSlotBy = (movieId , roomId, showDate) => {
+    page.commands.getAllShowTimeSlotBy = (movieId, roomId, showDate) => {
         return $.ajax({
             type: "GET",
-            url: page.url.getAllShowTimeSlot + movieId + "/" + roomId + "/"  + showDate,
+            url: page.url.getAllShowTimeSlot + movieId + "/" + roomId + "/" + showDate,
         }).done((data) => {
             page.element.showTimeSlotFilter.empty();
 
             $.each(data, (i, item) => {
 
-                let  str = `<option value="${item}">${item}</option>`;
+                let str = `<option value="${item}">${item}</option>`;
                 page.element.showTimeSlotFilter.append(str);
 
             })
@@ -604,7 +623,7 @@
     }
 
     page.commands.draw = (start, end) => {
-        let numberOfPage = Math.ceil(dataLength / pageSize );
+        let numberOfPage = Math.ceil(dataLength / pageSize);
         let tabIndex = end / maxNavigationPage;
 
         end = (end > numberOfPage) ? numberOfPage : end;
@@ -621,8 +640,8 @@
                                             </a>
                                       </li>`);
 
-        for(let i = start; i < end; i++ ) {
-                let str = `<li class="paginate_button page-item">
+        for (let i = start; i < end; i++) {
+            let str = `<li class="paginate_button page-item">
                                 <a href="#" aria-controls="tickets-table" data-dt-idx="${i + 1}" tabindex="${tabIndex}"
                                     class="page-link btn-paging">${i + 1}
                                 </a>
@@ -640,31 +659,31 @@
                                       </li>`);
     }
 
-    $(document).on("click","#tickets-table_next a", function (e) {
+    $(document).on("click", "#tickets-table_next a", function (e) {
         e.preventDefault();
         let tabIndex = $(this).attr("tabindex");
         let start = tabIndex * maxNavigationPage;
         let end = (1 + Number(tabIndex)) * maxNavigationPage;
         let numberTabIndex = Math.ceil(Math.ceil(dataLength / pageSize) / maxNavigationPage);
 
-        if(tabIndex == numberTabIndex) {
+        if (tabIndex == numberTabIndex) {
             $(this).parent().addClass("disabled");
         } else {
-            page.commands.draw(start , end);
+            page.commands.draw(start, end);
         }
 
     })
 
-    $(document).on("click","#tickets-table_previous a", function (e) {
+    $(document).on("click", "#tickets-table_previous a", function (e) {
         e.preventDefault();
         let tabIndex = $(this).attr("tabindex");
         let start = (tabIndex - 2) * maxNavigationPage;
         let end = (Number(tabIndex) - 1) * maxNavigationPage;
 
-        if(tabIndex == 1) {
+        if (tabIndex == 1) {
             $(this).parent().addClass("disabled");
         } else {
-            page.commands.draw(start , end);
+            page.commands.draw(start, end);
 
         }
     })
@@ -688,7 +707,7 @@
 
     page.element.movieFilter.on("change", function () {
         let movieIdFilter = page.element.movieFilter.val();
-        page.commands.getAllBranchByMovie(movieIdFilter).then( () => {
+        page.commands.getAllBranchByMovie(movieIdFilter).then(() => {
             let branchIdFilter = page.element.branchFilter.val();
             page.commands.getAllRoomByMovieAndBranch(movieIdFilter, branchIdFilter).then(() => {
                 let roomIdFilter = page.element.roomFilter.val();
@@ -751,9 +770,9 @@
     }
 
     page.commands.loadShowScheduleFilter = () => {
-        page.commands.getMovie().then( () => {
+        page.commands.getMovie().then(() => {
             let movieIdFilter = page.element.movieFilter.val();
-            page.commands.getAllBranchByMovie(movieIdFilter).then( () => {
+            page.commands.getAllBranchByMovie(movieIdFilter).then(() => {
                 let branchIdFilter = page.element.branchFilter.val();
                 page.commands.getAllRoomByMovieAndBranch(movieIdFilter, branchIdFilter).then(() => {
                     let roomIdFilter = page.element.roomFilter.val();
@@ -812,7 +831,6 @@
     }
 
 
-
     page.commands.doCreate = () => {
 
         delete showSchedule.id;
@@ -853,16 +871,16 @@
                 if (jqXHR.status === 401) {
                     setTimeout(() => {
                         App.SweetAlert.showErrorAlert(App.ERROR_401);
-                    },3000)
+                    }, 3000)
 
                     location.href = "/logout";
 
-                } else if(jqXHR.status === 403) {
+                } else if (jqXHR.status === 403) {
                     App.SweetAlert.showErrorAlert(App.ERROR_403);
 
-                }  else if(jqXHR.status === 500) {
+                } else if (jqXHR.status === 500) {
                     App.SweetAlert.showErrorAlert(App.ERROR_500);
-                } else if(jqXHR.responseJSON) {
+                } else if (jqXHR.responseJSON) {
 
                     $.each(jqXHR.responseJSON, function (key, value) {
                         str += `<label id="${key}-error" class="error" for="${key}">${value}</label>`;
@@ -944,7 +962,7 @@
                 "content-type": "application/json"
             },
             type: "PUT",
-            url: page.url.deleteShowSchedule  + showSchedule.id,
+            url: page.url.deleteShowSchedule + showSchedule.id,
             data: JSON.stringify(showSchedule)
         })
             .done((item) => {
@@ -952,10 +970,10 @@
                 page.commands.deleteRow(item);
                 page.commands.handleBtn();
 
-               App.SweetAlert.showSuccessAlert(App.DELETE_SHOW_SCHEDULE_SUCCESS);
+                App.SweetAlert.showSuccessAlert(App.DELETE_SHOW_SCHEDULE_SUCCESS);
 
-               dataLength--;
-               $("#numOfData").text(dataLength);
+                dataLength--;
+                $("#numOfData").text(dataLength);
             })
             .fail((jqXHR) => {
 
@@ -963,17 +981,16 @@
                     App.SweetAlert.showErrorAlert(App.ERROR_401);
                     setTimeout(() => {
                         location.href = "/logout";
-                    },3000)
+                    }, 3000)
 
-                } else if(jqXHR.status === 403) {
+                } else if (jqXHR.status === 403) {
                     App.SweetAlert.showErrorAlert(App.ERROR_403);
 
-                }  else if(jqXHR.status === 500) {
+                } else if (jqXHR.status === 500) {
                     App.SweetAlert.showErrorAlert(App.ERROR_500);
                 }
             })
     }
-
 
 
     page.dialogs.element.mdCreate.on("hidden.bs.modal", function () {
@@ -1084,9 +1101,6 @@
 
     page.commands.loadShowScheduleInfo();
     page.commands.loadShowScheduleFilter();
-
-
-
 
 
 </script>

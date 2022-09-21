@@ -87,7 +87,7 @@ class App {
                 title: t,
                 position: 'center',
                 showConfirmButton: false,
-                timer: 1500
+                timer: 2000
             })
         }
 
@@ -97,7 +97,7 @@ class App {
                 title: 'Warning',
                 text: t,
                 position: 'center',
-                timer: 1500
+                timer: 2000
             })
         }
     }

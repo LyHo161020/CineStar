@@ -19,25 +19,25 @@ public class LoginController {
 
     @Autowired
     private IUserService userService;
-//    @GetMapping("/")
-//    public String showHome() {
-//        return "redirect:/home";
-//    }
 
-    @GetMapping("/")
-    public ModelAndView showHome(@CookieValue(value = "JWT" , defaultValue = "hello") Long fooCookie) {
-        ModelAndView modelAndView = new ModelAndView("/login");
-        Long id = Long.valueOf(jwtService.getUserNameFromJwtToken(String.valueOf(fooCookie)));
-        Optional<UserDTO> userDTO = userService.unlockUser(id);
+    @GetMapping("/{id}")
+    public ModelAndView getLoginPage() {
+        return new ModelAndView("/error/error");
+    }
 
-//        if(userDTO.get().getRole().getId() == 1) {
-//            modelAndView = new ModelAndView("/homeUser");
-//            modelAndView.addObject("user",userDTO.get());
-//        }else {
-//            modelAndView = new ModelAndView("/home");
-//            modelAndView.addObject("user",userDTO.get());
-//        }
+    @GetMapping()
+    public ModelAndView showHome(@CookieValue(value = "JWT" , defaultValue = "hello") String fooCookie) {ModelAndView modelAndView = new ModelAndView("/login");
+        String username = jwtService.getUserNameFromJwtToken(fooCookie);
+        Optional<UserDTO> userDTO = userService.findUserDTOByUsername(username);
 
+        if(userDTO.get().getRole().getId() == 2) {
+            modelAndView = new ModelAndView("/homeStaff");
+            modelAndView.addObject("user",userDTO.get());
+        }else if (userDTO.get().getRole().getId() == 3) {
+            modelAndView = new ModelAndView("/homeAdmin");
+            modelAndView.addObject("user",userDTO.get());
+        }
+//
         return modelAndView;
     }
 

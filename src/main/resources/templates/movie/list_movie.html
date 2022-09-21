@@ -36,7 +36,12 @@
     <!-- end Topbar -->
 
     <!-- ========== Left Sidebar Start ========== -->
-    <th:block th:replace="/layout/left_sidebar_admin :: left_side_admin"/>
+    <div th:if="${user.role.getId() == 3}">
+        <th:block  th:replace="/layout/left_sidebar_admin :: left_side_admin"/>
+    </div>
+    <div th:if="${user.role.getId() == 2}">
+        <th:block  th:replace="/layout/left_sidebar_staff :: left_side_staff"/>
+    </div>
     <!-- Left Sidebar End -->
 
     <!-- ============================================================== -->
@@ -158,7 +163,7 @@
 <script src="/assets/libs/datatables/dataTables.responsive.min.js"></script>
 <script src="/assets/libs/datatables/responsive.bootstrap4.min.js"></script>
 <script src="/assets/sweetalert/v2/sweetalert.js"></script>
-
+<script src="/assets/js/app/jquery.validate-1.19.3.min.js"></script>
 <script src="/assets/js/app/custom-validation-movie.js"></script>
 
 

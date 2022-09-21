@@ -3943,18 +3943,15 @@ Giấy CNĐKDN số: 0312742744, đăng ký lần đầu ngày 18/04/2014, đăn
 <div class="go-top"></div>
 <div class="scroll-down"></div>
 <input type="hidden" value="https://cinestar.com.vn/" id="BASE_URL" />
-<<<<<<< HEAD
 <script type="text/javascript" src="/assets/customer_page/catalog/view/theme/default/js/btqe063.js"></script>
-=======
 <script type="text/javascript" src="/assets/customer_page/catalog/view/theme/default/js/btqe062.js"></script>
->>>>>>> origin/development
 <script src="/assets/js/app/app.js"></script>
 </body>
 <script>
 
     let page = {
         urls: {
-            // loadListNowShowing: App.BASE_URL_CUSTOMER_NOW_SHOWING,
+            loadListNowShowing: App.BASE_URL_CUSTOMER_NOW_SHOWING,
             getAllMovies : App.BASE_URL_MOVIE,
             logout: App.BASE_URL_LOGOUT
         },
@@ -3972,7 +3969,7 @@ Giấy CNĐKDN số: 0312742744, đăng ký lần đầu ngày 18/04/2014, đăn
 
     // let movies = new Movie();
 
-    function  loadNowShowing() {
+    page.url.loadListNowShowing = () => {
 
         $.ajax({
             headers: {
@@ -4057,7 +4054,7 @@ Giấy CNĐKDN số: 0312742744, đăng ký lần đầu ngày 18/04/2014, đăn
                 }
             })
     }
-    loadNowShowing();
+    page.url.loadListNowShowing();
 
     function findMovieDTOById(id) {
         return $.ajax({
@@ -4068,14 +4065,13 @@ Giấy CNĐKDN số: 0312742744, đăng ký lần đầu ngày 18/04/2014, đăn
 
                 movie = data;
             })
-            .fail((err) => {
+            .fail(() => {
                 alert("ID not found!");
             })
     }
 
     // function handleMovieDescription() {
         $(".movie-col[ data-open = 'playing']").on("click",".film-item > a" , function (e) {
-            // console.log(JSON.stringify($(this)));
             let id = $(this).parent().attr("id");
             e.preventDefault();
             window.location.href = `/movies/${id}`;

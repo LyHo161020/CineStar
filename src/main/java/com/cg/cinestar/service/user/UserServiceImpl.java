@@ -70,7 +70,7 @@ public class UserServiceImpl implements IUserService {
 
         String encodedPassword = encoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
-        userRepository.save(user);
+        user =  userRepository.save(user);
         return user;
     }
 

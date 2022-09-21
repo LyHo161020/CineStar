@@ -96,7 +96,8 @@ public class AuthAPI {
                 currentUser.getId(),
                 userDetails.getUsername(),
                 currentUser.getUsername(),
-                userDetails.getAuthorities()
+                userDetails.getAuthorities(),
+                currentUser.getStatus()
         );
 
         ResponseCookie springCookie = ResponseCookie.from("JWT", jwt)
@@ -112,7 +113,7 @@ public class AuthAPI {
         return ResponseEntity
                 .ok()
                 .header(HttpHeaders.SET_COOKIE, springCookie.toString())
-                .body(userDTO.get());
+                .body(jwtResponse);
     }
 
 

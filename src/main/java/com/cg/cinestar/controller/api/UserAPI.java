@@ -11,6 +11,7 @@ import com.cg.cinestar.utils.AppUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -147,5 +148,21 @@ public class UserAPI {
         return new ResponseEntity<>(listSearch,HttpStatus.OK);
     }
 
+    @GetMapping("/view/{id}")
+//    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public ResponseEntity<?> doViewAccount(@PathVariable Long id) {
+
+        try {
+            UserDTO account = userService.findUserDTOByID(id);
+
+            if (account == null) {
+                return new ResponseEntity<>("This account is not found!", HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(account, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>("Server error!!", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }

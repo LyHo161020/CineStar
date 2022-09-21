@@ -1,20 +1,11 @@
 package com.cg.cinestar.model;
 
-import com.cg.cinestar.utils.ValidDateUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-import java.util.Calendar;
 import java.util.Set;
 
 @AllArgsConstructor

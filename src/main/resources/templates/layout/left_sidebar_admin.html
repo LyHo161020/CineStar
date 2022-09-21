@@ -13,7 +13,7 @@
                 <li class="menu-title">Admin Management</li>
 
                 <li>
-                    <a href="/home/admin" class="waves-effect">
+                    <a th:href="@{/home/admin/__${user.id}__}" class="waves-effect">
                         <i class="mdi mdi-home"></i>
                         <span> Home </span>
                     </a>
