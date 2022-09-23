@@ -336,7 +336,7 @@
             $.each(data, (i, item) => {
                 let str = "";
                 if(item.id !== 1) {
-                    str = `<option value="${item.id}"}>${item.name}</option>`;
+                    str = `<option value="${item.id}">${item.name}</option>`;
                 }
                 page.dialogs.element.roleIdCre.append(str);
             })
@@ -597,10 +597,6 @@
     page.dialogs.element.dateOfBirthCre.attr("max", page.commands.getToDay(0));
 
     page.dialogs.element.dateOfBirthCre.attr("min", "1970-01-01");
-
-
-
-
 
 
     page.element.searchIcon.on('click', () => {

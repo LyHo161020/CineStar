@@ -147,6 +147,7 @@ public interface ShowScheduleRepository extends JpaRepository<ShowSchedule, Long
 
     @Query("select count (s.id) from ShowSchedule as s where s.deleted = false ")
     Integer getDataLength();
+
     @Query("SELECT NEW com.cg.cinestar.model.dto.ShowScheduleDetailsDTO (" +
             "s.id, " +
             "s.movie, " +

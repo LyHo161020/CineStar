@@ -1192,7 +1192,7 @@
                         </div>
                     </div>
 
-                    <div style="width: 592.54px; height: 436.23333333333px;"></div>
+                    <div style="width: 592.54px; height: 520px;"></div>
                 </div>
                 <ul class="cinema-note">
                     <li class="single">Ghế đơn</li>
@@ -2577,11 +2577,18 @@
     }
 
     page.commands.addSeat = (left, top) => {
+        let str = "";
 
-        let str = App.drawSeat(seat.id, seat.name, seat.seatType.price, left , top);
-        console.log(str);
+        if(Number(seat.seatType.id) === 1){
+            str = App.drawSeat(seat.id, seat.name, seat.seatType.price, left , top);
+        } else {
+            str = App.drawSeatCouple(seat.id, seat.name, seat.seatType.price, left , top);
+        }
+        // console.log(str);
         $(".seat-container").prepend(str);
     }
+
+
 
     page.commands.loadMovies = () => {
 
@@ -2708,26 +2715,70 @@
             url : page.url.getSeatsByRoomId + roomId
         }).done( (data) => {
             $(".seat-container").empty();
-            console.log(Math.ceil(data.length / 10));
+            console.log(data);
 
             let left = 50;
             let top = 43;
             let size = data.length;
             let count = 0;
 
-            for(let j = 0; j < Math.ceil(data.length / 10); j++) {
+            for(let j = 0; j < data[0].room.numberOfRows; j++) {
+                // console.log(data[0].room.numberOfRows);
              let  row = (size > 10) ? 10 : size;
+             // console.log(row);
 
                 for(let i = 0; i < row; i++) {
+                    console.log("row:" + j);
+                    if(count++ >= data.length) {
+                        console.log("adsadsaasdas");
+                        // console.log(count);
+                        // console.log(data.length);
+                        break;
+                    }
+
+                    if(data[count].seatType.id === 2) {
+                        top += 70;
+                        left = 50;
+                        let rowFinish = data.length - count;
+                        // console.log("seat2: " + count);
+
+                        for(let k = 0; k < rowFinish ; k++) {
+                            seat = data[count];
+                            page.commands.addSeat(left,top);
+                            left += 100;
+                            count++;
+                        }
+                        break;
+                    }
+
+
                     seat = data[count];
                     page.commands.addSeat(left, top);
-                    left += 50;
+
+                    // if(seat.seatType.id === 1){
+                        left += 50;
+                    // }else {
+                    //     left += 100;
+                    // }
                     count++;
                 }
                 size -= 10;
                 left = 50;
                 top += 50;
             }
+
+
+                // let rowFinish = data.length - count;
+                // console.log(count);
+                // console.log(rowFinish);
+                //
+                // for(let i = 0; i < rowFinish; i++) {
+                //     seat = data[count];
+                //     page.commands.addSeat(left,top);
+                //     left += 100;
+                //     count++;
+                // }
+
 
         }).fail((err) => {
             alert("Load seat fail");
@@ -2738,10 +2789,19 @@
     // page.commands.loadShowScheduleCustomer = () => {
     //     page.commands.loadMovies();
     // }
+    function formatNumber(number) {
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    function removeCharactor( charactor, letters)  {
+        letters = letters.replaceAll(charactor, "");
+        return letters;
+    }
 
     $('.sub-tab li a').click(function(e) {
 
         e.preventDefault();
+        console.log("123");
         $('.sub-tab li').removeClass('current');
         $(this).parent().addClass('current');
         // var url = $(this).attr('href');
@@ -2847,37 +2907,87 @@
         let ticket_price = parseInt($(this).parent().parent().find(".ticket-price").attr("data-price"));
 
         $(".ticket-num input").each(function (i , item) {
-            console.log(item);
-            console.log($(item));
             totalSeat += parseInt($(item).val());
         })
 
+        if(ticket_num > 0) {
+            $("#ticket-back").parent().addClass("active");
+        }
+
         if(totalSeat > 10) {
+            $(this).parent().parent().find(".ticket-num input").val(--ticket_num);
+            alert("Vui lòng chọn tối đa 10 ghế!");
+            return;
+        }
+
+        let ticket_total = ticket_num * ticket_price;
+
+        $(this).parent().parent().find(".ticket-total span").text(formatNumber(ticket_total));
+
+        $(".ticket-total span").each(function (i, item) {
+            totalPrice += parseInt(removeCharactor(".",$(item).text()));
+        });
+
+
+        $(".about-ticket li:nth-child(3) p.value span").text(totalSeat);
+        $(".total-ticket-num span").text(totalSeat);
+        $(".about-ticket li:nth-child(4) p.value span").text(formatNumber(totalPrice))
+        $(".total-ticket-amount span").text(formatNumber(totalPrice));
+        console.log(totalSeat);
+        console.log(totalPrice);
+        console.log(ticket_num);
+        console.log(ticket_total);
+    })
+
+    $(document).on("click",".minus", function (e) {
+
+        e.preventDefault();
+
+        let totalSeat = 0;
+        let totalPrice = 0;
+        let ticket_num = parseInt($(this).parent().parent().find(".ticket-num input").val());
+
+        if(ticket_num === 0) {
+            alert("Vui lòng chọn số lượng ghế phù hợp!");
+            return;
+        }
+
+        ticket_num--;
+        $(this).parent().parent().find(".ticket-num input").val(ticket_num);
+        let ticket_price = parseInt($(this).parent().parent().find(".ticket-price").attr("data-price"));
+
+        $(".ticket-num input").each(function (i , item) {
+            totalSeat += parseInt($(item).val());
+        })
+
+        if(ticket_num === 0) {
+            $("#ticket-back").parent().removeClass("active");
+        }
+
+        if(totalSeat > 10) {
+            $(this).parent().parent().find(".ticket-num input").val(--ticket_num);
             alert("Vui lòng chọn tối đa 10 ghế!");
             return;
         }
 
 
 
-
         let ticket_total = ticket_num * ticket_price;
 
-        $(this).parent().parent().find(".ticket-total span").text(ticket_total);
+        $(this).parent().parent().find(".ticket-total span").text(formatNumber(ticket_total));
 
         $(".ticket-total span").each(function (i, item) {
-            totalPrice += parseInt($(item).text());
+            totalPrice += parseInt(removeCharactor(".",$(item).text()));
         });
 
 
         $(".about-ticket li:nth-child(3) p.value span").text(totalSeat);
         $(".total-ticket-num span").text(totalSeat);
-        $(".about-ticket li:nth-child(4) p.value span").text(totalPrice)
-        $(".total-ticket-amount span").text(totalPrice);
-        console.log(totalSeat);
-        console.log(totalPrice);
-        console.log(ticket_num);
-        console.log(ticket_total);
+        $(".about-ticket li:nth-child(4) p.value span").text(formatNumber(totalPrice))
+        $(".total-ticket-amount span").text(formatNumber(totalPrice));
     })
+
+
 
 
 
@@ -2901,6 +3011,8 @@
         page.commands.getSeatsByRoomId(roomId);
 
     })
+
+
 
 
     // page.commands.loadShowScheduleCustomer();

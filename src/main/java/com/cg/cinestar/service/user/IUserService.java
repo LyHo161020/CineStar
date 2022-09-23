@@ -16,7 +16,7 @@ public interface IUserService extends IGeneralService<User>, UserDetailsService 
 
     void blockUser(Long id);
 
-    Optional<UserDTO> unlockUser(Long id);
+    void unlockUser(Long id);
 
     User updateUser(UserDTO userDTO);
 

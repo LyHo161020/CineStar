@@ -26,4 +26,13 @@ public class SeatType {
     private String name;
 
     private Long price;
+
+    @Override
+    public String toString() {
+        return "SeatType{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }

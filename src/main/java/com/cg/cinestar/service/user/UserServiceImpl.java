@@ -59,9 +59,8 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public Optional<UserDTO> unlockUser(Long id) {
+    public void unlockUser(Long id) {
         userRepository.unlockUser(id);
-        return null;
     }
 
     @Override

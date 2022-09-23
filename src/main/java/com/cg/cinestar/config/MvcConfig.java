@@ -28,8 +28,8 @@ public class MvcConfig implements WebMvcConfigurer {
         @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
-//                .allowedOrigins("https://mysterious-mountain-94405.herokuapp.com")
-                .allowedOrigins("*")
+                .allowedOrigins("http://localhost:3300")
+//                .allowedOrigins("*")
                 .allowedMethods("GET", "POST", "DELETE")
                 .allowedHeaders("*")
                 .allowCredentials(false)

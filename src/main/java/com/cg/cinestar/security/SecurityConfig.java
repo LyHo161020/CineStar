@@ -65,17 +65,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/transfers").hasAnyAuthority("ADMIN")
 //                .antMatchers("/api/users").hasAnyAuthority("USER")
                 .antMatchers("/assets/**").permitAll()
-//                .antMatchers(
-//                        "/v2/api-docs",
-//                        "/swagger-resources/configuration/ui",
-//                        "/configuration/ui",
-//                        "/swagger-resources",
-//                        "/swagger-resources/configuration/security",
-//                        "/configuration/security",
-//                        "/swagger-ui.html",
-//                        "/webjars/**"
-//                ).permitAll()
-
                 .antMatchers(
                         "/v3/api-docs",
                         "/swagger-resources/configuration/ui",
@@ -86,13 +75,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/swagger-ui/**"
                 ).permitAll()
                 .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginProcessingUrl("/login")
-                .loginPage("/login")
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .defaultSuccessUrl("/")
+//                .and()
+//                .formLogin()
+//                .loginProcessingUrl("/login")
+//                .loginPage("/login")
+//                .usernameParameter("username")
+//                .passwordParameter("password")
+//                .defaultSuccessUrl("/")
                 .and()
                 .logout()
                 .logoutUrl("/logout")

@@ -33,4 +33,14 @@ public class Room {
     @JoinColumn(name = "branch_id")
     private Branch branch;
 
+    @Override
+    public String toString() {
+        return "Room{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", capacity=" + capacity +
+                ", numberOfRows=" + numberOfRows +
+                ", branch=" + branch +
+                '}';
+    }
 }

@@ -32,4 +32,14 @@ public class Seat {
     @ManyToOne
     @JoinColumn(name = "room_id")
     private Room room;
+
+    @Override
+    public String toString() {
+        return "Seat{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", seatType=" + seatType +
+                ", room=" + room +
+                '}';
+    }
 }

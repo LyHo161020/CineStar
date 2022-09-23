@@ -15,6 +15,7 @@ class AppPage {
                             <span class="atc" style="display: block;">...</span>
                             <span class="detail-link">Chi tiết</span>
                         </a>
+                        <a class="trailler-btn fontsize13" href="${obj.trailer}">Xem trailer</a>
                         <a class="cart-btn fontsize13"
                            href="https://cinestar.com.vn/lichchieu/3e9eeda9-2fef-427b-a1ad-ea0a4d5b440f">
                            Mua vé

@@ -73,7 +73,7 @@ public class ShowScheduleAPI {
 
     @GetMapping("/branch/{id}")
     public ResponseEntity<?> findShowScheduleDetailsFTOListByBranch(@PathVariable Long id) {
-        List<ShowScheduleDetailsDTO> showScheduleDetailsDTOS = showScheduleService.findAllShowScheduleDetailsDTOByBranchId(id);
+            List<ShowScheduleDetailsDTO> showScheduleDetailsDTOS = showScheduleService.findAllShowScheduleDetailsDTOByBranchId(id);
 
         if(showScheduleDetailsDTOS.isEmpty()) {
             return new ResponseEntity<>("danh sach trong", HttpStatus.NO_CONTENT);

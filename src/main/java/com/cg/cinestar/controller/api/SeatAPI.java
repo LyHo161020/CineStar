@@ -6,6 +6,7 @@ import com.cg.cinestar.model.Seat;
 import com.cg.cinestar.repository.SeatRepository;
 import com.cg.cinestar.service.room.IRoomService;
 import com.cg.cinestar.service.seat.ISeatService;
+import com.cg.cinestar.service.seat_type.ISeatTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,9 @@ public class SeatAPI {
     @Autowired
     private SeatRepository seatRepository;
 
+    @Autowired
+    private ISeatTypeService seatTypeService;
+
     @GetMapping("/{roomId}")
     public ResponseEntity<?>  findSeatsByRoom(@PathVariable Long roomId) {
         Optional<Room>  room = roomService.findById(roomId);
@@ -45,5 +49,11 @@ public class SeatAPI {
 
         return new ResponseEntity<>(seatDTOList,HttpStatus.OK);
 
+    }
+
+    @GetMapping
+    public ResponseEntity<?> createSeat() {
+        seatTypeService.createSeat();
+        return new ResponseEntity<>("thanh cong", HttpStatus.OK);
     }
 }

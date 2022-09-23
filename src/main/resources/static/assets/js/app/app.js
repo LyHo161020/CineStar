@@ -266,6 +266,14 @@ class App {
         return str;
     }
 
+    static drawSeatCouple(id, name, price, left, top) {
+        let str = `<div class="couple" data-type-seat-id="${id}" data-price="${price}" 
+                        style="left:${left + 'px'}; top: ${top + 'px'}; width: 86px; height: 46px;position: absolute; padding: 12px; text-align: center; vertical-align: middle; font-family: 'Futurab'; font-weight: normal; font-size: 11px; color: #fff; text-transform: uppercase;">
+                        ${name}
+                   </div>`
+        return str;
+    }
+
 }
 
 class User {
