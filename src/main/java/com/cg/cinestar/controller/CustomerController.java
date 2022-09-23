@@ -17,5 +17,10 @@ public class CustomerController {
         return new ModelAndView("/customer_page/index");
     }
 
+//    @GetMapping("/phim")
+//    public ModelAndView getListMovie() {
+//        return new ModelAndView("/customer/list_nowShowing");
+//    }
+
 }
 

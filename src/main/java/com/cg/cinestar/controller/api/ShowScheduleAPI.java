@@ -123,8 +123,6 @@ public class ShowScheduleAPI {
 
 
     @GetMapping("/{id}")
-//    @PreAuthorize("hasAnyAuthority('USER')")
-
     public ResponseEntity<?> getScheduleById(@PathVariable Long id) {
         Optional<ShowScheduleDTO> showScheduleDTO = showScheduleService.findShowScheduleDTOById(id);
 
@@ -159,7 +157,6 @@ public class ShowScheduleAPI {
     }
 
     @PutMapping("/update/{id}")
-//    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<?> doUpdateShowSchedule(@PathVariable Long id,@Validated @RequestBody ShowScheduleDTO showScheduleDTO,
                                              BindingResult bindingResult) {
 
@@ -193,7 +190,6 @@ public class ShowScheduleAPI {
     }
 
     @PutMapping("/delete/{id}")
-//    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<?> doDelete(@PathVariable Long id){
         Optional<ShowScheduleDTO> showScheduleDTO = showScheduleService.findShowScheduleDTOById(id);
 

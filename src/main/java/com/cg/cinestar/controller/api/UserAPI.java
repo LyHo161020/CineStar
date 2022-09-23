@@ -46,8 +46,7 @@ public class UserAPI {
 
 
     @GetMapping("/{id}")
-//    @PreAuthorize("hasAnyAuthority('USER')")
-
+//    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<?> findUserDTO(@PathVariable Long id) {
         UserDTO userDTO = userService.findUserDTOByID(id);
 
@@ -58,6 +57,7 @@ public class UserAPI {
     }
 
     @PostMapping("/create")
+//    @PreAuthorize("hasAnyAuthority('ADMIN')")
         public ResponseEntity<?> doCreate(@Validated @RequestBody UserDTOCreate userDTOCreate, BindingResult bindingResult) {
 
 
@@ -138,6 +138,7 @@ public class UserAPI {
     }
 
     @PostMapping("/search")
+//    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<?> search(@RequestBody String searchInput) {
         searchInput = searchInput.replace('"',' ').trim().toLowerCase();
         List<UserDTO> listSearch = userService.search(searchInput);

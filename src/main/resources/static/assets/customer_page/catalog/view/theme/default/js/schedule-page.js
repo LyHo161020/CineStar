@@ -1517,7 +1517,6 @@ function LoadScheduleMovie(branchId) {
 			$('.c_address').html(data[0].branchAddress);
 
 			$.each(data, (i, item) => {
-				console.log(1)
 				let str = App.drawScheduleDetails(item.movie.id, item.movie.title,item.movie.fileUrl, item.movie.description);
 				$('.schedule-load').append(str);
 
@@ -1550,7 +1549,6 @@ function LoadScheduleMovie(branchId) {
 												<ul>
 										`;
 									$.each(data, (i, item) => {
-										console.log(3)
 										str += App.drawShowTimeSlot(item.movie.id, item.roomId, item.showTimeSlot)
 
 									})
@@ -1583,7 +1581,6 @@ function LoadScheduleDate(branchId, movieId) {
 	})
 		.done((data) => {
 			$.each(data, (i, item) => {
-				console.log(item);
 				let str = App.drawShowDate(item.showDate);
 				$('.schedule-load .schedule .row').prepend(str);
 
@@ -1611,7 +1608,6 @@ function LoadScheduleShowTimeSlot(branchId, movieId, showDate) {
 				`;
 
 			$.each(data, (i, item) => {
-				console.log(item);
 
 
 				str += App.drawShowTimeSlot(movieId, item.roomId, item.showTimeSlot)
@@ -4156,3 +4152,9 @@ $(window).bind("popstate", function(e) {
 	e.preventDefault();
 
 });
+
+	$(document).on("click",".film-item > a" , function (e) {
+	let id = $(this).parent().parent().attr("cine-id");
+	e.preventDefault();
+	window.location.href = `/movies/${id}`;
+})

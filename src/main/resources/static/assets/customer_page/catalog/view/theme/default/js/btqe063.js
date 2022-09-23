@@ -1624,17 +1624,17 @@ function Option() {
 	});
 	
 	//SHOW TRALLER FILM EVENT [IF USE AJAX TO LOAD DATA]
-	$('.container').on('click','.trailler-btn',function(e){
-		e.preventDefault();
-		var idx = $(this).attr('href');
-		$('body').append('<div class="loadicon" style="display:block"><span class="circle"></span></div>');	
-		$('html, body, .container').addClass('no-scroll');
-		
-		$('.overlay-video').fadeIn(500, 'linear', function() {
-			VideoLoad(idx);
-		});
-		return false;
-	});
+	// $('.container').on('click','.trailler-btn',function(e){
+	// 	e.preventDefault();
+	// 	var idx = $(this).attr('href');
+	// 	$('body').append('<div class="loadicon" style="display:block"><span class="circle"></span></div>');
+	// 	$('html, body, .container').addClass('no-scroll');
+	//
+	// 	$('.overlay-video').fadeIn(500, 'linear', function() {
+	// 		VideoLoad(idx);
+	// 	});
+	// 	return false;
+	// });
 	
 	//ZOOM IMAGE
    $('.zoom').click(function() {

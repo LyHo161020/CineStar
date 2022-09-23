@@ -135,7 +135,7 @@
 
         <!--menu-->
         <div class="navigation">
-            <a class="link-home" href="index.html">
+            <a class="link-home" href="/customers">
                 <h1>Trang chủ</h1>
             </a>
             <div class="nav">
@@ -143,13 +143,13 @@
                     <li><a data-title="CINESTAR - Hệ thống Rạp chiếu phim giá rẻ, hiện đại bậc nhất"
                            data-description="Hệ thống rạp chiếu phim Cinestar phục vụ khán giả với những thước phim điện ảnh chất lượng, dịch vụ tốt nhất với giá vé chỉ từ 45.000đ. Đặt vé ngay hôm nay để nhận được những ưu đãi bất ngờ từ Cinestar."
                            data-keyword="Hệ thống rạp chiếu phim Cinestar phục vụ khán giả với những thước phim điện ảnh chất lượng, dịch vụ tốt nhất với giá vé chỉ từ 45.000đ. Đặt vé ngay hôm nay để nhận được những ưu đãi bất ngờ từ Cinestar."
-                           href="phim.html">
+                           href="/customers/phimdangchieu">
                         <h1>Phim</h1>
                     </a></li>
                     <li class="current"><a data-title="CINESTAR - Hệ thống Rạp chiếu phim giá rẻ, hiện đại bậc nhất"
                                            data-description="Hệ thống rạp chiếu phim Cinestar phục vụ khán giả với những thước phim điện ảnh chất lượng, dịch vụ tốt nhất với giá vé chỉ từ 45.000đ. Đặt vé ngay hôm nay để nhận được những ưu đãi bất ngờ từ Cinestar."
                                            data-keyword="Hệ thống rạp chiếu phim Cinestar phục vụ khán giả với những thước phim điện ảnh chất lượng, dịch vụ tốt nhất với giá vé chỉ từ 45.000đ. Đặt vé ngay hôm nay để nhận được những ưu đãi bất ngờ từ Cinestar."
-                                           href="lichchieu.html">
+                                           href="/lichchieu">
                         <h1>Lịch chiếu</h1>
                     </a></li>
                     <li><a data-title="CINESTAR - Hệ thống Rạp chiếu phim giá rẻ, hiện đại bậc nhất"
@@ -3284,7 +3284,6 @@ Giấy CNĐKDN số: 0312742744, đăng ký lần đầu ngày 18/04/2014, đăn
                 $('.c_address').html(data[0].branchAddress);
 
                 $.each(data, (i, item) => {
-                    console.log(1)
                     let str = App.drawScheduleDetails(item.movie.id, item.movie.title,item.movie.fileUrl, item.movie.description);
                     $('.schedule-load').append(str);
 
@@ -3317,7 +3316,6 @@ Giấy CNĐKDN số: 0312742744, đăng ký lần đầu ngày 18/04/2014, đăn
 												<ul>
 										`;
                                         $.each(data, (i, item) => {
-                                            console.log(3)
                                             str += App.drawShowTimeSlot(item.movie.id, item.roomId, item.showTimeSlot)
 
                                         })
@@ -3350,7 +3348,6 @@ Giấy CNĐKDN số: 0312742744, đăng ký lần đầu ngày 18/04/2014, đăn
         })
             .done((data) => {
                 $.each(data, (i, item) => {
-                    console.log(item);
                     let str = App.drawShowDate(item.showDate);
                     $('.schedule-load .schedule .row').prepend(str);
 
@@ -3378,7 +3375,6 @@ Giấy CNĐKDN số: 0312742744, đăng ký lần đầu ngày 18/04/2014, đăn
 				`;
 
                 $.each(data, (i, item) => {
-                    console.log(item);
 
 
                     str += App.drawShowTimeSlot(movieId, item.roomId, item.showTimeSlot)

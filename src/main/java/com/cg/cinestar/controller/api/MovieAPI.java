@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,6 +44,7 @@ public class MovieAPI {
 
 
     @GetMapping
+//    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<?> findAllMovies(){
         List<MovieDTO> movies = movieService.findAllIMovieDTOByDeletedIsFalse();
         if (movies.isEmpty()) {
@@ -55,6 +57,7 @@ public class MovieAPI {
     }
 
     @GetMapping("/{id}")
+//    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<?> findMovieDTOById(@PathVariable String id){
 
         MovieDTO movieDTO = movieService.findMovieDTOById(id);
@@ -70,6 +73,7 @@ public class MovieAPI {
     }
 
     @PostMapping("/create")
+//    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<?> create(@Valid MovieDTO movieDTO, BindingResult bindingResult){
 
         if (bindingResult.hasFieldErrors()){
@@ -97,6 +101,7 @@ public class MovieAPI {
     }
 
     @PutMapping("/update")
+//    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<?> update(@Valid MovieDTO movieDTO, BindingResult bindingResult){
 
         if(bindingResult.hasFieldErrors()){
@@ -127,6 +132,7 @@ public class MovieAPI {
     }
 
     @DeleteMapping("/delete/{id}")
+//    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<?> doDelete(@PathVariable String id) {
         Optional<Movie> movie = movieRepository.findById(id);
 
@@ -146,6 +152,7 @@ public class MovieAPI {
     }
 
     @GetMapping("/search/{keyword}")
+//    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<?> searchMovie(@PathVariable String keyword){
 
         List<MovieDTO> movies = movieRepository.searchMovie(keyword);

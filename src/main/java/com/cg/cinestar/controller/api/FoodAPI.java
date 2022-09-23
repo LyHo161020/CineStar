@@ -28,7 +28,6 @@ public class FoodAPI {
     private ISizeService sizeService;
 
     @GetMapping
-//    @PreAuthorize("hasAnyAuRéthority('ADMIN')")
     public ResponseEntity<?> showListFood() {
         List<FoodDTO> foodDTOs = foodService.findAllFoodDTO();
 
@@ -39,7 +38,6 @@ public class FoodAPI {
     }
 
     @GetMapping("/{id}")
-//    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<?> getProductById(@PathVariable Long id) {
         Optional<FoodDTO> foodDTOs = foodService.findFoodDTOByID(id);
 
@@ -50,7 +48,6 @@ public class FoodAPI {
     }
 
     @PostMapping("/add")
-//    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<?> doAdd(@Validated @RequestBody FoodDTO foodDTO, BindingResult bindingResult) {
 
         new FoodDTO().validate(foodDTO, bindingResult);
@@ -76,7 +73,6 @@ public class FoodAPI {
     }
 
     @PutMapping("/edit/{id}")
-//    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<?> doEdit(@PathVariable Long id,@Validated @RequestBody FoodDTO foodDTO,
                                       BindingResult bindingResult) {
         Optional<Food> f = foodService.findById(id);
@@ -111,7 +107,6 @@ public class FoodAPI {
     }
 
     @DeleteMapping("/remove/{id}")
-//    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<?> doRemoveFood(@PathVariable Long id){
 
         Optional<FoodDTO> foodDTO = foodService.findFoodDTOByID(id);
