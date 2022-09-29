@@ -2599,113 +2599,114 @@ $(document).ready(function() {
 
 		}
 	});
-	$(document).on( "click", ".cart-wrap .select-box li a", function(e){
-		e.preventDefault();
-		var cate = $(this).parents('.select-list').attr('data-cate');
-		var movie_id = $(this).attr('data-id');
-		var theater_id = $(this).attr('data-value');
-		var date = $(this).attr('data-date');
 
-		$(this).parent().parent().find(' > li').removeClass('selected');
-		$(this).parent().addClass('selected');
-		$(this).parents('.select-list').find('.select-header h3').text($(this).text());
-		$(this).closest('.select-box').fadeOut(200, 'linear');
-		//movie.movie_img = $(this).attr('data-img');
-		if(cate == 'film') {
-			//
-			getPage(BASE_URL + "gettheaterbymovie", "POST", {id:movie_id}, function(data){
-				$('.loadicon').fadeOut(300, 'linear', function() {
-					$('.loadicon').remove();
-				});
-				data = JSON.parse(data);
-				// console.log(data, "===============")
-				$('.select-list[data-cate="cine"] .select-box ul').html("");
-				$('.select-list[data-cate="day"] .select-box ul').html("");
-				$.each( data, function( key, value ) {
-					$('.select-list[data-cate="cine"] .select-box ul').append('<li class="show" ><a href="javascript:void(0);" data-value="'+value.ID+'"><h3>'+value.NAME+'</h3></a></li>');
-				});
-				resetForm();
-				//$('.select-list[data-cate="cine"] .select-box li').first().find('> a').trigger('click');
-			});
-
-			/*
-            resetForm();
-            sortDataFilm($(this));*/
-		}
-		else if(cate == 'cine'){
-
-			var params = {
-				movie_id: $('.select-list[data-cate="film"] .select-box ul li.selected a').attr('data-id'),
-				theater_id: theater_id
-			};
-			movie.theater_id = theater_id;
-			getPage(BASE_URL + "getdate", "POST", params, function(data){
-				$('.loadicon').fadeOut(300, 'linear', function() {
-					$('.loadicon').remove();
-				});
-				data=JSON.parse(data);
-				$('.select-list[data-cate="day"] .select-box ul').html("");
-				$.each( data, function( key, value ) {
-//                    console.log(key, value);
-					$('.select-list[data-cate="day"] .select-box ul').append('<li class="show" ><a href="javascript:void(0);" data-date="'+value.value+'"><h3>'+value.name+'</h3></a></li>');
-				});
-
-				/*
-                $('.select-list[data-cate="day"] .select-box').html(data);
-                $('.block-list').addClass('is-'+$('.select-list[data-cate="film"] .select-box ul li.selected a').attr('data-format'));
-                //<li class="show" ><a href="javascript:void(0);" data-date="<?php echo $item['value'];?>"><h3><?php echo $item['name'];?></h3></a></li>
-                */
-			});
-		}
-		else if(cate == 'day') {
-			//cart/getShowTimes
-			var params = {
-				movie_id: $('.select-list[data-cate="film"] .select-box ul li.selected a').attr('data-id'),
-				theater_id: $('.select-list[data-cate="cine"] .select-box ul li.selected a').attr('data-value'),
-				date: date,
-				format: $('.select-list[data-cate="film"] .select-box ul li.selected a').attr('data-format')
-			};
-			getPage(BASE_URL + "getshowtimes", "POST", params, function(data){
-				$('.loadicon').fadeOut(300, 'linear', function() {
-					$('.loadicon').remove();
-				});
-
-				$('.select-list[data-cate="hour"] .select-box').html(data);
-				$('.block-list').addClass('is-'+$('.select-list[data-cate="film"] .select-box ul li.selected a').attr('data-format'));
-			});
-
-			/*$('.block-list').removeClass('is-2d').removeClass('is-3d')
-			var l_class = 'is-' + $('.select-list[data-cate="film"] li.selected a').attr('film-ref');
-			$('.block-list').addClass(l_class);*/
-		}
-		else if(cate == 'hour') { //IF HOUSE LIST IS CHOSE WILL OPEN ODER POPUP
-			if($(this).parent().hasClass('disable-time')) return false;
-			var l_film = $('.select-list[data-cate="film"] .select-box li.selected a');
-			var l_cine = $('.select-list[data-cate="cine"] .select-box li.selected a');
-			var l_day  = $('.select-list[data-cate="day"] .select-box li.selected a');
-			movie.showtimes_id = $(this).attr('data-id');
-			/*window.location = 'http://www.123phim.vn/checkout?merchantCode=16&cinemaCode=' + movie.theater_id + '&sessionCode='  + movie.showtimes_id;
-            //window.location = 'http://123phim.vn/checkout/cinestar?sessionCode=' + movie.showtimes_id;
-            return false;
-			*/
-			movie.room_name = $(this).attr('data-room-name');
-			movie.movie_img  = l_film.attr('data-img');
-			movie.movie_name = l_film.text();
-			movie.movie_type= l_film.attr('data-format');
-
-			movie.cinema_id = parseInt(l_cine.attr('data-value'));
-			movie.cinema_name = l_cine.text();
-
-			movie.movie_date = l_day.attr('data-date');
-
-			movie.movie_hour = $(this).text();
-
-			order();
-		}
-		var _class = 'is-' + cate;
-		$('.block-list').addClass(_class);
-		return  false;
-	});
+// 	$(document).on( "click", ".cart-wrap .select-box li a", function(e){
+// 		e.preventDefault();
+// 		var cate = $(this).parents('.select-list').attr('data-cate');
+// 		var movie_id = $(this).attr('data-id');
+// 		var theater_id = $(this).attr('data-value');
+// 		var date = $(this).attr('data-date');
+//
+// 		$(this).parent().parent().find(' > li').removeClass('selected');
+// 		$(this).parent().addClass('selected');
+// 		$(this).parents('.select-list').find('.select-header h3').text($(this).text());
+// 		$(this).closest('.select-box').fadeOut(200, 'linear');
+// 		//movie.movie_img = $(this).attr('data-img');
+// 		if(cate == 'film') {
+// 			//
+// 			getPage(BASE_URL + "gettheaterbymovie", "POST", {id:movie_id}, function(data){
+// 				$('.loadicon').fadeOut(300, 'linear', function() {
+// 					$('.loadicon').remove();
+// 				});
+// 				data = JSON.parse(data);
+// 				// console.log(data, "===============")
+// 				$('.select-list[data-cate="cine"] .select-box ul').html("");
+// 				$('.select-list[data-cate="day"] .select-box ul').html("");
+// 				$.each( data, function( key, value ) {
+// 					$('.select-list[data-cate="cine"] .select-box ul').append('<li class="show" ><a href="javascript:void(0);" data-value="'+value.ID+'"><h3>'+value.NAME+'</h3></a></li>');
+// 				});
+// 				resetForm();
+// 				//$('.select-list[data-cate="cine"] .select-box li').first().find('> a').trigger('click');
+// 			});
+//
+// 			/*
+//             resetForm();
+//             sortDataFilm($(this));*/
+// 		}
+// 		else if(cate == 'cine'){
+//
+// 			var params = {
+// 				movie_id: $('.select-list[data-cate="film"] .select-box ul li.selected a').attr('data-id'),
+// 				theater_id: theater_id
+// 			};
+// 			movie.theater_id = theater_id;
+// 			getPage(BASE_URL + "getdate", "POST", params, function(data){
+// 				$('.loadicon').fadeOut(300, 'linear', function() {
+// 					$('.loadicon').remove();
+// 				});
+// 				data=JSON.parse(data);
+// 				$('.select-list[data-cate="day"] .select-box ul').html("");
+// 				$.each( data, function( key, value ) {
+// //                    console.log(key, value);
+// 					$('.select-list[data-cate="day"] .select-box ul').append('<li class="show" ><a href="javascript:void(0);" data-date="'+value.value+'"><h3>'+value.name+'</h3></a></li>');
+// 				});
+//
+// 				/*
+//                 $('.select-list[data-cate="day"] .select-box').html(data);
+//                 $('.block-list').addClass('is-'+$('.select-list[data-cate="film"] .select-box ul li.selected a').attr('data-format'));
+//                 //<li class="show" ><a href="javascript:void(0);" data-date="<?php echo $item['value'];?>"><h3><?php echo $item['name'];?></h3></a></li>
+//                 */
+// 			});
+// 		}
+// 		else if(cate == 'day') {
+// 			//cart/getShowTimes
+// 			var params = {
+// 				movie_id: $('.select-list[data-cate="film"] .select-box ul li.selected a').attr('data-id'),
+// 				theater_id: $('.select-list[data-cate="cine"] .select-box ul li.selected a').attr('data-value'),
+// 				date: date,
+// 				format: $('.select-list[data-cate="film"] .select-box ul li.selected a').attr('data-format')
+// 			};
+// 			getPage(BASE_URL + "getshowtimes", "POST", params, function(data){
+// 				$('.loadicon').fadeOut(300, 'linear', function() {
+// 					$('.loadicon').remove();
+// 				});
+//
+// 				$('.select-list[data-cate="hour"] .select-box').html(data);
+// 				$('.block-list').addClass('is-'+$('.select-list[data-cate="film"] .select-box ul li.selected a').attr('data-format'));
+// 			});
+//
+// 			/*$('.block-list').removeClass('is-2d').removeClass('is-3d')
+// 			var l_class = 'is-' + $('.select-list[data-cate="film"] li.selected a').attr('film-ref');
+// 			$('.block-list').addClass(l_class);*/
+// 		}
+// 		else if(cate == 'hour') { //IF HOUSE LIST IS CHOSE WILL OPEN ODER POPUP
+// 			if($(this).parent().hasClass('disable-time')) return false;
+// 			var l_film = $('.select-list[data-cate="film"] .select-box li.selected a');
+// 			var l_cine = $('.select-list[data-cate="cine"] .select-box li.selected a');
+// 			var l_day  = $('.select-list[data-cate="day"] .select-box li.selected a');
+// 			movie.showtimes_id = $(this).attr('data-id');
+// 			/*window.location = 'http://www.123phim.vn/checkout?merchantCode=16&cinemaCode=' + movie.theater_id + '&sessionCode='  + movie.showtimes_id;
+//             //window.location = 'http://123phim.vn/checkout/cinestar?sessionCode=' + movie.showtimes_id;
+//             return false;
+// 			*/
+// 			movie.room_name = $(this).attr('data-room-name');
+// 			movie.movie_img  = l_film.attr('data-img');
+// 			movie.movie_name = l_film.text();
+// 			movie.movie_type= l_film.attr('data-format');
+//
+// 			movie.cinema_id = parseInt(l_cine.attr('data-value'));
+// 			movie.cinema_name = l_cine.text();
+//
+// 			movie.movie_date = l_day.attr('data-date');
+//
+// 			movie.movie_hour = $(this).text();
+//
+// 			order();
+// 		}
+// 		var _class = 'is-' + cate;
+// 		$('.block-list').addClass(_class);
+// 		return  false;
+// 	});
 
 
 ////////////////////////////////// ORDER POPUP EVENTS///////////////////////////////////

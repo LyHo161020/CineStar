@@ -336,7 +336,7 @@ class Role {
 
 
 class Movie {
-    constructor(id, title, premiereDate, showDuration, categories, fileUrl, director, actor, language, description) {
+    constructor(id, title, premiereDate, showDuration, categories, fileUrl, director, actor, language, description, trailer) {
         this.id = id;
         this.title = title;
         this.premiereDate = premiereDate;
@@ -347,6 +347,7 @@ class Movie {
         this.actor = actor;
         this.language = language;
         this.description = description;
+        this.trailer = trailer;
     }
 }
 

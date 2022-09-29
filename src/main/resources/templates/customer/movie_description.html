@@ -25,7 +25,7 @@
     <!--[if lt IE 9]>
     <meta http-equiv="refresh" content="0; url=https://cinestar.com.vn/detect.html" />
     <script type="text/javascript">
-            </script>
+    </script>
         <![endif]-->
     <script>
         var USERNAME = '';
@@ -69,6 +69,12 @@
     <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1760220167590183&amp;ev=PageView&amp;noscript=1"/>
 
     </noscript>
+
+    <style>
+        .select-list .warning li {
+            pointer-events: visible;
+        }
+    </style>
 
     <!-- End Facebook Pixel Code -->
 </head><body id="film-details-page">
@@ -361,16 +367,9 @@
                             <span></span>
                             <h3 data-holder="Chọn phim">Chọn phim</h3>
                         </div>
-                        <div class="select-box">
+                        <div class="select-box" id="selectMovie">
                             <ul>
-                                <li><a href="javascript:void(0);" data-img="https://cinestar.com.vn/pictures/Cinestar/07-2022/nang-dau-halloween.jpg" data-format="2d" data-id="0af0ed19-1d16-45bd-92b9-4b611cbb769b" ><h3>THÁM TỬ LỪNG DANH CONAN (C13): NÀNG DÂU HALLOWEEN</h3></a></li>
-                                <li><a href="javascript:void(0);" data-img="https://cinestar.com.vn/pictures/Cinestar/08-2022/cuoc-chien-xuyen-khong.jpg" data-format="2d" data-id="2a26d413-0e30-43b3-94eb-1b748425a800" ><h3>CUỘC CHIẾN XUYÊN KHÔNG (C16)</h3></a></li>
-                                <li><a href="javascript:void(0);" data-img="https://cinestar.com.vn/pictures/Cinestar/07-2022/dckscr.jpg" data-format="2d" data-id="38c7bd6f-8fea-4999-8afe-fdbb723cca3d" ><h3>DÂN CHƠI KHÔNG SỢ CON RƠI (C13)</h3></a></li>
-                                <li><a href="javascript:void(0);" data-img="https://cinestar.com.vn/pictures/Cinestar/07-2022/chuyen-ma-giang-duong.jpg" data-format="2d" data-id="3e9eeda9-2fef-427b-a1ad-ea0a4d5b440f" ><h3>CHUYỆN MA GIẢNG ĐƯỜNG - HỌC KỲ 2 (C16)</h3></a></li>
-                                <li><a href="javascript:void(0);" data-img="https://cinestar.com.vn/pictures/Cinestar/08-2022/bullet-train.jpg" data-format="2d" data-id="54ec8131-aa1b-49d8-8715-63068cb08eb1" ><h3>SÁT THỦ ĐỐI ĐẦU (C18)</h3></a></li>
-                                <li><a href="javascript:void(0);" data-img="https://cinestar.com.vn/pictures/Cinestar/07-2022/2037.jpg" data-format="2d" data-id="782f74b0-2a57-400a-800d-a42d87cfa020" ><h3>ĐIỀU ƯỚC CUỐI CỦA TÙ NHÂN 2037 (C16)</h3></a></li>
-                                <li><a href="javascript:void(0);" data-img="https://cinestar.com.vn/pictures/Cinestar/07-2022/lien-minh-sieu-thu.jpg" data-format="2d" data-id="ae102bae-ca55-4509-ad75-3f7fbdeff52c" ><h3>LIÊN MINH SIÊU THÚ DC 2D LT</h3></a></li>
-                                <li><a href="javascript:void(0);" data-img="https://cinestar.com.vn/pictures/Cinestar/08-2022/poster-ha-canh-khan-cap.jpg" data-format="2d" data-id="e2cb3939-f404-4242-b9ac-9d197e8e0531" ><h3>HẠ CÁNH KHẨN CẤP (C16)</h3></a></li>
+<!
                             </ul>
                         </div>
                     </div>
@@ -380,9 +379,11 @@
                             <span></span>
                             <h3 data-holder="Chọn rạp">Chọn rạp</h3>
                         </div>
-                        <div class="select-box">
+                        <div class="select-box" id="selectBranch">
                             <ul class="warning">
-                                <li><a href="javascript:void(0);"><h3>Vui lòng chọn phim</h3></a></li>
+                                <li><a href="javascript:void(0);">
+                                    <h3>Vui lòng chọn phim</h3>
+                                </a></li>
                             </ul>
                             <ul>
                             </ul>
@@ -394,7 +395,7 @@
                             <span></span>
                             <h3 data-holder="Chọn ngày">Chọn ngày</h3>
                         </div>
-                        <div class="select-box">
+                        <div class="select-box" id="selectShowDate">
                             <ul class="warning">
                                 <li><a href="javascript:void(0);"><h3>Vui lòng chọn phim và rạp</h3></a></li>
                             </ul>
@@ -409,7 +410,10 @@
                             <span></span>
                             <h3 data-holder="Chọn suất chiếu">Chọn suất chiếu</h3>
                         </div>
-                        <div class="select-box">
+                        <div class="select-box" id="selectShowTimeSlot">
+                            <ul>
+
+                            </ul>
                         </div>
                     </div>
 
@@ -423,8 +427,8 @@
 
             <div class="sub-tab film">
                 <ul>
-                    <li><a href="/assets/customer_page/phimdangchieu.html"  data-name="playing">Phim đang chiếu</a></li>
-                    <li><a href="/assets/customer_page/phimsapchieu.html"  data-name="coming">Phim sắp chiếu</a></li>
+                    <li><a href="/customers/phimdangchieu"  data-name="playing">Phim đang chiếu</a></li>
+                    <li><a href="/customers/phimsapchieu"  data-name="coming">Phim sắp chiếu</a></li>
                     <li><a href="/assets/customer_page/suatchieudacbiet.html"  data-name="special">Suất chiếu đặc biệt</a></li>
                 </ul>
             </div>
@@ -2436,15 +2440,92 @@
 <div class="go-top"></div>
 <div class="scroll-down"></div>
 <input type="hidden" value="https://cinestar.com.vn/" id="BASE_URL" />
-<script type="text/javascript" src="/assets/customer_page/catalog/view/theme/default/js/btqe063.js?v=27"></script>
-<script type="text/javascript" src="/assets/customer_page/catalog/view/theme/default/js/btqe062.js?v=27"></script>
+<script type="text/javascript" src="/assets/customer_page/catalog/view/theme/default/js/btqe063.js"></script>
+<script src="/assets/js/app/app.js"></script>
 </body>
 <script>
+    let page = {
+        urls: {
+            getAllMovies: App.BASE_URL_MOVIE,
+            getAllBranchByMovieId: App.BASE_URL + "/branches/",
+            getAllShowDateByMovieAndBranch: App.BASE_URL + "/show-schedules/show_date_customer_page/",
+            getAllShowTimeSlot: App.BASE_URL + "/show-schedules/",
+            getAllSeatType: App.BASE_URL + "/seat_types",
+            getSeatsByRoomId: App.BASE_URL + "/seats/",
+            logout: App.BASE_URL_LOGOUT
+        },
+        element: {},
+        loadData: {},
+        commands: {},
+        dialogs: {
+            element: {},
+            commands: {},
+            close: {},
+            alertDanger: {},
+            inputError: {}
+        }
+    }
+
+    page.dialogs.element.ulMovie = $("#selectMovie ul");
+    page.dialogs.element.ulBranch = $("#selectBranch ul");
+    page.dialogs.element.ulShowDate = $("#selectShowDate ul");
+    page.dialogs.element.ulShowTimeSlot = $("#selectShowTimeSlot ul");
+
     let url = window.location.href;
 
     let strArr = url.split("/");
 
     let movieId = strArr[strArr.length - 1];
+
+    function loadSelectList() {
+        $.ajax({
+            headers: {
+                "Content-Type": "Application/json",
+                "Accept": "Application/json"
+            },
+            type: "GET",
+            url: page.urls.getAllMovies
+        })
+            .done((item) => {
+                $.each(item, (i, item) => {
+                    let str = `
+                    <li>
+                        <a href="javascript:void(0);" data-img="${item.fileUrl}"
+                         data-format="2d" data-id="${item.id}" >
+                         <h3> ${item.title} </h3>
+                         </a>
+                     </li>
+                    `;
+                    $("#selectMovie ul").append(str);
+                })
+        })
+            .fail((jqXHR) => {
+                let str = ``;
+
+                if (jqXHR.status === 401) {
+                    setTimeout(() => {
+                        App.SweetAlert.showErrorAlert(App.ERROR_401);
+                    }, 3000)
+
+                    location.href = page.urls.logout;
+
+                }  else if (jqXHR.status === 403) {
+                    App.SweetAlert.showErrorAlert(App.ERROR_403);
+
+                } else if (jqXHR.status === 500) {
+                    App.SweetAlert.showErrorAlert(App.ERROR_500);
+
+                } else if (jqXHR.responseJSON) {
+
+                    $.each(jqXHR.responseJSON, function (key, value) {
+                        str += `<label id="${key}Load-error" class="error" for="${key}Load">${value}</label>`;
+                        $("#" + key).addClass("error");
+                    });
+
+                }
+            })
+    }
+
 
     function getMovieDTOById(id) {
         return $.ajax({
@@ -2456,10 +2537,10 @@
                     let str = `
                     <div class="film-item t-2d">
                         <div class="film-item-pic">
-                            <img src="${data.fileUrl}" alt="${data.title} (C18)"/>
+                            <img src="${data.fileUrl}" alt="${data.title}"/>
                         </div>
                         <div class="film-item-txt">
-                            <h3>${data.title} (C18)</h3>
+                            <h3> ${data.title} </h3>
                 
                             <div class="film-overview"><span class="l-title">Khởi chiếu:</span><span class="l-value">Từ ${data.premiereDate}</span>
                             </div>
@@ -2475,9 +2556,9 @@
                             </div>
                             <p>${data.description}</p>
                             <div class="film-item-but">
-                                <a class="trailler-btn fontsize13" ${data.trailer} href="">Xem trailer</a>
+                                <a class="trailler-btn fontsize13" data-href="${data.trailer}">Xem trailer</a>
                                 <a class="cart-btn fontsize14"
-                                   href="/assets/customer_page/lichchieu/0a6fdec5-8cd8-4fe8-8684-1c8291d6ea23.html">Mua vé</a>
+                                   href="">Mua vé</a>
                             </div>
                         </div>
                     </div>
@@ -2513,9 +2594,125 @@
             })
     }
 
+    page.commands.getAllBranchByMovie = (movieId) => {
+        return $.ajax({
+            type: "GET",
+            url: page.urls.getAllBranchByMovieId + movieId,
+        }).done((data) => {
+            page.dialogs.element.ulBranch.empty();
+
+            $.each(data, (i, item) => {
+                let  str = `<li class = "show">
+                                <a href="javascript:void(0);"  data-id="${item.id}" >
+                                <h3>${item.name}</h3>
+                                </a>
+                            </li>
+                            `;
+                page.dialogs.element.ulBranch.append(str);
+
+            })
+        })
+            .fail((err) => {
+                alert("Load branch fail!");
+            })
+    }
+
+    page.commands.getAllShowDateByMovieAndBranch =  (movieId, branchId)  => {
+        return $.ajax({
+            type: "GET",
+            url: page.urls.getAllShowDateByMovieAndBranch + movieId + "/" + branchId,
+        }).done((data) => {
+            page.dialogs.element.ulShowDate.empty();
+
+            $.each(data, (i, item) => {
+                let  str = `<li class="show">
+                                <a href="javascript:void(0);" data-date="${item}">
+                                <h3>${item}</h3>
+                                </a>
+                            </li>
+                            `;
+                page.dialogs.element.ulShowDate.append(str);
+
+            })
+        })
+            .fail((err) => {
+                alert("Load show date fail!");
+            })
+    }
+
+    page.commands.getAllShowTimeSlot =  (movieId, branchId, showDate)  => {
+        return $.ajax({
+            type: "GET",
+            url: page.urls.getAllShowTimeSlot + movieId + "/" + branchId + "/" + showDate,
+        }).done((data) => {
+            page.dialogs.element.ulShowTimeSlot.empty();
+
+            $.each(data, (i, item) => {
+                    let  str = `
+                            <li class="show">
+                                <a href="javascript:void(0);" data-room-id = "${item.room.id}" data-hour="${item.showTimeSlot}">
+                                <h3>${item.showTimeSlot}</h3>
+                                </a>
+                            </li>
+                        `;
+                page.dialogs.element.ulShowTimeSlot.append(str);
+
+            })
+        })
+            .fail((err) => {
+                alert("Load show time slot fail!");
+            })
+    }
+
+    page.commands.getAllSeatType = () => {
+        return $.ajax({
+            type: "GET",
+            url : page.urls.getAllSeatType
+        }).done( (data) => {
+            page.element.tbcontentPrice.empty();
+
+            $.each(data , (i , item) => {
+                seatType = item;
+                page.commands.addRowPrice();
+            })
+        }).fail((err) => {
+            alert("Load seatType fail");
+        })
+    }
+
+    page.commands.getSeatsByRoomId = (roomId) => {
+        return $.ajax({
+            type: "GET",
+            url : page.urls.getSeatsByRoomId + roomId
+        }).done( (data) => {
+            $(".seat-container").empty();
+            console.log(Math.ceil(data.length / 10));
+
+            let left = 50;
+            let top = 43;
+            let size = data.length;
+            let count = 0;
+
+            for(let j = 0; j < Math.ceil(data.length / 10); j++) {
+                let  row = (size > 10) ? 10 : size;
+
+                for(let i = 0; i < row; i++) {
+                    seat = data[count];
+                    page.commands.addSeat(left, top);
+                    left += 50;
+                    count++;
+                }
+                size -= 10;
+                left = 50;
+                top += 50;
+            }
+
+        }).fail((err) => {
+            alert("Load seat fail");
+        })
+    }
+
     function getCategory(data) {
-        console.log(data);
-        console.log(data.categories);
         let str = data.categories.replace("[", "").replace("]", "");
         $("#category").append(str);
     }
@@ -2523,13 +2720,105 @@
 
    function load() {
         getMovieDTOById(movieId).then(() => {
+            loadSelectList();
             getCategory(movie);
         })
    }
 
    load();
-    
 
+    $(document).on("click", "#movieDescription .film-item .film-item-txt .film-item-but .trailler-btn", function (e) {
+        e.preventDefault();
+        $(".allvideo").empty();
+        let href = $(this).attr("data-href");
+        let str = `<div class ="video-list">
+                            <div class ="close-video"></div>
+                            <div class ="video-wrap">
+                                <iframe width="100%" height="100%" src="${href}"
+                                        frameBorder="0" allowFullScreen=""></iframe>
+                            </div>
+                        </div>`;
+
+        $(".allvideo").html(str);
+
+        $(".allvideo").css({'width' : '100%' , 'display' :  'block'});
+
+        $('.overlay-video').fadeIn(500, 'linear');
+
+    })
+
+    $(document).on("click" , ".close-video" , function (e) {
+        e.preventDefault();
+
+        $(".allvideo").html("");
+
+        $(".allvideo").css({'width' : '0px' , 'display' :  'none'});
+
+        $('.overlay-video').fadeOut(500, 'linear');
+    })
+
+    $("#selectMovie").on('click', "li a", function (e) {
+        e.preventDefault();
+        let movie_id = $(this).attr("data-id");
+
+        $(this).parents('.select-list').find('.select-header h3').text($(this).text());
+        $(this).closest('.select-box').fadeOut(200, 'linear');
+        $(this).parent().parent().find(' > li').removeClass('selected');
+        $(this).parent().addClass('selected');
+
+        page.commands.getAllBranchByMovie(movie_id);
+    })
+
+    $("#selectBranch").on("click", "li a", function () {
+        let movieId = $("#selectMovie li.selected a").attr("data-id");
+        let branchId = $(this).attr("data-id");
+
+        $(this).parents('.select-list').find('.select-header h3').text($(this).text());
+        $(this).closest('.select-box').fadeOut(200, 'linear');
+
+        $(this).parent().parent().find(' > li').removeClass('selected');
+        $(this).parent().addClass('selected');
+
+        page.commands.getAllShowDateByMovieAndBranch(movieId,branchId);
+    })
+
+    $("#selectShowDate").on("click", "li a", function () {
+        let movie_id = $("#selectMovie li.selected a").attr("data-id");
+        let branchId = $("#selectBranch li.selected a").attr("data-id");
+        let showDate = $(this).attr("data-date");
+
+        $(this).parents('.select-list').find('.select-header h3').text($(this).text());
+        $(this).closest('.select-box').fadeOut(200, 'linear');
+
+        $(this).parent().parent().find(' > li').removeClass('selected');
+        $(this).parent().addClass('selected');
+
+        page.commands.getAllShowTimeSlot(movie_id,branchId,showDate);
+    })
+
+    $("#selectShowTimeSlot").on("click","li a", function () {
+        let movieName = $(".select-header h3[data-holder = 'Chọn phim']").text();
+        let showTimeSlot = $(this).attr("data-hour");
+        let showDate = $("#selectShowDate li.selected a").attr("data-date");
+
+        $('.container').css({'height': $(window).height(), 'overflow-y': 'hidden', 'opacity': 0.5});
+
+        $(this).parent().parent().find(' > li').removeClass('selected');
+        $(this).parent().addClass('selected');
+
+        $(".order-overview h2 span").text(movieName);
+        $(".about-ticket li:nth-child(1) p.value").text(showTimeSlot);
+        $(".about-ticket li:nth-child(2) p.value").text(showDate)
+
+        $(".section-order").css({"height": $(window).height()});
+        $('.order-content').css({'display': 'block'});
+        $('.ticket-content').css({'display': 'block'});
+
+        page.commands.getAllSeatType();
+
+    });
+
+    $('.movie-item').off();
 
 </script>
 </html>

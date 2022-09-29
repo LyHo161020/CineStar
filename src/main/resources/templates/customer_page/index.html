@@ -392,7 +392,7 @@
                             <span></span>
                             <h3 data-holder="Chọn phim">Chọn phim</h3>
                         </div>
-                        <div class="select-box" id = "selectMovie">
+                        <div class="select-box" id ="selectMovie">
                             <ul>
 <!--                                <li><a href="javascript:void(0);" data-img="https://cinestar.com.vn/pictures/Cinestar/07-2022/nang-dau-halloween.jpg" data-format="2d" data-id="0af0ed19-1d16-45bd-92b9-4b611cbb769b" ><h3>THÁM TỬ LỪNG DANH CONAN (C13): NÀNG DÂU HALLOWEEN</h3></a></li>-->
 <!--                                <li><a href="javascript:void(0);" data-img="https://cinestar.com.vn/pictures/Cinestar/08-2022/cuoc-chien-xuyen-khong.jpg" data-format="2d" data-id="2a26d413-0e30-43b3-94eb-1b748425a800" ><h3>CUỘC CHIẾN XUYÊN KHÔNG (C16)</h3></a></li>-->
@@ -475,8 +475,8 @@
 
             <div class="sub-tab">
                 <ul>
-                    <li><a href="https://cinestar.com.vn/getmoviehomepage" data-name="playing">Phim đang chiếu</a></li>
-                    <li><a href="https://cinestar.com.vn/getmoviehomepage" data-name="coming">Phim sắp chiếu</a></li>
+                    <li><a href="/customers/phimdangchieu" data-name="playing">Phim đang chiếu</a></li>
+                    <li><a href="/customers/phimsapchieu" data-name="coming">Phim sắp chiếu</a></li>
                     <li><a href="https://cinestar.com.vn/getmoviehomepage" data-name="special">Suất chiếu đặc biệt</a></li>
                 </ul>
             </div>
@@ -2645,25 +2645,6 @@
             })
     }
 
-    page.commands.getAllShowDateByMovieAndBranch =  (movieId, branchId)  => {
-        return $.ajax({
-            type: "GET",
-            url: page.url.getAllShowDateByMovieAndBranch + movieId + "/" + branchId,
-        }).done((data) => {
-            page.dialogs.element.ulShowDate.empty();
-
-            $.each(data, (i, item) => {
-
-                let  str = `<li class="show"><a href="javascript:void(0);" data-date="${item}"><h3>${item}</h3></a></li>`;
-                page.dialogs.element.ulShowDate.append(str);
-
-            })
-        })
-            .fail((err) => {
-                alert("Load show date fail!");
-            })
-    }
-
     page.commands.getAllShowTimeSlot =  (movieId, branchId, showDate)  => {
         return $.ajax({
             type: "GET",
@@ -2900,11 +2881,41 @@
     })
 
 
-    // page.commands.loadShowScheduleCustomer();
-    $(document).on("click",".movie-over > a" , function (e) {
+    $(document).on("click",".movie-over .description-click" , function (e) {
         let id = $(this).parent().attr("id");
         e.preventDefault();
         window.location.href = `/movies/${id}`;
+    })
+
+    $(document).on("click", "#homeMovie .slide-item .movie-item .movie-over .trailler-btn", function (e) {
+        e.preventDefault();
+        $(".allvideo").empty();
+        let href = $(this).attr("data-href");
+        console.log(href);
+        let str = `<div class ="video-list">
+                            <div class ="close-video"></div>
+                            <div class ="video-wrap">
+                                <iframe width="100%" height="100%" src="${href}"
+                                        frameBorder="0" allowFullScreen=""></iframe>
+                            </div>
+                        </div>`;
+
+        $(".allvideo").html(str);
+
+        $(".allvideo").css({'width' : '100%' , 'display' :  'block'});
+
+        $('.overlay-video').fadeIn(500, 'linear');
+
+    })
+
+    $(document).on("click" , ".close-video" , function (e) {
+        e.preventDefault();
+
+        $(".allvideo").html("");
+
+        $(".allvideo").css({'width' : '0px' , 'display' :  'none'});
+
+        $('.overlay-video').fadeOut(500, 'linear');
     })
 </script>
 </body>
