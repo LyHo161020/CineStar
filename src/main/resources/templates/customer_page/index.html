@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
@@ -2462,7 +2461,7 @@
                             $('.block-user .tab-register, .block-user .tab-login').fadeOut(200);
                             $('.register-content').removeClass('showbox');
 
-                            if(movie.movie_hour != '') {
+                            if(movie.movie_hour !== '') {
                                 order();
                             }
 
@@ -2471,7 +2470,7 @@
                         }else{
                             $('body').append('<div  class="contact-success color-red">Đăng nhập thất bại.</div>');
                         }
-                        $('html, body').animate({scrollTop:0}, 'slow');
+                        $("html, body").animate({scrollTop:0}, 'slow');
                         setTimeout(hidemsg,5000);
                     }
                 });  //end ajax
@@ -2543,16 +2542,23 @@
             commands :{}
         }
     }
+    let listSeat = [];
 
     let movieCine = new Movie();
     let seatType = new SeatType();
     let seat = new Seat();
+    let food = new Food();
 
     page.element.tempLoadMovieHome = $("#tempLoadMovieHome");
     page.element.tempContentPrice = $("#tempContentPrice");
     page.element.tbBodyHomeMovie = $("#homeMovie");
     page.element.tbcontentPrice = $("#content-price");
+    page.element.ulFood = $(".cons-box ul li");
     page.element.divSeat = $(".seat-container");
+    page.element.confirmMovie = $(".confirm-film");
+    page.element.confirmTicket = $(".confirm-ticket .confirm-text ul");
+    page.element.confirmTotal = $(".confirm-total .confirm-value");
+    page.element.confirmCons = $(".confirm-cons .confirm-text ul");
 
     page.dialogs.element.ulMovie = $("#selectMovie ul");
     page.dialogs.element.ulBranch = $("#selectBranch ul");
@@ -2580,6 +2586,22 @@
         $(".seat-container").prepend(str);
     }
 
+    page.commands.addFood = () => {
+        let str = App.drawFood(food);
+        page.element.ulFood.append(str);
+    }
+
+    page.commands.addSeat = (left, top) => {
+        let str = "";
+
+        if(Number(seat.seatType.id) === 1){
+            str = App.drawSeat(seat.id, seat.name, seat.seatType.price, left , top);
+        } else {
+            str = App.drawSeatCouple(seat.id, seat.name, seat.seatType.price, left , top);
+        }
+        $(".seat-container").prepend(str);
+    }
+
     page.commands.loadMovies = () => {
 
         return $.ajax({
@@ -2601,11 +2623,10 @@
 
             })
         })
-            .fail((err) => {
+            .fail(() => {
                 alert("Load movie fail!");
             })
     }
-
 
     page.commands.getAllBranchByMovie = (movieId) => {
         return $.ajax({
@@ -2621,7 +2642,7 @@
 
             })
         })
-            .fail((err) => {
+            .fail(() => {
                 alert("Load branch fail!");
             })
     }
@@ -2640,7 +2661,7 @@
 
             })
         })
-            .fail((err) => {
+            .fail(() => {
                 alert("Load show date fail!");
             })
     }
@@ -2659,7 +2680,7 @@
 
             })
         })
-            .fail((err) => {
+            .fail(() => {
                 alert("Load show date fail!");
             })
     }
@@ -2707,15 +2728,38 @@
                 top += 50;
             }
 
-        }).fail((err) => {
+        }).fail(() => {
             alert("Load seat fail");
         })
     }
 
-    //
-    // page.commands.loadShowScheduleCustomer = () => {
-    //     page.commands.loadMovies();
-    // }
+    page.commands.formatNumber = (number) => {
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    page.commands.removeCharactor = (charactor, letters) => {
+        letters = letters.replaceAll(charactor, "");
+        return letters;
+    }
+
+    page.commands.getAllFood = () => {
+        return $.ajax({
+            type: "GET",
+            url : page.url.getAllFood
+        }).done( (data) => {
+
+            page.element.ulFood.empty();
+            page.element.ulFood.append("<h2>Đồ Ăn - Thức Uống</h2>");
+
+            $.each(data , (i , item) => {
+                food = item;
+                page.commands.addFood();
+            })
+        }).fail(() => {
+            alert("Load food fail");
+        })
+    }
+
 
     $('.sub-tab li a').click(function(e) {
 
@@ -2726,11 +2770,11 @@
         let dataName = $(this).attr('data-name');
 
 
-        if( $('.movie-content .slide-wrapper').children().length > 0){
+        if( $(".movie-content .slide-wrapper").children().length > 0){
             $('.movie-content .slide-wrapper').children().remove();
         }
 
-        if(dataName == "playing") {
+        if(dataName === "playing") {
             page.commands.loadMovies();
         }
 
@@ -2765,7 +2809,6 @@
 
         page.commands.getAllShowDateByMovieAndBranch(movie_id,branchId);
     })
-
 
     $("#selectShowDate").on("click", "li a", function () {
         let movie_id = $("#selectMovie li.selected a").attr("data-id");
@@ -2803,9 +2846,23 @@
 
     });
 
+    $(document).on("click", "#ticket-back", function(e) {
+        e.preventDefault();
+
+        $('.container').css({ 'height': "auto", 'overflow-y': 'auto', 'opacity': 1 });
+        $('.order-content').css({ 'display': 'none' });
+        $('.ticket-content').css({ 'display': 'none' });
+
+        $('.section-order').stop().animate({'height': 0}, 200, 'linear', function(){
+            resetForm();
+            resetOrder();
+
+        })
+    });
+
     $('.movie-item').off();
 
-    $('.movie-content .movie-load').on("mouseenter", ".movie-item", function (e) {
+    $(".movie-content .movie-load").on("mouseenter", ".movie-item", function (e) {
         $('.movie-item.show').removeClass('show').addClass('hide');
         hoverMovie($(this));
     })
@@ -2836,8 +2893,6 @@
         }
 
 
-
-
         let ticket_total = ticket_num * ticket_price;
 
         $(this).parent().parent().find(".ticket-total span").text(ticket_total);
@@ -2857,7 +2912,53 @@
         console.log(ticket_total);
     })
 
+    $(document).on("click", ".minus", function (e) {
 
+        e.preventDefault();
+
+        let totalSeat = 0;
+        let totalPrice = 0;
+        let ticket_num = parseInt($(this).parent().parent().find(".ticket-num input").val());
+
+        if (ticket_num === 0) {
+            alert("Vui lòng chọn số lượng ghế phù hợp!");
+            return;
+        }
+
+        ticket_num--;
+        $(this).parent().parent().find(".ticket-num input").val(ticket_num);
+        let ticket_price = parseInt($(this).parent().parent().find(".ticket-price").attr("data-price"));
+
+        $(".ticket-num input").each(function (i, item) {
+            totalSeat += parseInt($(item).val());
+        })
+
+        if (ticket_num === 0) {
+            $("#ticket-back").parent().removeClass("active");
+        }
+
+        if (totalSeat > 10) {
+            $(this).parent().parent().find(".ticket-num input").val(--ticket_num);
+            alert("Vui lòng chọn tối đa 10 ghế!");
+            return;
+        }
+
+
+
+        let ticket_total = ticket_num * ticket_price;
+
+        $(this).parent().parent().find(".ticket-total span").text(formatNumber(ticket_total));
+
+        $(".ticket-total span").each(function (i, item) {
+            totalPrice += parseInt(removeCharactor(".", $(item).text()));
+        });
+
+
+        $(".about-ticket li:nth-child(3) p.value span").text(totalSeat);
+        $(".total-ticket-num span").text(totalSeat);
+        $(".about-ticket li:nth-child(4) p.value span").text(formatNumber(totalPrice))
+        $(".total-ticket-amount span").text(formatNumber(totalPrice));
+    })
 
     $("#ticket-next").on("click", function () {
         $(".final-content").attr("style","display:none");
@@ -2879,6 +2980,239 @@
         page.commands.getSeatsByRoomId(roomId);
 
     })
+
+    $(document).on("click" , "#cinema-back", function(e) {
+        e.preventDefault();
+
+        listSeat = [];
+        $('.seat-number').html('');
+        $('.cinema-seat td').removeClass('choosing');
+
+        $(".ticket-content").css({"display" : "block", "opacity" : 0});
+        $('.section-order').css({ 'height': 'auto' });
+        $("#cinema-content").css({ "opacity": "0", "display": "none" });
+
+        $('html, body').stop().animate({scrollTop: 0}, 150, 'linear', function(){
+            $('.ticket-content').css({'opacity': 1});
+        });
+    })
+
+    $(document).on("click", ".cons-chose", function(e) {
+        e.preventDefault();
+
+        $(".order-content").prepend("<span class='overlay-cons'></span>");
+
+        $(".cons-content").addClass("show");
+
+        // page.commands.getAllFood();
+    })
+
+    $(document).on("click",".cmb-add", function(e) {
+        e.preventDefault();
+
+        let price = $(this).parent().find("input").attr("data-price");
+        let num = $(this).parent().find("input").val();
+        let nameFood = $(this).parent().find("input").attr("data-name");
+
+
+        $(this).parent().find("input").val(++num);
+
+        let total = parseInt(price) * num;
+
+        $(this).parent().parent().find(".combo-total-outer span").text(page.commands.formatNumber(total));
+
+        if(num === 1) {
+            $(".cons-text").append(`<li data-name = "${nameFood}"> ${num} x ${nameFood} </li>`);
+        } else {
+            $(`.cons-text li[data-name = "${nameFood}"]`).remove();
+            $(".cons-text").append(`<li data-name = "${nameFood}"> ${num} x ${nameFood} </li>`);
+        }
+
+
+        let totalPrice = 0;
+        $(".combo-total-outer span").each(function (i, item) {
+            totalPrice += parseInt(page.commands.removeCharactor(".", $(item).text()));
+        });
+
+        $(".cons-total").css({"display" : "inline-block"});
+        $(".cons-but").addClass("show");
+        $(".cons-value span").text(page.commands.formatNumber(totalPrice));
+    })
+
+    $(document).on("click",".cmb-minus", function(e) {
+        e.preventDefault();
+
+        let price = $(this).parent().find("input").attr("data-price");
+        let num = $(this).parent().find("input").val();
+        let nameFood = $(this).parent().find("input").attr("data-name");
+
+        if(num === 0) {
+            return;
+        }
+
+
+        $(this).parent().find("input").val(--num);
+
+        let total = parseInt(price) * num;
+
+        $(this).parent().parent().find(".combo-total-outer span").text(page.commands.formatNumber(total));
+
+        if(num === 0) {
+            $(`.cons-text li[data-name = "${nameFood}"]`).remove();
+        } else {
+            $(`.cons-text li[data-name = "${nameFood}"]`).remove();
+            $(".cons-text").append(`<li data-name = "${nameFood}"> ${num} x ${nameFood} </li>`);
+        }
+
+
+        let totalPrice = 0;
+        $(".combo-total-outer span").each(function (i, item) {
+            totalPrice += parseInt(page.commands.removeCharactor(".", $(item).text()));
+        });
+
+        $(".cons-total").css({"display" : "inline-block"});
+        $(".cons-but").addClass("show");
+        $(".cons-value span").text(page.commands.formatNumber(totalPrice));
+    })
+
+    $(document).on('click', '#cons-cancel', function(e) {
+        $('.cons-total').css({'display': 'none'});
+        $('.cons-value span, .cons-text').html('');
+
+
+        $('.combo-item').each(function(index, element) {
+            $(element).find('input').val(0).attr({'data-total':0});
+            $(element).find('.combo-total-outer span').html('0');
+            $('.cons-but').removeClass('show');
+        });
+
+        $(".order-content > span").remove();
+
+        $(".cons-content").removeClass("show");
+
+    });
+
+    $(document).on("click", "#cons-ok", function(e) {
+        e.preventDefault();
+
+        $(".order-content > span").remove();
+
+        $(".cons-content").removeClass("show");
+    })
+
+    $('.seat-container').on("click", "div", function(e) {
+        let numberSeatOfCouple = $("#content-price tr[data-seatstyle-id = '2'] input").val();
+        let numberSeatOfSingle = $("#content-price tr[data-seatstyle-id = '1'] input").val();
+        let statusSeat = $(this).attr("class");
+        let seatTypeId = $(this).attr("data-type-seat-id");
+        let seatName = $(this).text().trim();
+        let price = $(this).attr("data-price");
+
+
+        if(statusSeat.includes("busy")) {
+            alert("Ghế này đã được đặt rồi! Vui lòng chọn ghế khác!");
+            return;
+        }
+
+        if(statusSeat.includes("choosing")) {
+            console.log(listSeat);
+            $(this).removeClass("choosing");
+            listSeat = listSeat.filter(function (item,index) {
+                return item.price !== price && item.seatName !== seatName;
+            })
+            console.log(listSeat);
+            return;
+        }
+
+        if(numberSeatOfCouple === 0 && statusSeat.includes("couple")) {
+            alert("Bạn không đặt ghế loại này! Vui lòng chọn ghế loại khác!");
+            return;
+        }
+
+        if(numberSeatOfSingle === 0 && statusSeat.includes("single")) {
+            alert("Bạn không đặt ghế loại này! Vui lòng chọn ghế loại khác!");
+            return;
+        }
+
+        let countSingle = 0;
+        let countCouple = 0;
+        $(".seat-container div").each( (i, item) => {
+            if($(item).attr("class").includes("single choosing")){
+                countSingle++;
+            }
+
+            if($(item).attr("class").includes("couple choosing")){
+                countCouple++;
+            }
+        })
+
+        if((countSingle == numberSeatOfSingle && statusSeat.includes("single")) || (countCouple == numberSeatOfCouple && statusSeat.includes("couple"))) {
+            alert("Bạn đã đặt đủ số lượng ghế loại này!");
+            return;
+        }
+
+        listSeat.push({ "price" : price, "seatName": seatName});
+
+
+        $(this).addClass("choosing");
+        (seatTypeId === 1) ? countSingle++ : countCouple++;
+
+        $(".seat-number").append(`<span data-num="${seatTypeId}" >${seatName}</span>`);
+
+        if(numberSeatOfSingle == countSingle && numberSeatOfCouple == countCouple) {
+            $('.cinema-btn').addClass("active");
+
+            let top = $('.cinema-content').innerHeight();
+            $('html, body').animate({scrollTop: top}, 'slow');
+        }
+
+    })
+
+    $(document).on("click", "#cinema-next", function(e) {
+        e.preventDefault();
+
+        $(".final-content").css({"display" : "block"});
+        $("#cinema-content").css({"display" : "none" , "opacity" : 0});
+
+        let movieName = $(".select-header h3[data-holder = 'Chọn phim']").text();
+        let image = $("#selectMovie li.selected a").attr("data-img");
+        let showTimeSlot = $("#selectShowTimeSlot li.selected a").attr("data-hour");
+        let showDate = $("#selectShowDate li.selected a").attr("data-date");
+        let totalPrice = page.commands.removeCharactor(",",$(".about-ticket li:nth-child(4) p.value span").text());
+
+        let data = {
+            "movieName": movieName,
+            "image" : image,
+            "showTimeSlot" : showTimeSlot,
+            "showDate" : showDate
+        }
+
+        let str = App.drawBillMovie(data);
+        page.element.confirmMovie.append(str);
+
+        for(let i = 0; i < listSeat.length; i++) {
+            page.element.confirmTicket.append(App.drawBillSeat(listSeat[i]));
+        }
+
+        page.element.confirmTotal.append(`<span>${page.commands.formatNumber(totalPrice)}</span><sup>đ</sup>`);
+
+
+    })
+
+    $(document).on("click", "#payment-back", function(e) {
+        e.preventDefault();
+        // listSeat = [];
+
+        page.element.confirmMovie.html("");
+        page.element.confirmTicket.html("");
+        page.element.confirmTotal.html("");
+        $(".final-content").css({"display" : "none"});
+        $("#cinema-content").css({"display" : "block" , "opacity" : 1});
+    })
+
+    $(() => {
+        page.commands.getAllFood();
+    });
 
 
     $(document).on("click",".movie-over .description-click" , function (e) {
@@ -2911,12 +3245,13 @@
     $(document).on("click" , ".close-video" , function (e) {
         e.preventDefault();
 
-        $(".allvideo").html("");
+        $('.allvideo').html("");
 
         $(".allvideo").css({'width' : '0px' , 'display' :  'none'});
 
         $('.overlay-video').fadeOut(500, 'linear');
-    })
+    });
+
 </script>
 </body>
 </html>

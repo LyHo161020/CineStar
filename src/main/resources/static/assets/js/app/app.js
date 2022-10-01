@@ -266,6 +266,54 @@ class App {
         return str;
     }
 
+    static drawFood(data) {
+        let str = ` 
+                    <div class="combo-item">
+                        <div class="combo-text">
+                            <h3>${data.name}</h3>
+                            <p>${data.name}</p>
+                            <div class="combo-price">giá:<span class="text-price">${data.price}</span><sup>đ</sup></div>
+                        </div>
+                        <div class="combo-input"><a href="javascript:void(0);" class="cmb-minus">-</a><input data-price="${data.price}" data-name="${data.name}" type="text" value="0" size="3"><a
+                                href="javascript:void(0);" class="cmb-add">+</a></div>
+                        <div class="combo-total">
+                            <div class="combo-total-outer"><span>0</span><sup>đ</sup></div>
+                        </div>
+                    </div>`;
+
+        return str;
+    }
+
+    static drawSeatCouple(id, name, price, left, top) {
+        let str = `<div class="couple" data-type-seat-id = "2" data-seat-id = "${id}" data-price="${price}" 
+                        style="left:${left + 'px'}; top: ${top + 'px'}; width: 86px; height: 46px;position: absolute; padding: 12px; text-align: center; vertical-align: middle; font-family: 'Futurab'; font-weight: normal; font-size: 11px; color: #fff; text-transform: uppercase;">
+                        ${name}
+                   </div>`
+        return str;
+    }
+
+    static drawBillMovie(data) {
+        let str = `    <div class="confirm-film-pic"><img src="${data.image}"></div>
+                       <div class="confirm-film-text">
+                            <h3>${data.movieName}</h3>
+                            <p>Ngày chiếu: <strong>${data.showDate}</strong></p>
+                            <p>Xuất chiếu: <strong>${data.showTimeSlot}</strong></p>
+                            <p><span class="icon-3d"></span></p>
+                       </div>
+                              `;
+        return str;
+    }
+
+
+    static drawBillSeat(data) {
+        let str = `  <li>
+                        <div class="confirm-mark">${data.seatName}</div>
+                        <div class="confirm-value"><span>${data.price}</span><sup>đ</sup></div>
+                    </li>`;
+        return str;
+    }
+
+
 }
 
 class User {

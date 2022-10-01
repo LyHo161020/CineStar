@@ -2662,23 +2662,23 @@ $(document).ready(function() {
         return false;
 	});
 	//minus ticket
-	$(document).on('click', '.minus', function(e) {
-		e.preventDefault();
-		
-		var row =  $(this).parent().parent();
-		// console.log(row.attr('data-seatstyle-id'), "row.attr('data-seatstyle-id')");
-		var isDouble = row.attr('data-seatstyle-id') == 30 ? 1 : 0;
-		isDouble = (isDouble === 0 && row.attr('data-ticket-id') == 27) ? -1: isDouble;
-		cal_total_on_row(row,'des', isDouble);
-        var key = row.attr('data-seatstyle-id')+"_"+row.attr('data-ticket-id');
-        var val = parseInt(row.find('.ticket-num input').val());
-        if(val==0 && movie.pseats.hasOwnProperty(key)){
-            delete movie.pseats[key];
-        } else {
-            movie.pseats[key] = val;
-        }
-        return false;
-	});
+	// $(document).on('click', '.minus', function(e) {
+	// 	e.preventDefault();
+	//
+	// 	var row =  $(this).parent().parent();
+	// 	// console.log(row.attr('data-seatstyle-id'), "row.attr('data-seatstyle-id')");
+	// 	var isDouble = row.attr('data-seatstyle-id') == 30 ? 1 : 0;
+	// 	isDouble = (isDouble === 0 && row.attr('data-ticket-id') == 27) ? -1: isDouble;
+	// 	cal_total_on_row(row,'des', isDouble);
+    //     var key = row.attr('data-seatstyle-id')+"_"+row.attr('data-ticket-id');
+    //     var val = parseInt(row.find('.ticket-num input').val());
+    //     if(val==0 && movie.pseats.hasOwnProperty(key)){
+    //         delete movie.pseats[key];
+    //     } else {
+    //         movie.pseats[key] = val;
+    //     }
+    //     return false;
+	// });
 	//ticket number keyup
 	 $('.ticket-num input[type="text"]').each(function(){
         var txtval = $(this).val();
@@ -2985,29 +2985,29 @@ $(document).ready(function() {
 
 	});
 	//back
-    $(document).on('click', '#cinema-back', function (){
-		stopClick = true;
-		myClock.setTime(timeClock);
-		myClock.stop();
-		
-		movie.chair_num = 0;
-		movie.double_chair_num = 0;
-		movie.seats = [];
-
-		$('.seat-number').html('');
-		$('.cinema-seat td').removeClass('choosing');
-		//$('.cinema-seat[data-cine='+ movie.cinema_id +'] td').removeClass('choosing');
-		
-		$('.cinema-content').css({'display': 'none'});
-		$('.ticket-content').css({'display': 'block', 'opacity': 0});
-		$('.section-order').css({'height': 'auto'});
-
-		$('html, body').stop().animate({scrollTop: 0}, 150, 'linear', function(){
-			$('.ticket-content').css({'opacity': 1});
-			$('.cons-icon').removeClass('show');
-		});
-		
-	});
+    // $(document).on('click', '#cinema-back', function (){
+	// 	stopClick = true;
+	// 	myClock.setTime(timeClock);
+	// 	myClock.stop();
+	//
+	// 	movie.chair_num = 0;
+	// 	movie.double_chair_num = 0;
+	// 	movie.seats = [];
+	//
+	// 	$('.seat-number').html('');
+	// 	$('.cinema-seat td').removeClass('choosing');
+	// 	//$('.cinema-seat[data-cine='+ movie.cinema_id +'] td').removeClass('choosing');
+	//
+	// 	$('.cinema-content').css({'display': 'none'});
+	// 	$('.ticket-content').css({'display': 'block', 'opacity': 0});
+	// 	$('.section-order').css({'height': 'auto'});
+	//
+	// 	$('html, body').stop().animate({scrollTop: 0}, 150, 'linear', function(){
+	// 		$('.ticket-content').css({'opacity': 1});
+	// 		$('.cons-icon').removeClass('show');
+	// 	});
+	//
+	// });
 
 	function generateInfo(){
 		var total = 0;
@@ -3040,73 +3040,73 @@ $(document).ready(function() {
 		return str;
 	}
 	//next
-	$(document).on('click', '#cinema-next', function (){
-		if (movie && movie.pseats && movie.pseats['29_27'] && movie.pseats['29_27'] > 0) {
-			const mess = 'Tôi xác nhận mua vé cho người xem từ 18 tuổi trở lên và hiểu rằng Cinestar sẽ không hoàn tiền nếu không chứng thực được độ tuổi của khán giả.';
-			if (confirm(mess) != true) {
-				return;
-			}
-		}
-		let sv = movie.pseats['29_27'] || 0;
-		movie.seats.forEach(function(item, index) {
-			if (sv > 0) {
-				movie.seats[index]['price'] = movie.price_sv;
-				sv--;
-			}
-			
-		});
-		//Q add
-		$('.order-content > .cinema-name').remove();
-		$('.cons-icon').removeClass('show');
-		
-		var top = $('.cinema-content').offset().top;
-		$('.cinema-wrap').stop().animate({'opacity': 0}, 200, function(){
-			$('html,body').stop().animate({scrollTop: top - 100}, 200);
-
-			//add combo
-			var total = 0;
-
-			var totalMoney = movie.amount;
-			movie.combos = [];
-			$('.combo-input input').each(function(index, elm) {
-
-				if($(elm).attr('data-total')){
-					var combo = {id:"", name: "", quantity: 0 , price: ""};
-					total += parseInt($(elm).attr('data-total'));
-					if(parseInt($(elm).attr('data-total'))!= 0){
-						combo.id = $(elm).attr('data-id');
-						combo.name = $(elm).attr('data-name');
-						combo.quantity = $(elm).val();
-						combo.price = $(elm).attr('data-price');
-						movie.combos.push(combo);
-						totalMoney += parseInt($(elm).attr('data-price'));
-					}
-				}
-			});
-			
-			if(totalMoney == 0){
-				$(".payment_method").css({'display':'none'});
-			} else {
-				$(".payment_method").css({'display':'block'});
-			}
-			//
-			// console.log("=================================movies", movie, "===============================");
-			$('.final-confirm .confirm-box').html(generateInfo());
-			$('#cinema_id').val(movie.theater_id);
-			$('#cinema_name').val(movie.cinema_name);
-			$('#movie_name').val(movie.movie_name);
-			
-			
-			// $('.html-confirm-info').html(generateInfo());
-			//Q add
-			$('.cinema-content').css({'display':'none'});
-			
-			$('.final-content').css({'display': 'block'});
-			var cine_name = '<div class="cinema-name"><h2>' + $('.cinema-content .cinema-name h2').html() +'</h2></div>';
-			$('.order-content').prepend(cine_name);	
-			
-		});
-	});
+	// $(document).on('click', '#cinema-next', function (){
+	// 	if (movie && movie.pseats && movie.pseats['29_27'] && movie.pseats['29_27'] > 0) {
+	// 		const mess = 'Tôi xác nhận mua vé cho người xem từ 18 tuổi trở lên và hiểu rằng Cinestar sẽ không hoàn tiền nếu không chứng thực được độ tuổi của khán giả.';
+	// 		if (confirm(mess) != true) {
+	// 			return;
+	// 		}
+	// 	}
+	// 	let sv = movie.pseats['29_27'] || 0;
+	// 	movie.seats.forEach(function(item, index) {
+	// 		if (sv > 0) {
+	// 			movie.seats[index]['price'] = movie.price_sv;
+	// 			sv--;
+	// 		}
+	//
+	// 	});
+	// 	//Q add
+	// 	$('.order-content > .cinema-name').remove();
+	// 	$('.cons-icon').removeClass('show');
+	//
+	// 	var top = $('.cinema-content').offset().top;
+	// 	$('.cinema-wrap').stop().animate({'opacity': 0}, 200, function(){
+	// 		$('html,body').stop().animate({scrollTop: top - 100}, 200);
+	//
+	// 		//add combo
+	// 		var total = 0;
+	//
+	// 		var totalMoney = movie.amount;
+	// 		movie.combos = [];
+	// 		$('.combo-input input').each(function(index, elm) {
+	//
+	// 			if($(elm).attr('data-total')){
+	// 				var combo = {id:"", name: "", quantity: 0 , price: ""};
+	// 				total += parseInt($(elm).attr('data-total'));
+	// 				if(parseInt($(elm).attr('data-total'))!= 0){
+	// 					combo.id = $(elm).attr('data-id');
+	// 					combo.name = $(elm).attr('data-name');
+	// 					combo.quantity = $(elm).val();
+	// 					combo.price = $(elm).attr('data-price');
+	// 					movie.combos.push(combo);
+	// 					totalMoney += parseInt($(elm).attr('data-price'));
+	// 				}
+	// 			}
+	// 		});
+	//
+	// 		if(totalMoney == 0){
+	// 			$(".payment_method").css({'display':'none'});
+	// 		} else {
+	// 			$(".payment_method").css({'display':'block'});
+	// 		}
+	// 		//
+	// 		// console.log("=================================movies", movie, "===============================");
+	// 		$('.final-confirm .confirm-box').html(generateInfo());
+	// 		$('#cinema_id').val(movie.theater_id);
+	// 		$('#cinema_name').val(movie.cinema_name);
+	// 		$('#movie_name').val(movie.movie_name);
+	//
+	//
+	// 		// $('.html-confirm-info').html(generateInfo());
+	// 		//Q add
+	// 		$('.cinema-content').css({'display':'none'});
+	//
+	// 		$('.final-content').css({'display': 'block'});
+	// 		var cine_name = '<div class="cinema-name"><h2>' + $('.cinema-content .cinema-name h2').html() +'</h2></div>';
+	// 		$('.order-content').prepend(cine_name);
+	//
+	// 	});
+	// });
 	
 	
 
@@ -3114,18 +3114,18 @@ $(document).ready(function() {
 	
 	
 //////////////////FINAL EVENTS/////////////////////////////
-	$(document).on('click', '#payment-back', function(){
-		
-		$('.order-content > .cinema-name').remove();
-		$('.final-content').fadeOut(500,'linear',function(){
-		
-			$('.cinema-content').css({'display':'block'});
-			$('.cons-icon').addClass('show');
-			
-			$('.cinema-wrap').css({'opacity': 1});
-		});		
-		
-	});
+// 	$(document).on('click', '#payment-back', function(){
+//
+// 		$('.order-content > .cinema-name').remove();
+// 		$('.final-content').fadeOut(500,'linear',function(){
+//
+// 			$('.cinema-content').css({'display':'block'});
+// 			$('.cons-icon').addClass('show');
+//
+// 			$('.cinema-wrap').css({'opacity': 1});
+// 		});
+//
+// 	});
 	$(document).on('click', '#payment-next', function(){
         //$('.close-order').trigger('click');
         //var url = $(this).attr('data-link');
@@ -3322,78 +3322,78 @@ $(document).ready(function() {
 	
 //////////////////////////////////// CONS //////////////////////////////////
 //	$(document).on('click','.cons-but a', function(e) {
-	$(document).on('click','.cons-chose, .cons-but .cons-icon', function(e) {
-		
-		if($('.cons-content').hasClass('show')){
-				
-				if($('.cons-chose').hasClass('toScroll')) {
-					var top = $('.toScroll').offset().top;
-					$('.cons-chose').removeClass('toScroll');
-					$('html,body').scrollTop(top);
-							
-				}
-					
-				$('.overlay-cons').stop().fadeOut(500, 'linear', function(){
-					$('.cons-content').removeClass('show');
-					$('.overlay-cons').remove();
-					cal_total_cons();
-				});
-				
-				
-				
-				
-		}else{
-			//ajax get combo
-			getPage(BASE_URL + 'index.php?route=common/order/getCombo', 'POST', { cinema_id: movie.theater_id}, function(data){
-				$('.loadicon').fadeOut(300, 'linear', function() {
-					$('.loadicon').remove();
-				});
-				
-				$('.cons-content .cons-box').html(data);
-				$('.cons-chose').addClass('toScroll');
-				
-				$('.order-content').css({'height': 'auto'});
-				
-				var cons_h = $('.cons-content').innerHeight();
-				var oder_h = $('.order-content').height();
-				
-				if(oder_h <= cons_h) {
-					$('.order-content').css({'height': cons_h + 120});
-				}
-				
-				var top = $('.order-content').offset().top;
-				
-				$('html, body').stop().animate({scrollTop: top - 80},  300,'linear',function(){
-					
-					$('.cons-content').addClass('show');
-					
-				});	
-				
-				$('.order-content').prepend('<span class="overlay-cons"></span>');
-				
-				$('.overlay-cons').click(function(){
-					
-					$('.order-content').css({'height': 'auto'});
-					if($('.cons-chose').hasClass('toScroll')) {
-						var top = $('.toScroll').offset().top;
-						$('.cons-chose').removeClass('toScroll');
-						$('html,body').scrollTop(top);
-							
-					}
-					
-					$('.cons-content').removeClass('show');
-					$('.overlay-cons').stop().fadeOut(500, 'linear', function(){
-						$('.overlay-cons').remove();
-						cal_total_cons();
-						
-					});
-					
-					
-				});
-			});				
-		}
-		
-	});
+// 	$(document).on('click','.cons-chose, .cons-but .cons-icon', function(e) {
+//
+// 		if($('.cons-content').hasClass('show')){
+//
+// 				if($('.cons-chose').hasClass('toScroll')) {
+// 					var top = $('.toScroll').offset().top;
+// 					$('.cons-chose').removeClass('toScroll');
+// 					$('html,body').scrollTop(top);
+//
+// 				}
+//
+// 				$('.overlay-cons').stop().fadeOut(500, 'linear', function(){
+// 					$('.cons-content').removeClass('show');
+// 					$('.overlay-cons').remove();
+// 					cal_total_cons();
+// 				});
+//
+//
+//
+//
+// 		}else{
+// 			//ajax get combo
+// 			getPage(BASE_URL + 'index.php?route=common/order/getCombo', 'POST', { cinema_id: movie.theater_id}, function(data){
+// 				$('.loadicon').fadeOut(300, 'linear', function() {
+// 					$('.loadicon').remove();
+// 				});
+//
+// 				$('.cons-content .cons-box').html(data);
+// 				$('.cons-chose').addClass('toScroll');
+//
+// 				$('.order-content').css({'height': 'auto'});
+//
+// 				var cons_h = $('.cons-content').innerHeight();
+// 				var oder_h = $('.order-content').height();
+//
+// 				if(oder_h <= cons_h) {
+// 					$('.order-content').css({'height': cons_h + 120});
+// 				}
+//
+// 				var top = $('.order-content').offset().top;
+//
+// 				$('html, body').stop().animate({scrollTop: top - 80},  300,'linear',function(){
+//
+// 					$('.cons-content').addClass('show');
+//
+// 				});
+//
+// 				$('.order-content').prepend('<span class="overlay-cons"></span>');
+//
+// 				$('.overlay-cons').click(function(){
+//
+// 					$('.order-content').css({'height': 'auto'});
+// 					if($('.cons-chose').hasClass('toScroll')) {
+// 						var top = $('.toScroll').offset().top;
+// 						$('.cons-chose').removeClass('toScroll');
+// 						$('html,body').scrollTop(top);
+//
+// 					}
+//
+// 					$('.cons-content').removeClass('show');
+// 					$('.overlay-cons').stop().fadeOut(500, 'linear', function(){
+// 						$('.overlay-cons').remove();
+// 						cal_total_cons();
+//
+// 					});
+//
+//
+// 				});
+// 			});
+// 		}
+//
+// 	});
 	
 	$('.cons-content .cons-icon').click(function(){
 		
@@ -3416,38 +3416,38 @@ $(document).ready(function() {
 	});
 	
 	//addd ticket
-	$(document).on('click','.cmb-add', function(e) {
-		e.preventDefault();
-		var row =  $(this).parent().parent();
-		cal_total_on_cons(row,'asc');
-		return false;
-	});
+	// $(document).on('click','.cmb-add', function(e) {
+	// 	e.preventDefault();
+	// 	var row =  $(this).parent().parent();
+	// 	cal_total_on_cons(row,'asc');
+	// 	return false;
+	// });
 	//minus ticket
-	$(document).on('click', '.cmb-minus', function(e) {
-		e.preventDefault();
-		var row =  $(this).parent().parent();
-		cal_total_on_cons(row,'des');
-		return false;
-	});
+	// $(document).on('click', '.cmb-minus', function(e) {
+	// 	e.preventDefault();
+	// 	var row =  $(this).parent().parent();
+	// 	cal_total_on_cons(row,'des');
+	// 	return false;
+	// });
 	
-	$(document).on('click', '.cons-ok', function(e) {
-		if($('.cons-chose').hasClass('toScroll')) {
-			$('.order-content').css({'height': 'auto'});
-			var top = $('.toScroll').offset().top;
-			$('.cons-chose').removeClass('toScroll');
-			$('html,body').scrollTop(top);
-				
-		}
-		
-		$('.cons-content').removeClass('show');
-		
-		$('.overlay-cons').stop().fadeOut(500, 'linear', function(){
-			$('.overlay-cons').remove();
-			cal_total_cons();
-		
-		});
-		
-	});
+	// $(document).on('click', '.cons-ok', function(e) {
+	// 	if($('.cons-chose').hasClass('toScroll')) {
+	// 		$('.order-content').css({'height': 'auto'});
+	// 		var top = $('.toScroll').offset().top;
+	// 		$('.cons-chose').removeClass('toScroll');
+	// 		$('html,body').scrollTop(top);
+	//
+	// 	}
+	//
+	// 	$('.cons-content').removeClass('show');
+	//
+	// 	$('.overlay-cons').stop().fadeOut(500, 'linear', function(){
+	// 		$('.overlay-cons').remove();
+	// 		cal_total_cons();
+	//
+	// 	});
+	//
+	// });
 	
 	$(document).on('click', '.cons-cancel', function(e) {
 		$('.cons-total').css({'display': 'none'});
